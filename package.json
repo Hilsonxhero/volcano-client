@@ -20,6 +20,7 @@
     "vue": "latest"
   },
   "dependencies": {
+    "@ctrl/tinycolor": "^3.6.0",
     "@pinia/nuxt": "^0.4.11",
     "@vueuse/core": "^9.13.0",
     "async-validator": "^4.2.5",

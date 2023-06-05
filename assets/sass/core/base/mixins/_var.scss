@@ -1,8 +1,7 @@
-@use 'sass:map';
+@use "sass:map";
 
-@use 'config';
-@use 'function' as *;
-@use '../common/var' as *;
+@use "config";
+@use "function" as *;
 
 // set css var value, because we need translate value to string
 // for example:
@@ -19,25 +18,25 @@
 }
 
 @mixin set-css-color-type($colors, $type) {
-  @include set-css-var-value(('color', $type), map.get($colors, $type, 'base'));
+  @include set-css-var-value(("color", $type), map.get($colors, $type, "base"));
 
   @each $i in (3, 5, 7, 8, 9) {
     @include set-css-var-value(
-      ('color', $type, 'light', $i),
-      map.get($colors, $type, 'light-#{$i}')
+      ("color", $type, "light", $i),
+      map.get($colors, $type, "light-#{$i}")
     );
   }
 
   @include set-css-var-value(
-    ('color', $type, 'dark-2'),
-    map.get($colors, $type, 'dark-2')
+    ("color", $type, "dark-2"),
+    map.get($colors, $type, "dark-2")
   );
 }
 
 // set all css var for component by map
 @mixin set-component-css-var($name, $variables) {
   @each $attribute, $value in $variables {
-    @if $attribute == 'default' {
+    @if $attribute == "default" {
       #{getCssVarName($name)}: #{$value};
     } @else {
       #{getCssVarName($name, $attribute)}: #{$value};
@@ -46,9 +45,9 @@
 }
 
 @mixin set-css-color-rgb($type) {
-  $color: map.get($colors, $type, 'base');
+  $color: map.get($colors, $type, "base");
   @include set-css-var-value(
-    ('color', $type, 'rgb'),
+    ("color", $type, "rgb"),
     #{red($color),
     green($color),
     blue($color)}

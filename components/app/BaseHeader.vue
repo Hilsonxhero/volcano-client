@@ -61,12 +61,12 @@
                 <!-- <BaseButton class="mr-2" variant="light">
                   <nuxt-icon name="user-bulk"></nuxt-icon>
                 </BaseButton> -->
-                <a
-                  href=""
+                <nuxt-link
+                  :to="{ name: 'auth' }"
                   class="text-white overflow-hidden relative rounded-[14px] py-4 px-8 border border-white border-solid ml-4"
                 >
                   ورود
-                </a>
+                </nuxt-link>
                 <a
                   href=""
                   class="primary-button-two text-white overflow-hidden relative rounded-[14px] py-4 px-8"

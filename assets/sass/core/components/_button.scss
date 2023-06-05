@@ -1,15 +1,23 @@
-//
-// Buttons Base
-//
+@use "sass:map";
 
-// Button
-.hx-button {
+@use "mixins/buttons";
+
+$button-icon-span-gap: () !default;
+$button-icon-span-gap: map.merge(
+  (
+    "large": 8px,
+    "default": 6px,
+    "small": 4px,
+  ),
+  $button-icon-span-gap
+);
+
+@include b(button) {
   align-items: center;
   border-radius: 0.5rem;
   display: inline-flex;
   flex: 0 0 auto;
   font-weight: 500;
-  //letter-spacing: .0892857143em;
   justify-content: center;
   outline: 0;
   position: relative;
@@ -26,347 +34,234 @@
   vertical-align: middle;
   white-space: nowrap;
   font-size: 0.8rem;
-  // @include button-size($btn-padding-y, $btn-padding-x, $btn-font-size, $btn-border-radius);
-  // @include transition($btn-transition);
+  color: get($text-color, "regular");
 
-  &__content {
-    align-items: center;
-    color: inherit;
-    display: flex;
-    flex: 1 0 auto;
-    justify-content: inherit;
-    line-height: normal;
-    position: relative;
-    transition: inherit;
-    transition-property: inherit;
-    transition-property: opacity;
-
-    span svg {
-      width: 1.5rem;
-      height: 1.5rem;
-      fill: currentColor;
-    }
-  }
-
-  &__round {
-    border-radius: 50%;
-  }
-
-  &__outlined {
-    border: thin solid !important;
-  }
-
-  &::before {
-    background-color: currentColor;
-    border-radius: inherit;
-    bottom: 0;
-    color: inherit;
-    content: "";
-    left: 0;
-    opacity: 0;
-    pointer-events: none;
-    position: absolute;
-    right: 0;
-    top: 0;
-    transition: opacity 0.2s cubic-bezier(0.4, 0, 0.6, 1);
-  }
-
+  background-color: get($fill-color, "blank");
+  border: 1px solid;
+  border-color: get($border-color, "light");
   &:hover,
-  &:active {
-    color: $body-color;
-    text-decoration: if($link-hover-decoration==underline, none, null);
-
-    &::before {
-      opacity: 0.1;
-    }
-  }
-
-  .btn-check:focus + &,
   &:focus {
-    outline: 0;
-    box-shadow: $btn-focus-box-shadow;
+    // color: getCssVar("button", "hover", "text-color");
+    // border-color: getCssVar("button", "hover", "border-color");
+    // background-color: getCssVar("button", "hover", "bg-color");
+    outline: none;
   }
 
-  .btn-check:checked + &,
-  .btn-check:active + &,
-  &:active,
-  &.active {
-    // @include box-shadow($btn-active-box-shadow);
+  &:active {
+    // color: getCssVar("button", "active", "text-color");
+    // border-color: getCssVar("button", "active", "border-color");
+    // background-color: getCssVar("button", "active", "bg-color");
+    outline: none;
   }
 
-  &:disabled,
-  &.disabled,
-  fieldset:disabled & {
-    pointer-events: none;
-    opacity: $btn-disabled-opacity;
-    // @include box-shadow(none);
+  &:focus-visible {
+    // outline: 2px solid getCssVar("button", "outline-color");
+    outline-offset: 1px;
   }
 
-  outline: none !important;
-
-  // Reset focus shadow
-  &:not(.hx-button__shadow):not(.shadow):not(.shadow-sm):not(.shadow-lg) {
-    box-shadow: none !important;
-  }
-
-  // Remove border
-  &:not(.hx-button__outline):not(.hx-button__dashed):not(.border-hover):not(
-      .border-active
-    ):not(.hx-button__flush):not(.hx-button__icon) {
-    border: 0;
-    padding: calc(#{$btn-padding-y} + #{$btn-border-width})
-      calc(#{$btn-padding-x} + #{$btn-border-width});
-
-    &.hx-button__lg {
-      padding: calc(#{$btn-padding-y-lg} + #{$btn-border-width})
-        calc(#{$btn-padding-x-lg} + #{$btn-border-width});
-    }
-
-    &.hx-button__sm {
-      padding: calc(#{$btn-padding-y-sm} + #{$btn-border-width})
-        calc(#{$btn-padding-x-sm} + #{$btn-border-width});
-      font-size: $font-size-sm;
-    }
-  }
-
-  // Link
-  &.hx-button__link {
-    border: 0;
-    border-radius: 0;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    text-decoration: none;
-    font-weight: $btn-font-weight;
-  }
-
-  // Outline dashed
-  &.hx-button__outline-dashed {
-    border: 1px dashed $border-dashed-color;
-  }
-
-  // Flush
-  &.hx-button__flush {
-    // @include button-reset();
-  }
-
-  // Flex
-  &.hx-button__flex {
+  > span {
     display: inline-flex;
     align-items: center;
   }
-}
 
-// Icons
-.hx-button {
-  // Svg icon
-  .svg-icon {
-    flex-shrink: 0;
-    line-height: 0;
-    margin-right: 0.5rem;
+  & + & {
+    margin-left: 12px;
   }
 
-  // Icon only button
-  &.hx-button__icon {
-    height: 36px;
-    width: 36px;
+  @include button-size(
+    map.get($button-padding-vertical, "default") - $button-border-width,
+    map.get($button-padding-horizontal, "default") - $button-border-width,
+    map.get($button-font-size, "default"),
+    map.get($button-border-radius, "default")
+  );
 
-    &__content {
-      svg {
-        color: rgba(0, 0, 0, 0.54) !important;
-        fill: currentColor !important;
+  &::-moz-focus-inner {
+    border: 0;
+  }
+
+  & [class*="#{$namespace}-icon"] {
+    & + span {
+      // margin-left: map.get($button-icon-span-gap, "default");
+    }
+    svg {
+      vertical-align: bottom;
+    }
+  }
+
+  @include when(plain) {
+    border: 1px solid !important;
+    // background-color: transparent;
+  }
+
+  @include when(active) {
+    // color: getCssVar("button", "active", "text-color");
+    // border-color: getCssVar("button", "active", "border-color");
+    // background-color: getCssVar("button", "active", "bg-color");
+    outline: none;
+  }
+
+  @include when(disabled) {
+    &,
+    &:hover,
+    &:focus {
+      // color: getCssVar("button", "disabled", "text-color");
+      cursor: not-allowed;
+      // background-image: none;
+      // background-color: getCssVar("button", "disabled", "bg-color");
+      // border-color: getCssVar("button", "disabled", "border-color");
+    }
+  }
+
+  @include when(loading) {
+    position: relative;
+    pointer-events: none;
+
+    &:before {
+      // mask the button
+      z-index: 1;
+      pointer-events: none;
+      content: "";
+      position: absolute;
+      left: -1px;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      border-radius: inherit;
+      // background-color: getCssVar("mask-color", "extra-light");
+    }
+  }
+  @include when(round) {
+    // border-radius: getCssVar("border-radius", "round");
+  }
+  @include when(circle) {
+    border-radius: 50%;
+
+    // padding: map.get($button-padding-vertical, "default") - $button-border-width;
+  }
+
+  @include when(text) {
+    // color: getCssVar("button", "text-color");
+    border: 0 solid transparent;
+    background-color: transparent;
+
+    @include when(disabled) {
+      // color: getCssVar("button", "disabled", "text-color");
+      background-color: transparent !important;
+    }
+
+    &:not(.is-disabled) {
+      &:hover,
+      &:focus {
+        // background-color: getCssVar("fill-color", "light");
       }
-    }
 
-    // Remove border
-    &:not(.hx-button__outline):not(.hx-button__dashed):not(.border-hover):not(
-        .border-active
-      ):not(.hx-button__flush) {
-      border: 0;
-    }
+      &:focus-visible {
+        // outline: 2px solid getCssVar("button", "outline-color");
+        outline-offset: 1px;
+      }
 
-    // Sizes
-    &.hx-button__sm {
-      height: $input-height-sm;
-      width: $input-height-sm;
-    }
+      &:active {
+        // background-color: getCssVar("fill-color");
+      }
 
-    &.hx-button__lg {
-      height: $input-height-lg;
-      width: $input-height-lg;
-    }
+      @include when(has-bg) {
+        // background-color: getCssVar("fill-color", "light");
 
-    &.hx-button__circle {
-      border-radius: 50%;
-    }
+        &:hover,
+        &:focus {
+          // background-color: getCssVar("fill-color");
+        }
 
-    i,
-    .svg-icon {
-      padding: 0;
-      margin: 0;
-      line-height: 1;
-    }
-  }
-}
-
-//
-// Buttons Theme
-//
-
-// Theme colors
-@each $name, $value in $theme-colors {
-  // Base
-  .hx-button.hx-button__#{$name} {
-    $color: theme-inverse-color($name);
-    $icon-color: theme-inverse-color($name);
-    $border-color: $value;
-    $bg-color: $value;
-    $color-active: theme-inverse-color($name);
-    $icon-color-active: theme-inverse-color($name);
-    $border-color-active: theme-active-color($name);
-    $bg-color-active: theme-active-color($name);
-    @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
-    );
-  }
-
-  .hx-button.hx-button__#{$name}-text {
-    $color: theme-inverse-color($name);
-    $icon-color: theme-inverse-color($name);
-    $border-color: $value;
-    $bg-color: $value;
-    $color-active: theme-inverse-color($name);
-    $icon-color-active: theme-inverse-color($name);
-    $border-color-active: theme-active-color($name);
-    $bg-color-active: theme-active-color($name);
-    @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
-    );
-  }
-
-  // Light
-  @if (theme-light-color($name)) {
-    .hx-button.hx-button__light-#{$name} {
-      $color: $value;
-      $icon-color: $value;
-      $border-color: theme-light-color($name);
-      $bg-color: theme-light-color($name);
-
-      $color-active: theme-inverse-color($name);
-      $icon-color-active: theme-inverse-color($name);
-      $border-color-active: $value;
-      $bg-color-active: $value;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-  }
-
-  @if ($btn-extended-variants==true or $name==primary or $name==light) {
-    .hx-button.hx-button__bg-#{$name} {
-      $color: null;
-      $icon-color: null;
-      $border-color: $value;
-      $bg-color: $value;
-
-      $color-active: null;
-      $icon-color-active: null;
-      $border-color-active: null;
-      $bg-color-active: null;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-
-    .hx-button.hx-button__active-#{$name} {
-      $color: null;
-      $icon-color: null;
-      $border-color: null;
-      $bg-color: null;
-
-      $color-active: theme-inverse-color($name);
-      $icon-color-active: theme-inverse-color($name);
-      $border-color-active: $value;
-      $bg-color-active: $value;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-
-    @if (theme-light-color($name)) {
-      .hx-button.hx-button__active-light-#{$name} {
-        $color: null;
-        $icon-color: null;
-        $border-color: null;
-        $bg-color: null;
-
-        $color-active: $value;
-        $icon-color-active: $value;
-        $border-color-active: theme-light-color($name);
-        $bg-color-active: theme-light-color($name);
-
-        @include button-custom-variant(
-          $color,
-          $icon-color,
-          $border-color,
-          $bg-color,
-          $color-active,
-          $icon-color-active,
-          $border-color-active,
-          $bg-color-active
-        );
-
-        // Don't change the border color for outline style
-        &.hx-button__outline:not(.hx-button__outline-default) {
-          border-color: $value !important;
+        &:active {
+          // background-color: getCssVar("fill-color", "dark");
         }
       }
     }
   }
-}
 
-// Theme text colors
-@each $name, $value in $theme-text-colors {
-  @if ($btn-extended-variants==true or $name==primary or $name==muted) {
-    // Text and icon colors
-    .hx-button.hx-button__color-#{$name} {
+  @include e(text) {
+    @include m(expand) {
+      letter-spacing: 0.3em;
+      margin-right: -0.3em;
+    }
+  }
+
+  @include when(link) {
+    border-color: transparent;
+    // color: getCssVar("button", "text-color");
+    background: transparent;
+    padding: 2px;
+    height: auto;
+
+    &:hover,
+    &:focus {
+      // color: getCssVar("button", "hover", "link-text-color");
+    }
+
+    @include when(disabled) {
+      // color: getCssVar("button", "disabled", "text-color");
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+
+    &:not(.is-disabled) {
+      &:hover,
+      &:focus {
+        border-color: transparent;
+        background-color: transparent;
+      }
+
+      &:active {
+        // color: getCssVar("button", "active-color");
+        border-color: transparent;
+        background-color: transparent;
+      }
+    }
+  }
+
+  @include m(text) {
+    border-color: transparent;
+    background: transparent;
+    // color: getCssVar("color", "primary");
+    padding-left: 0;
+    padding-right: 0;
+    @include when(disabled) {
+      // color: getCssVar("button", "disabled", "text-color");
+      background-color: transparent !important;
+      border-color: transparent !important;
+    }
+
+    &:not(.is-disabled) {
+      &:hover,
+      &:focus {
+        // color: getCssVar("color", "primary", "light-3");
+        border-color: transparent;
+        background-color: transparent;
+      }
+
+      &:active {
+        // color: getCssVar("color", "primary", "dark-2");
+        border-color: transparent;
+        background-color: transparent;
+      }
+    }
+  }
+
+  @include e(link) {
+    @include m(expand) {
+      letter-spacing: 0.3em;
+      margin-right: -0.3em;
+    }
+  }
+
+  // @each $type in (primary, success, warning, danger, info) {
+  //   @include m($type) {
+  //     @include button-variant($type);
+  //   }
+  // }
+
+  @each $name, $value in $theme-colors {
+    &.#{$namespace}-button-outline--#{$name} {
       $color: $value;
       $icon-color: $value;
       $bg-color: null;
@@ -387,115 +282,18 @@
         $bg-color-active
       );
     }
+  }
 
-    // Text and icon colors active state
-    .hx-button.hx-button__active-color-#{$name} {
-      $color: null;
-      $icon-color: null;
-      $border-color: null;
-      $bg-color: null;
-
-      $color-active: $value;
-      $icon-color-active: $value;
-      $border-color-active: null;
-      $bg-color-active: null;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-
-    // Icon colors
-    .hx-button.hx-button__icon-#{$name} {
-      $color: null;
-      $icon-color: $value;
-      $bg-color: null;
-      $border-color: null;
-
-      $color-active: null;
-      $icon-color-active: null;
-      $border-color-active: null;
-      $bg-color-active: null;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-
-    // Icon colors active state
-    .hx-button.hx-button__active-icon-#{$name} {
-      $color: null;
-      $icon-color: null;
-      $bg-color: null;
-      $border-color: null;
-
-      $color-active: null;
-      $icon-color-active: $value;
-      $border-color-active: null;
-      $bg-color-active: null;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-
-    // Text colors
-    .hx-button.hx-button__text-#{$name} {
-      $color: $value;
-      $icon-color: null;
-      $bg-color: null;
-      $border-color: null;
-
-      $color-active: null;
-      $icon-color-active: null;
-      $border-color-active: null;
-      $bg-color-active: null;
-
-      @include button-custom-variant(
-        $color,
-        $icon-color,
-        $border-color,
-        $bg-color,
-        $color-active,
-        $icon-color-active,
-        $border-color-active,
-        $bg-color-active
-      );
-    }
-
-    // Text colors active state
-    .hx-button.hx-button__active-text-#{$name} {
-      $color: null;
-      $icon-color: null;
-      $bg-color: null;
-      $border-color: null;
-
-      $color-active: $value;
-      $icon-color-active: null;
-      $border-color-active: null;
-      $bg-color-active: null;
-
+  @each $name, $value in $theme-colors {
+    @include m($name) {
+      $color: theme-inverse-color($name);
+      $icon-color: theme-inverse-color($name);
+      $border-color: $value;
+      $bg-color: $value;
+      $color-active: theme-inverse-color($name);
+      $icon-color-active: theme-inverse-color($name);
+      $border-color-active: theme-active-color($name);
+      $bg-color-active: theme-active-color($name);
       @include button-custom-variant(
         $color,
         $icon-color,
@@ -508,82 +306,33 @@
       );
     }
   }
-}
 
-// Social colors
-@each $name, $value in $social-colors {
-  // Base
-  .hx-button.hx-button__#{$name} {
-    $color: get($value, inverse);
-    $icon-color: get($value, inverse);
-    $border-color: get($value, base);
-    $bg-color: get($value, base);
+  @each $size in (large, small) {
+    @include m($size) {
+      // @include set-css-var-value(
+      //   ("button", "size"),
+      //   map.get($input-height, $size)
+      // );
 
-    $color-active: null;
-    $icon-color-active: null;
-    $border-color-active: get($value, active);
-    $bg-color-active: get($value, active);
+      // height: getCssVar("button", "size");
 
-    @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
-    );
+      & [class*="#{$namespace}-icon"] {
+        & + span {
+          // margin-left: map.get($button-icon-span-gap, $size);
+        }
+      }
+
+      @include button-size(
+        map.get($button-padding-vertical, $size) - $button-border-width,
+        map.get($button-padding-horizontal, $size) - $button-border-width,
+        map.get($button-font-size, $size),
+        map.get($button-border-radius, $size)
+      );
+
+      @include when(circle) {
+        // width: getCssVar("button", "size");
+        padding: map.get($button-padding-vertical, $size) - $button-border-width;
+      }
+    }
   }
-
-  // Light
-  .hx-button.hx-button__light-#{$name} {
-    $color: get($value, base);
-    $icon-color: get($value, base);
-    $bg-color: get($value, light);
-    $border-color: get($value, light);
-
-    $color-active: get($value, inverse);
-    $icon-color-active: get($value, inverse);
-    $bg-color-active: get($value, base);
-    $border-color-active: get($value, base);
-
-    @include button-custom-variant(
-      $color,
-      $icon-color,
-      $border-color,
-      $bg-color,
-      $color-active,
-      $icon-color-active,
-      $border-color-active,
-      $bg-color-active
-    );
-  }
-}
-
-// Outline dashed style
-.hx-button.hx-button__outline.hx-button__outline-dashed.hx-button__outline-default {
-  border-width: 1px;
-  border-style: dashed;
-
-  $color: $light-inverse;
-  $icon-color: $light-inverse;
-  $border-color: $gray-300;
-  $bg-color: null;
-
-  $color-active: $primary;
-  $icon-color-active: $primary;
-  $border-color-active: $primary;
-  $bg-color-active: $primary-light;
-
-  @include button-custom-variant(
-    $color,
-    $icon-color,
-    $border-color,
-    $bg-color,
-    $color-active,
-    $icon-color-active,
-    $border-color-active,
-    $bg-color-active
-  );
 }

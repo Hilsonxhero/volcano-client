@@ -1,77 +1,143 @@
-//
-// Button Mixins
-//
-
-// Custom variant
 @mixin button-custom-variant(
-    $color,
-    $icon-color,
-    $border-color,
-    $bg-color,
-    $color-active,
-    $icon-color-active,
-    $border-color-active,
-    $bg-color-active
+  $color,
+  $icon-color,
+  $border-color,
+  $bg-color,
+  $color-active,
+  $icon-color-active,
+  $border-color-active,
+  $bg-color-active
 ) {
+  @if ($color != null) {
+    color: $color;
+  }
 
-    @if ( $color != null ) {
-        color: $color;
+  @if ($icon-color != null) {
+    i {
+      color: $icon-color;
     }
 
-    @if ( $icon-color != null ) {
-        i {
-    		color: $icon-color;
-    	}
-
-    	.svg-icon {
-    		@include svg-icon-color($icon-color);
-    	}
-
-        &.dropdown-toggle:after {
-            color: $icon-color;
-        }
+    .svg-icon {
+      @include svg-icon-color($icon-color);
     }
 
-    @if ( $border-color != null ) {
-        border-color: $border-color !important;
+    &.dropdown-toggle:after {
+      color: $icon-color;
+    }
+  }
+
+  @if ($border-color != null) {
+    border-color: $border-color !important;
+  }
+
+  @if ($bg-color != null) {
+    background-color: $bg-color !important;
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:focus:not(.btn-active),
+  &:hover:not(.btn-active),
+  &:active:not(.btn-active),
+  &.active,
+  &.show,
+  .show > & {
+    @if ($color-active != null) {
+      color: $color-active;
     }
 
-    @if ( $bg-color != null ) {
-        background-color: $bg-color;
+    @if ($icon-color-active != null) {
+      i {
+        color: $icon-color-active;
+      }
+
+      .svg-icon {
+        @include svg-icon-color($icon-color-active);
+      }
+
+      &.dropdown-toggle:after {
+        color: $icon-color-active;
+      }
     }
 
-    .btn-check:checked + &,
-    .btn-check:active + &,
-    &:focus:not(.btn-active),
-    &:hover:not(.btn-active),
-    &:active:not(.btn-active),
-    &.active,
-    &.show,
-    .show > & {
-        @if ( $color-active != null ) {
-            color: $color-active;
-        }
-
-        @if ( $icon-color-active != null ) {
-            i {
-        		color: $icon-color-active;
-        	}
-
-        	.svg-icon {
-        		@include svg-icon-color($icon-color-active);
-        	}
-
-            &.dropdown-toggle:after {
-                color: $icon-color-active;
-            }
-        }
-
-        @if ( $border-color-active != null ) {
-            border-color: $border-color-active;
-        }
-
-        @if ( $bg-color-active != null ) {
-            background-color: $bg-color-active !important;
-        }
+    @if ($border-color-active != null) {
+      border-color: $border-color-active;
     }
+
+    @if ($bg-color-active != null) {
+      background-color: $bg-color-active !important;
+    }
+  }
+}
+
+@mixin button-plain($type) {
+  $button-color-types: (
+    "": (
+      "text-color": (
+        "color",
+        $type,
+      ),
+      "bg-color": (
+        "color",
+        $type,
+        "light-9",
+      ),
+      "border-color": (
+        "color",
+        $type,
+        "light-5",
+      ),
+    ),
+    "hover": (
+      "text-color": (
+        "color",
+        "white",
+      ),
+      "bg-color": (
+        "color",
+        $type,
+      ),
+      "border-color": (
+        "color",
+        $type,
+      ),
+    ),
+    "active": (
+      "text-color": (
+        "color",
+        "white",
+      ),
+    ),
+  );
+
+  @each $type, $typeMap in $button-color-types {
+    @each $typeColor, $list in $typeMap {
+      @include css-var-from-global(("button", $type, $typeColor), $list);
+    }
+  }
+
+  &.is-disabled {
+    &,
+    &:hover,
+    &:focus,
+    &:active {
+      color: getCssVar("color", $type, "light-5");
+      background-color: getCssVar("color", $type, "light-9");
+      border-color: getCssVar("color", $type, "light-8");
+    }
+  }
+}
+
+@mixin button-size(
+  $padding-vertical,
+  $padding-horizontal,
+  $font-size,
+  $border-radius
+) {
+  padding: $padding-vertical $padding-horizontal;
+  font-size: $font-size;
+  border-radius: $border-radius;
+  &.is-round {
+    padding: $padding-vertical $padding-horizontal;
+  }
 }

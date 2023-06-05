@@ -6,3 +6,4 @@ export * from "./collapse";
 export * from "./slider";
 export * from "./pagination";
 export * from "./radio";
+export * from "./button";

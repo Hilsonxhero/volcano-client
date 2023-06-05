@@ -6,6 +6,7 @@ export default defineNuxtConfig({
         'nuxt-icons',
         '@nuxtjs/i18n',
         '~/modules/web/module',
+        '~/modules/auth/module',
     ],
 
     i18n: {
