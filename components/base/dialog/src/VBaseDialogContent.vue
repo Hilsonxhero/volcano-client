@@ -30,11 +30,8 @@
         </el-icon>
         
       </button> -->
-      <base-button v-if="showClose" icon variant="gray" @click="$emit('close')">
-        <nuxt-icon
-          name="close-square"
-          class="w-8 h-8 text-gray-400"
-        ></nuxt-icon>
+      <base-button v-if="showClose" icon @click="$emit('close')">
+        <nuxt-icon name="close-square" class="w-7 h-7 text-current"></nuxt-icon>
       </base-button>
     </header>
     <div :id="bodyId" :class="ns.e('body')">

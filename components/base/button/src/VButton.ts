@@ -11,11 +11,8 @@ export const buttonTypes = [
   'warning',
   'info',
   'danger',
-  /**
-   * @deprecated
-   * Text type will be deprecated in the next major version (3.0.0)
-   */
   'text',
+  'light',
   '',
 ] as const
 export const buttonNativeTypes = ['button', 'submit', 'reset'] as const
@@ -26,12 +23,9 @@ export const buttonProps = buildProps({
   type: {
     type: String,
     values: buttonTypes,
-    default: '',
+    default: 'text',
   },
-  icon: {
-    type: String,
-    default: '',
-  },
+  icon: Boolean,
   nativeType: {
     type: String,
     values: buttonNativeTypes,

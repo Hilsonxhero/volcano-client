@@ -7,6 +7,7 @@ export default defineNuxtConfig({
         '@nuxtjs/i18n',
         '~/modules/web/module',
         '~/modules/auth/module',
+        '~/modules/portal/module',
     ],
 
     i18n: {

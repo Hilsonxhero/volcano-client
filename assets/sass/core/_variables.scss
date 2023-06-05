@@ -89,7 +89,7 @@ $lighten: rgba($light, 0.5); // Custom variable
 // Success colors
 $success: #50cd89 !default; // Bootstrap variable
 $success-active: #0bb7af !default; // Custom variable
-$success-light: if(isDarkMode(), #1c3833, #c9f7f5) !default; // Custom variable
+$success-light: rgba(70, 201, 58, 0.15); // Custom variable
 $success-inverse: $white !default; // Custom variable
 
 // Info colors
@@ -135,7 +135,7 @@ $theme-active-colors: (
   // custom color type
   "primary": $primary-active,
   "secondary": $secondary-active,
-  "light": $light-active,
+  "light": $gray-600,
   "success": $success-active,
   "info": $info-active,
   "warning": $warning-active,
@@ -148,7 +148,7 @@ $theme-inverse-colors: (
   "white": $white-inverse,
   "primary": $primary-inverse,
   "secondary": $secondary-inverse,
-  "light": $light-inverse,
+  "light": $gray-600,
   "success": $success-inverse,
   "info": $info-inverse,
   "warning": $warning-inverse,
@@ -164,6 +164,7 @@ $theme-light-colors: (
   "warning": $warning-light,
   "danger": $danger-light,
   "dark": $dark-light,
+  "light": $gray-300,
 ) !default; // Custom variable
 
 // Text colors
@@ -595,7 +596,7 @@ $font-sizes: (
   5hx: $font-size-base * 5.5,
   // 71.5px
   5tx: $font-size-base * 5.75
-    // 74.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+    // 74.75px,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ) !default;
 
 $headings-margin-bottom: $spacer * 0.5 !default;

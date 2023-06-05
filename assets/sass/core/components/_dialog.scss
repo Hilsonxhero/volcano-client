@@ -36,6 +36,9 @@
     height: fit-content;
     max-height: calc(80vh - 150px);
   }
+  &__title {
+    font-size: 18px;
+  }
 }
 
 .hx-overlay-dialog {

@@ -2,37 +2,20 @@ const DocMenuConfig = [
   {
     pages: [
       {
-        heading: "حساب کاربری",
+        heading: "داشبورد ",
         route: "user-profile-index",
-        svgIcon: "user-circle",
-      },
-    ],
-  },
-  {
-    pages: [
-      {
-        heading: "سفارشات",
-        route: "user-orders-index",
-        svgIcon: "shopping-bag",
-      },
-    ],
-  },
-  {
-    pages: [
-      {
-        heading: "آدرس ها",
-        route: "user-addresses-index",
-        svgIcon: "directions",
+        svgIcon: "category-bulk",
       },
     ],
   },
 
+
   {
     pages: [
       {
-        heading: "لیست ها",
+        heading: "پروژه ها",
         route: "user-lists-index",
-        svgIcon: "cube-scan",
+        svgIcon: "projects",
       },
     ],
   },

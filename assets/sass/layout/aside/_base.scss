@@ -124,7 +124,10 @@ body {
       z-index: get($aside-config, z-index);
       overflow: hidden;
       border-radius: 1rem;
-      background-color: #f2f3f5;
+      // background-color: #f2f3f5;
+      // background-color: rgba(245, 245, 245, 1);
+      background-color: #ffffff;
+      box-shadow: 0 0 #0000, 0 0 #0000, 0px 2px 14px #0000001a;
     }
 
     // Static aside mode

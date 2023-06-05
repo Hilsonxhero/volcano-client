@@ -4,12 +4,14 @@
     :class="[
       ns.b(),
       // ns.m(_type),
-      plain ? ns.bm('outline', _type) : ns.m(_type),
+      // plain ? ns.bm('outline', _type) : ns.m(_type),
+      variantClass,
       ns.m(_size),
 
       ns.is('disabled', _disabled),
       ns.is('loading', loading),
       ns.is('plain', plain),
+      ns.is('icon', icon),
       ns.is('round', round),
       ns.is('circle', circle),
       ns.is('text', text),
@@ -31,12 +33,49 @@
       <component :is="icon" v-if="icon" />
       <slot v-else name="icon" />
     </el-icon> -->
+
+    <div :class="ns.m('overlay')"></div>
     <span
-      v-if="$slots.default"
+      v-if="$slots.default && !loading"
       :class="{ [ns.em('text', 'expand')]: shouldAddSpace }"
     >
       <slot />
     </span>
+    <span v-if="loading" class="v-btn__loader"
+      ><div
+        class="v-progress-circular v-progress-circular--indeterminate v-progress-circular--visible v-theme--light"
+        style="width: 23px; height: 23px"
+        role="progressbar"
+        aria-valuemin="0"
+        aria-valuemax="100"
+      >
+        <svg
+          style="transform: rotate(calc(-90deg))"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 43.80952380952381 43.80952380952381"
+        >
+          <circle
+            class="v-progress-circular__underlay"
+            fill="transparent"
+            cx="50%"
+            cy="50%"
+            r="20"
+            stroke-width="3.8095238095238093"
+            stroke-dasharray="125.66370614359172"
+            stroke-dashoffset="0"
+          ></circle>
+          <circle
+            class="v-progress-circular__overlay"
+            fill="transparent"
+            cx="50%"
+            cy="50%"
+            r="20"
+            stroke-width="3.8095238095238093"
+            stroke-dasharray="125.66370614359172"
+            stroke-dashoffset="125.66370614359172px"
+          ></circle>
+        </svg></div
+    ></span>
   </button>
 </template>
 
@@ -55,17 +94,6 @@ const props = defineProps(buttonProps);
 const emit = defineEmits(buttonEmits);
 const slots = useSlots();
 
-useDeprecated(
-  {
-    from: "type.text",
-    replacement: "type.link",
-    version: "3.0.0",
-    scope: "props",
-    ref: "https://element-plus.org/en-US/component/button.html#button-attributes",
-  },
-  computed(() => props.type === "text")
-);
-
 const buttonGroupContext = inject(buttonGroupContextKey, undefined);
 const globalConfig = useGlobalConfig("button");
 const ns = useNamespace("button");
@@ -78,6 +106,17 @@ const _type = computed(() => props.type || buttonGroupContext?.type || "");
 const autoInsertSpace = computed(
   () => props.autoInsertSpace ?? globalConfig.value?.autoInsertSpace ?? false
 );
+
+const variantClass = computed(() => {
+  if (props.plain) {
+    return ns.bm("outline", props.type);
+  }
+  if (props.icon) {
+    return ns.bm("icon", props.type);
+  }
+
+  return ns.m(props.type);
+});
 
 // add space between two characters in Chinese
 const shouldAddSpace = computed(() => {
