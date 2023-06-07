@@ -360,19 +360,13 @@ const handleInput = async (event: Event) => {
     value = props.formatter(value);
   }
 
-  // should not emit input during composition
-  // see: https://github.com/ElemeFE/element/issues/10516
   if (isComposing.value) return;
 
-  // hack for https://github.com/ElemeFE/element/issues/8548
-  // should remove the following line when we don't support IE
   if (value === nativeInputValue.value) return;
 
   emit(UPDATE_MODEL_EVENT, value);
   emit("input", value);
 
-  // ensure native input value is controlled
-  // see: https://github.com/ElemeFE/element/issues/12850
   await nextTick();
   setNativeInputValue();
   setCursor();
@@ -407,7 +401,6 @@ const handlePasswordVisible = () => {
 };
 
 const focus = async () => {
-  // see: https://github.com/ElemeFE/element/issues/18573
   await nextTick();
   _ref.value?.focus();
 };
@@ -462,14 +455,8 @@ watch(
   }
 );
 
-// native input value is set explicitly
-// do not use v-model / :value in template
-// see: https://github.com/ElemeFE/element/issues/14521
 watch(nativeInputValue, () => setNativeInputValue());
 
-// when change between <input> and <textarea>,
-// update DOM dependent value and styles
-// https://github.com/ElemeFE/element/issues/14857
 watch(
   () => props.type,
   async () => {

@@ -20,7 +20,7 @@
         >
           <nuxt-link to="/">
             <div
-              class="bg-gray-100 rounded-2xl p-4 text-base hover:bg-gray-200 transition ease-in-out"
+              class="bg-white shadow-lg rounded-2xl p-4 text-base hover:shadow-sm transition ease-in-out"
             >
               <div class="flex items-center justify-between">
                 <div>لورم ایپسوم متن ساختگی</div>

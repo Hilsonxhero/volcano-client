@@ -71,7 +71,7 @@ $button-icon-span-gap: map.merge(
   }
 
   & + & {
-    margin-left: 12px;
+    // margin-left: 12px;
   }
 
   @include button-size(
@@ -240,8 +240,8 @@ $button-icon-span-gap: map.merge(
     border-color: transparent;
     background: transparent;
     // color: getCssVar("color", "primary");
-    padding-left: 0;
-    padding-right: 0;
+    // padding-left: 0;
+    // padding-right: 0;
     @include when(disabled) {
       // color: getCssVar("button", "disabled", "text-color");
       background-color: transparent !important;
@@ -330,16 +330,39 @@ $button-icon-span-gap: map.merge(
     }
   }
 
-  @each $name, $value in $theme-light-colors {
+  // @each $name, $value in $theme-colors {
+  //   @include m($name) {
+  //     $color: theme-active-color($name);
+  //     $icon-color: theme-inverse-color($name);
+  //     $border-color: $value;
+  //     $bg-color: theme-light-color($name);
+  //     $color-active: theme-active-color($name);
+  //     $icon-color-active: theme-inverse-color($name);
+  //     $border-color-active: theme-active-color($name);
+  //     $bg-color-active: theme-light-color($name);
+  //     @include button-custom-variant(
+  //       $color,
+  //       $icon-color,
+  //       $border-color,
+  //       $bg-color,
+  //       $color-active,
+  //       $icon-color-active,
+  //       $border-color-active,
+  //       $bg-color-active
+  //     );
+  //   }
+  // }
+
+  @each $name, $value in $theme-colors {
     @include m($name) {
-      $color: theme-active-color($name);
+      $color: #fff;
       $icon-color: theme-inverse-color($name);
       $border-color: $value;
-      $bg-color: theme-light-color($name);
-      $color-active: theme-active-color($name);
+      $bg-color: theme-color($name);
+      $color-active: null;
       $icon-color-active: theme-inverse-color($name);
-      $border-color-active: theme-active-color($name);
-      $bg-color-active: theme-light-color($name);
+      $border-color-active: null;
+      $bg-color-active: theme-active-color($name);
       @include button-custom-variant(
         $color,
         $icon-color,

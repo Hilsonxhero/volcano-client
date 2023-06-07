@@ -1,0 +1,187 @@
+<template>
+  <div ref="scrollElRef" class="hover-scroll-overlay-y my-5 my-lg-5">
+    <div
+      class="menu flex-col menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
+    >
+      <template v-for="(item, i) in pages" :key="i">
+        <div v-if="item.heading" class="menu-item">
+          <div class="menu-content pt-8 pb-2">
+            <span class="menu-section text-gray-400 text-uppercase text-sm">
+              {{ translate(item.heading) }}
+            </span>
+          </div>
+        </div>
+
+        <template v-for="(menuItem, j) in item.pages" :key="j">
+          <template v-if="menuItem.heading">
+            <div class="menu-item">
+              <router-link class="menu-link" active-class="active" to="/">
+                <span
+                  v-if="menuItem.svgIcon"
+                  class="bg-gray-200 rounded-2xl flex justify-center items-center min-w-[2.75rem] h-[2.75rem] ml-2"
+                >
+                  <span class="svg-icon svg-icon-2">
+                    <nuxt-icon
+                      :name="menuItem.svgIcon"
+                      class="w-6 h-6"
+                    ></nuxt-icon>
+                  </span>
+                </span>
+                <span class="menu-title">{{
+                  translate(menuItem.heading)
+                }}</span>
+              </router-link>
+            </div>
+          </template>
+
+          <div
+            v-if="menuItem.sectionTitle"
+            :class="{ show: hasActiveChildren(menuItem.route) }"
+            class="menu-item"
+          >
+            <base-collapse menu accordion>
+              <base-collapse-item menu class="menu-item">
+                <template #title>
+                  <span class="menu-link">
+                    <span v-if="menuItem.svgIcon" class="menu-icon">
+                      <span class="svg-icon svg-icon-2">
+                        <!-- <inline-svg :src="menuItem.svgIcon" /> -->
+                        <nuxt-icon
+                          :name="menuItem.svgIcon"
+                          class="w-6 h-6"
+                        ></nuxt-icon>
+                      </span>
+                    </span>
+                    <span class="menu-title">{{
+                      translate(menuItem.sectionTitle)
+                    }}</span>
+                    <span class="menu-arrow"></span>
+                  </span>
+                </template>
+
+                <template v-for="(item2, k) in menuItem.sub" :key="k">
+                  <div v-if="item2.heading" class="menu-item">
+                    <router-link class="menu-link" active-class="active" to="/">
+                      <span class="menu-bullet">
+                        <span class="bullet bullet-dot"></span>
+                      </span>
+                      <span class="menu-title">{{
+                        translate(item2.heading)
+                      }}</span>
+                    </router-link>
+                  </div>
+
+                  <div
+                    v-if="item2.sectionTitle"
+                    :class="{ show: hasActiveChildren(item2.route) }"
+                    class="menu-item"
+                  >
+                    <base-collapse menu accordion>
+                      <base-collapse-item menu>
+                        <template #title>
+                          <span class="menu-link">
+                            <span class="menu-bullet">
+                              <span class="bullet bullet-dot"></span>
+                            </span>
+                            <span class="menu-title">{{
+                              translate(item2.sectionTitle)
+                            }}</span>
+                            <span class="menu-arrow"></span>
+                          </span>
+                        </template>
+
+                        <div
+                          :class="{ show: hasActiveChildren(item2.route) }"
+                          class=""
+                        >
+                          <template v-for="(item3, k) in item2.sub" :key="k">
+                            <div v-if="item3.heading" class="menu-item">
+                              <router-link
+                                class="menu-link"
+                                active-class="active"
+                                to="/"
+                              >
+                                <span class="menu-bullet">
+                                  <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">{{
+                                  translate(item3.heading)
+                                }}</span>
+                              </router-link>
+                            </div>
+                          </template>
+                        </div>
+                      </base-collapse-item>
+                    </base-collapse>
+                  </div>
+                </template>
+              </base-collapse-item>
+            </base-collapse>
+          </div>
+        </template>
+      </template>
+
+      <div class="menu-item">
+        <div class="menu-content">
+          <div class="separator mx-1 my-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+//@ts-nocheckk
+import { BaseCollapseItem, BaseCollapse } from "@/components/base/collapse";
+import { useAuthStore } from "@/modules/auth/store";
+
+const router = useRouter();
+const store = useAuthStore();
+
+const { t } = useLocale();
+const route = useRoute();
+const scrollElRef = ref<null | HTMLElement>(null);
+
+const pages = ref([
+  {
+    // heading: "تست",
+    pages: [
+      {
+        heading: "تابلو",
+        route: "",
+        svgIcon: "board",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+        svgIcon: "note-bulk",
+      },
+    ],
+  },
+]);
+
+onMounted(() => {
+  if (scrollElRef.value) {
+    scrollElRef.value.scrollTop = 0;
+  }
+});
+
+const translate = (text) => {
+  if (t(text)) {
+    return t(text);
+  } else {
+    return text;
+  }
+};
+
+const handleLogout = async () => {
+  try {
+    await store.logout();
+    router.push("/");
+  } catch (error) {}
+};
+
+const hasActiveChildren = (match) => {
+  return route.path.indexOf(match) !== -1;
+};
+</script>

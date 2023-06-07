@@ -39,14 +39,17 @@
         </template>
 
         <template v-else>
-          <base-button icon variant="gray">
-            <nuxt-icon
-              name="arrow-left"
-              class="w-5 h-5"
-              :class="[ns.be('item', 'arrow'), ns.is('active', isActive)]"
-            >
-            </nuxt-icon>
-          </base-button>
+          <div class="flex items-center">
+            <slot name="actions"></slot>
+            <base-button icon>
+              <nuxt-icon
+                name="arrow-left"
+                class="w-6 h-6"
+                :class="[ns.be('item', 'arrow'), ns.is('active', isActive)]"
+              >
+              </nuxt-icon>
+            </base-button>
+          </div>
         </template>
       </div>
     </div>

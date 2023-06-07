@@ -3,13 +3,17 @@
 //
 
 @function theme-inverse-color($key: "primary") {
-    @return get($theme-inverse-colors, $key);
+  @return get($theme-inverse-colors, $key);
 }
 
 @function theme-active-color($key: "primary") {
-    @return get($theme-active-colors, $key);
+  @return get($theme-active-colors, $key);
 }
 
 @function theme-light-color($key: "primary") {
-    @return get($theme-light-colors, $key);
+  @return get($theme-light-colors, $key);
+}
+
+@function theme-color($key: "primary") {
+  @return get($theme-colors, $key);
 }

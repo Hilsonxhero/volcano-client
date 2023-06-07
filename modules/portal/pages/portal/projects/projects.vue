@@ -6,7 +6,7 @@
         <base-button
           @click="handleShowCreateProject()"
           type="primary"
-          class="text-blue-500"
+          class=""
           to="/"
         >
           <div class="flex items-center">
@@ -24,7 +24,7 @@
       >
         <nuxt-link to="/">
           <div
-            class="bg-gray-100 rounded-2xl p-4 text-base hover:bg-gray-200 transition ease-in-out"
+            class="bg-white shadow-lg rounded-2xl p-4 text-base hover:shadow-sm transition ease-in-out"
           >
             <div class="flex items-center justify-between">
               <div>لورم ایپسوم متن ساختگی</div>
@@ -99,12 +99,12 @@
     <base-dialog
       @close="handleCloseCreateProject()"
       title="ایجاد پروژه"
-      custom-class="lg:w-[60%]"
+      custom-class="lg:w-[50%]"
       v-model="visible_create_project"
     >
       <div class="grid grid-cols-12 gap-4 py-14">
-        <div class="col-span-6 flex flex-col items-center justify-center">
-          <div class="w-full px-6">
+        <div class="col-span-6 flex flex-col items-center justify-center px-6">
+          <div class="w-full">
             <base-form :model="form" ref="formRef" class="h-full space-y-6">
               <base-form-item
                 :model="form"
@@ -162,16 +162,6 @@
                 </div>
               </div>
             </base-form>
-
-            <!-- <span class="v-btn__loader"
-              ><div
-                class="v-progress-circular v-progress-circular--indeterminate v-progress-circular--visible v-theme--dark"
-                style="width: 23px; height: 23px"
-                role="progressbar"
-                aria-valuemin="0"
-                aria-valuemax="100"
-              ></div
-            ></span> -->
           </div>
         </div>
         <div class="col-span-6 flex flex-col items-center justify-center">

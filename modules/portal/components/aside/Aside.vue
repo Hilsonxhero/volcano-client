@@ -11,7 +11,7 @@
       >
         <img src="~/assets/media/logo-base.svg" class="max-h-75px" />
       </nuxt-link> -->
-      <BaseLogo dark />
+      <!-- <BaseLogo dark /> -->
 
       <div
         class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"

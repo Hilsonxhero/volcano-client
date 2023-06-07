@@ -461,8 +461,7 @@ const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
   const handleBlur = () => {
     states.softFocus = false;
 
-    // reset input value when blurred
-    // https://github.com/ElemeFE/element/pull/10822
+
     return nextTick(() => {
       inputRef.value?.blur?.();
       if (calculatorRef.value) {

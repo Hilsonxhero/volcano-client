@@ -24,7 +24,7 @@ useHead({
   title: "پنل کاربر",
   bodyAttrs: {
     class:
-      "page-loading-enabled  header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed",
+      "page-loading-enabled header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed",
   },
 });
 

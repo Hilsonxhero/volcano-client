@@ -27,7 +27,7 @@ export default defineNuxtModule({
         nuxt.hook('pages:extend', (pages) => {
             pages.push(
                 {
-                    name: 'portal',
+                    name: 'portal-dashboard',
                     path: '/portal/dashboard',
                     file: resolve(__dirname, './pages/portal/dashboard.vue')
                 },
@@ -45,6 +45,23 @@ export default defineNuxtModule({
                     name: 'portal-projects-show',
                     path: '/portal/projects/:id/:slug',
                     file: resolve(__dirname, './pages/portal/projects/show.vue')
+                },
+
+                {
+                    name: 'portal-projects-pages-index',
+                    path: '/portal/projects/:id/:slug/pages',
+                    file: resolve(__dirname, './pages/portal/projects/pages/index.vue')
+                },
+
+                {
+                    name: 'portal-projects-pages-create',
+                    path: '/portal/projects/:id/:slug/pages/create',
+                    file: resolve(__dirname, './pages/portal/projects/pages/create.vue')
+                },
+                {
+                    name: 'portal-projects-pages-edit',
+                    path: '/portal/projects/:id/:slug/pages/edit/:page',
+                    file: resolve(__dirname, './pages/portal/projects/pages/edit.vue')
                 },
             )
         })

@@ -1,18 +1,10 @@
 <template>
   <div class="w-full">
-    <nuxt-link
-      v-if="dark"
-      :to="{ name: 'home' }"
-      class="mx-auto flex justify-center w-1/2"
-    >
-      <img src="~/assets/media/logo-dark.svg" class="max-h-75px" />
+    <nuxt-link v-if="dark" :to="{ name: 'home' }" class="">
+      <img src="~/assets/media/logo-dark.svg" class="max-h-40px w-3/4" />
     </nuxt-link>
-    <nuxt-link
-      v-else
-      :to="{ name: 'home' }"
-      class="mx-auto flex justify-center w-1/2"
-    >
-      <img src="~/assets/media/logo-light.svg" class="max-h-75px" />
+    <nuxt-link v-else :to="{ name: 'home' }" class="">
+      <img src="~/assets/media/logo-light.svg" class="max-h-40px w-3/4" />
     </nuxt-link>
   </div>
 </template>

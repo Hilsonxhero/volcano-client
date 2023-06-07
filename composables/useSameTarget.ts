@@ -7,9 +7,7 @@ export const useSameTarget = (handleClick?: (e: MouseEvent) => void) => {
 
     let mousedownTarget = false
     let mouseupTarget = false
-    // refer to this https://javascript.info/mouse-events-basics
-    // events fired in the order: mousedown -> mouseup -> click
-    // we need to set the mousedown handle to false after click fired.
+
     const onClick = (e: MouseEvent) => {
         // if and only if
         if (mousedownTarget && mouseupTarget) {
