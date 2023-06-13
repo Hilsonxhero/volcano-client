@@ -1,23 +1,11 @@
 <template>
   <div>
-    <!-- <div class="bg-white p-5 lg:shadow-design-base rounded-3xl">
-      <template v-if="otp">
-        <Otp :username="username" :end="end" @reset="otp = false" />
-      </template>
-      <template v-else>
-        <Confirmation v-model="username" @change="handleChange" />
-      </template>
-    </div> -->
     <div class="grid grid-cols-12 min-h-screen">
       <div
         class="col-span-12 md:col-span-6 auth-module-cover flex flex-col items-center justify-center"
       >
         <div class="py-24 px-12 flex flex-col items-center justify-center">
-          <div>
-            <!-- <h1 class="text-4xl font-semibold leading-7">
-              به Volcano خوش آمدید و کسب و کار خود را توسعه دهید
-            </h1> -->
-          </div>
+          <div></div>
           <div class="mt-10">
             <img src="@/assets/media/25.svg" alt="" />
           </div>

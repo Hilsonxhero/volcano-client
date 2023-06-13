@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const personalInfo = async () => {
         try {
-            const { data } = await useApiService.get(`user/profile/personal-info`);
+            const { data } = await useApiService.get(`user/profile/personal`);
             user.value = data?.user;
         } catch (error) {
             return error;
@@ -23,7 +23,7 @@ export const useAuthStore = defineStore("auth", () => {
         if (!checked.value)
             try {
                 const { data } = await useApiService.get(`user/init`);
-                user.value = data.user;
+                user.value = data;
                 isLoggedIn.value = data?.is_logged_in;
                 checked.value = true;
 
@@ -36,17 +36,18 @@ export const useAuthStore = defineStore("auth", () => {
     const login = async (form) => {
         try {
             checked.value = false;
-            const { data } = await useApiService.post(`user/login/otp`, form);
+            const { data } = await useApiService.post(`auth/otp/login`, form);
             isLoggedIn.value = true;
             return data;
         } catch (error) {
             return error;
         }
+
     };
 
     const authenticate = async (form) => {
         try {
-            const { data } = await useApiService.post(`user/authenticate`, form);
+            const { data } = await useApiService.post(`auth/otp/authenticate`, form);
             return data;
         } catch (error) {
             return error;
@@ -56,7 +57,7 @@ export const useAuthStore = defineStore("auth", () => {
     const logout = async () => {
         try {
             checked.value = false;
-            const { data } = await useApiService.post(`user/logout`);
+            const { data } = await useApiService.post(`auth/logout`);
             user.value = null;
             isLoggedIn.value = false;
         } catch (error) {

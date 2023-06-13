@@ -102,9 +102,7 @@ const handleSendCode = async () => {
 
     if (data.success) {
       await store.init();
-      console.log("hghghghg", data);
-
-      navigateTo("/user/profile");
+      navigateTo("/portal/dashboard");
     } else {
       error.value = data.data;
       // HxNotification.info({

@@ -4,6 +4,6 @@ export default defineNuxtRouteMiddleware((to) => {
     const store = useAuthStore();
     if (store.isLoggedIn) {
         // return '/user/profile'
-        return '/'
+        return '/portal/dashboard'
     }
 })

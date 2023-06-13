@@ -92,6 +92,11 @@
 definePageMeta({
   layout: "portal",
 });
+
+onMounted(async () => {
+  const { data } = await useApiService.get("portal/projects");
+  console.log("data", data);
+});
 </script>
 
 <style scoped></style>
