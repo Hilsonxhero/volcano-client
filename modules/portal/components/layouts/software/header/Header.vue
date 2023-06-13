@@ -21,8 +21,8 @@
           </div>
         </div>
         <div class="flex items-center lg:hidden ml-3" @click="handleShowNav">
-          <div class="btn btn-icon btn-active-light-primary">
-            <span class="svg-icon svg-icon-2x mt-1">
+          <div class="cursor-pointer">
+            <span class="">
               <nuxt-icon name="menu" class="w-7 h-7 text-gray-500" />
             </span>
           </div>
@@ -37,6 +37,7 @@
         </div>
       </div>
     </div>
+
     <base-dialog
       v-model="visible_account"
       title="حساب کاربری"
@@ -124,6 +125,8 @@ const handleShowNav = () => {
 };
 
 const handleLogout = async () => {};
+
+const handleFilterModal = () => {};
 
 const showAccountDialog = () => {
   visible_account.value = true;

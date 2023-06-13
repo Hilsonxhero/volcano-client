@@ -63,6 +63,11 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/:slug/pages/edit/:page',
                     file: resolve(__dirname, './pages/portal/projects/pages/edit.vue')
                 },
+                {
+                    name: 'software-projects-pages-index',
+                    path: '/software/projects/:id/:slug/pages',
+                    file: resolve(__dirname, './pages/software/projects/pages/index.vue')
+                },
             )
         })
 

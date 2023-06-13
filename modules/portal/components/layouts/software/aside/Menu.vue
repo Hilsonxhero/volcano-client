@@ -1,0 +1,164 @@
+<template>
+  <div ref="scrollElRef" class="hover-scroll-overlay-y my-5 my-lg-5">
+    <div
+      class="menu flex-col menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
+    >
+      <template v-for="(item, i) in pages" :key="i">
+        <div v-if="item.heading" class="menu-item">
+          <div class="menu-content pt-8 pb-2">
+            <span class="text-gray-900 text-uppercase text-base">
+              {{ translate(item.heading) }}
+            </span>
+          </div>
+        </div>
+
+        <template v-for="(menuItem, j) in item.pages" :key="j">
+          <template v-if="menuItem.heading">
+            <div class="menu-item">
+              <nuxt-link class="menu-link" active-class="active" to="/">
+                <span
+                  class="bg-gray-200 rounded-2xl flex justify-center items-center min-w-[2.75rem] h-[2.75rem] ml-2"
+                >
+                  <span class="svg-icon svg-icon-2">
+                    <nuxt-icon name="stickynote" class="w-6 h-6"></nuxt-icon>
+                  </span>
+                </span>
+                <span class="menu-title">{{
+                  translate(menuItem.heading)
+                }}</span>
+              </nuxt-link>
+            </div>
+          </template>
+        </template>
+      </template>
+
+      <div class="menu-item">
+        <div class="menu-content">
+          <div class="separator mx-1 my-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script lang="ts" setup>
+//@ts-nocheckk
+import { BaseCollapseItem, BaseCollapse } from "@/components/base/collapse";
+import { useAuthStore } from "@/modules/auth/store";
+
+const router = useRouter();
+const store = useAuthStore();
+
+const { t } = useLocale();
+const route = useRoute();
+const scrollElRef = ref<null | HTMLElement>(null);
+
+const pages = ref([
+  {
+    heading: "تست",
+    pages: [
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+    ],
+  },
+  {
+    heading: "تست",
+    pages: [
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+    ],
+  },
+  {
+    heading: "تست",
+    pages: [
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+    ],
+  },
+  {
+    heading: "تست",
+    pages: [
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+    ],
+  },
+  {
+    heading: "لورم ایپسوم ",
+    pages: [
+      {
+        heading: "عنوان تست",
+        route: "",
+      },
+      {
+        heading: "صفحات",
+        route: "",
+      },
+    ],
+  },
+]);
+
+onMounted(() => {
+  if (scrollElRef.value) {
+    scrollElRef.value.scrollTop = 0;
+  }
+});
+
+const translate = (text) => {
+  if (t(text)) {
+    return t(text);
+  } else {
+    return text;
+  }
+};
+
+const handleLogout = async () => {
+  try {
+    await store.logout();
+    router.push("/");
+  } catch (error) {}
+};
+
+const hasActiveChildren = (match) => {
+  return route.path.indexOf(match) !== -1;
+};
+</script>

@@ -5,6 +5,14 @@
     :class="['aside-light', show && 'drawer-on']"
   >
     <div class="aside-logo flex-column-auto py-6 px-6">
+      <!-- <nuxt-link
+        :to="{ name: 'home' }"
+        class="mx-auto flex justify-center w-1/2"
+      >
+        <img src="~/assets/media/logo-base.svg" class="max-h-75px" />
+      </nuxt-link> -->
+      <!-- <BaseLogo dark /> -->
+
       <div
         class="flex items-center border-b border-gray-300 pb-4 w-full cursor-pointer"
       >
@@ -39,17 +47,19 @@
 <script setup lang="ts">
 //@ts-nocheckk
 import BaseLogo from "@/components/app/BaseLogo.vue";
-import HXMenu from "@/modules/portal/components/layouts/project/aside/Menu.vue";
+import HXMenu from "@/modules/portal/components/layouts/software/aside/Menu.vue";
+// import useClickOutside from "@/core/hooks/useClickOutside";
 import { useAuthStore } from "@/modules/auth/store";
 import { storeToRefs } from "pinia";
 import { onClickOutside } from "@vueuse/core";
-
 const store = useAuthStore();
 const { user } = storeToRefs(store);
 
 const asideRef = ref(null);
 
 const show = inject("show", false);
+
+// const { onClickOutside } = useClickOutside();
 
 onClickOutside(asideRef, () => {
   if (show.value === true) {

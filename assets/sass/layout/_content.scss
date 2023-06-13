@@ -229,6 +229,12 @@ input[type="radio"]:checked + .c-circle-variant--color {
       -webkit-text-fill-color: transparent;
     }
   }
+  .content {
+    margin: 4rem 0 1rem 1rem;
+    background-color: #f4f7f8;
+    border-radius: 1.5rem;
+    padding: 1rem 1rem 3rem 1rem;
+  }
 }
 
 @include media-breakpoint-down(lg) {
@@ -238,16 +244,15 @@ input[type="radio"]:checked + .c-circle-variant--color {
       color: #ffffff;
     }
   }
+  .content {
+    margin: 4rem 1rem 1rem 1rem;
+    background-color: #f4f7f8;
+    border-radius: 1.5rem;
+    padding: 1rem 1rem 3rem 1rem;
+  }
 }
 .invoice-container {
   & .invoice-title-align {
     margin-top: -1.3rem;
   }
-}
-
-.content {
-  margin: 4rem 0 1rem 1rem;
-  background-color: #f4f7f8;
-  border-radius: 1.5rem;
-  padding: 1rem 1rem 3rem 1rem;
 }
