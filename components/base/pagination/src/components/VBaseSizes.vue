@@ -26,7 +26,7 @@ import { paginationSizesProps } from "./VSizes";
 
 const props = defineProps(paginationSizesProps);
 const emit = defineEmits(["page-size-change"]);
-const { t } = useLocale();
+
 const ns = useNamespace("pagination");
 const pagination = usePagination();
 const innerPageSize = ref<number>(props.pageSize!);

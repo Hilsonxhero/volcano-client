@@ -7,7 +7,7 @@
         <div v-if="item.heading" class="menu-item">
           <div class="menu-content pt-8 pb-2">
             <span class="menu-section text-gray-400 text-uppercase text-sm">
-              {{ translate(item.heading) }}
+              {{ item.heading }}
             </span>
           </div>
         </div>
@@ -28,9 +28,7 @@
                     ></nuxt-icon>
                   </span>
                 </span>
-                <span class="menu-title">{{
-                  translate(menuItem.heading)
-                }}</span>
+                <span class="menu-title">{{ menuItem.heading }}</span>
               </router-link>
             </div>
           </template>
@@ -53,9 +51,7 @@
                         ></nuxt-icon>
                       </span>
                     </span>
-                    <span class="menu-title">{{
-                      translate(menuItem.sectionTitle)
-                    }}</span>
+                    <span class="menu-title">{{ menuItem.sectionTitle }}</span>
                     <span class="menu-arrow"></span>
                   </span>
                 </template>
@@ -66,9 +62,7 @@
                       <span class="menu-bullet">
                         <span class="bullet bullet-dot"></span>
                       </span>
-                      <span class="menu-title">{{
-                        translate(item2.heading)
-                      }}</span>
+                      <span class="menu-title">{{ item2.heading }}</span>
                     </router-link>
                   </div>
 
@@ -85,7 +79,7 @@
                               <span class="bullet bullet-dot"></span>
                             </span>
                             <span class="menu-title">{{
-                              translate(item2.sectionTitle)
+                              item2.sectionTitle
                             }}</span>
                             <span class="menu-arrow"></span>
                           </span>
@@ -106,7 +100,7 @@
                                   <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">{{
-                                  translate(item3.heading)
+                                  item3.heading
                                 }}</span>
                               </router-link>
                             </div>
@@ -140,7 +134,6 @@ import { useAuthStore } from "@/modules/auth/store";
 const router = useRouter();
 const store = useAuthStore();
 
-const { t } = useLocale();
 const route = useRoute();
 const scrollElRef = ref<null | HTMLElement>(null);
 
@@ -149,14 +142,6 @@ onMounted(() => {
     scrollElRef.value.scrollTop = 0;
   }
 });
-
-const translate = (text) => {
-  if (t(text)) {
-    return t(text);
-  } else {
-    return text;
-  }
-};
 
 const handleLogout = async () => {
   try {

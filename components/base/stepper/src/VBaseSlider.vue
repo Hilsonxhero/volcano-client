@@ -110,7 +110,6 @@ const emit = defineEmits(sliderEmits);
 
 const ns = useNamespace("slider");
 
-const { t } = useLocale();
 const initData = reactive<SliderInitData>({
   firstValue: 0,
   secondValue: 0,
@@ -161,7 +160,7 @@ const groupLabel = computed<string>(() => {
 
 const firstButtonLabel = computed<string>(() => {
   if (props.range) {
-    return props.rangeStartLabel || t("el.slider.defaultRangeStartLabel");
+    return props.rangeStartLabel || "sample";
   } else {
     return groupLabel.value;
   }
@@ -174,7 +173,7 @@ const firstValueText = computed<string>(() => {
 });
 
 const secondButtonLabel = computed<string>(() => {
-  return props.rangeEndLabel || t("el.slider.defaultRangeEndLabel");
+  return props.rangeEndLabel || "defaultRangeEndLabel";
 });
 
 const secondValueText = computed<string>(() => {

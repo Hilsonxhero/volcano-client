@@ -4,11 +4,15 @@ export default defineNuxtConfig({
         '@pinia/nuxt',
         'nuxt-swiper',
         'nuxt-icons',
-        // '@nuxtjs/i18n',
+        '@nuxtjs/i18n',
         '~/modules/web/module',
         '~/modules/auth/module',
         '~/modules/portal/module',
     ],
+
+    i18n: {
+        vueI18n: './core/plugins/i18n.config.ts'
+    },
 
 
     css: ["@/assets/sass/main.scss", "@/assets/css/tailwind.css"],

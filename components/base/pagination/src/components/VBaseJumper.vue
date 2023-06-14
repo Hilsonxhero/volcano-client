@@ -1,6 +1,6 @@
 <template>
   <span :class="ns.e('jump')" :disabled="disabled">
-    {{ t("el.pagination.goto") }}
+    sample text
     <hx-input
       size="small"
       :class="[ns.e('editor'), ns.is('in-pagination')]"
@@ -12,7 +12,7 @@
       @update:model-value="handleInput"
       @change="handleChange"
     />
-    {{ t("el.pagination.pageClassifier") }}
+    sample text
   </span>
 </template>
 
@@ -21,7 +21,6 @@ import { computed, ref } from "vue";
 
 import { usePagination } from "../usePagination";
 
-const { t } = useLocale();
 const ns = useNamespace("pagination");
 const { pageCount, disabled, currentPage, changeEvent } = usePagination();
 const userInput = ref<number>();

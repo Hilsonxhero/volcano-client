@@ -105,7 +105,7 @@ export default defineComponent({
   emits: paginationEmits,
 
   setup(props, { emit, slots }) {
-    const { t } = useLocale()
+
     const ns = useNamespace('pagination')
     const vnodeProps = getCurrentInstance()!.vnode.props || {}
     // we can find @xxx="xxx" props on `vnodeProps` to check if user bind corresponding events
