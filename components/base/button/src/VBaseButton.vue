@@ -27,7 +27,7 @@
   >
     <template v-if="loading">
       <slot v-if="$slots.loading" name="loading" />
-      <nuxt-icon v-else name="loading" :class="ns.is('loading')"> </nuxt-icon>
+      <!-- <nuxt-icon v-else name="loading" :class="ns.is('loading')"> </nuxt-icon> -->
     </template>
     <!-- <el-icon v-else-if="icon || $slots.icon">
       <component :is="icon" v-if="icon" />

@@ -117,7 +117,6 @@ definePageMeta({
 });
 
 const loading = ref(true);
-
 const projects = ref([]);
 
 onMounted(async () => {

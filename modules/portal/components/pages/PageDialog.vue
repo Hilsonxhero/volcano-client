@@ -8,95 +8,131 @@
     >
       <div>
         <div class="">
-          <menu-bar
-            class="editor__header sticky top-0 bg-white z-10"
-            :editor="editor"
-          >
-            <template #link>
-              <button
-                type="button"
-                :class="[ns.e('menu-item')]"
-                title="image"
-                @click="show = !show"
-              >
-                <nuxt-icon
-                  filled
-                  name="link-m"
-                  class="w-6 h-6 text-gray-500"
-                ></nuxt-icon>
-              </button>
-            </template>
+          <div class="flex justify-between items-center">
+            <menu-bar
+              class="editor__header sticky top-0 bg-white z-10"
+              :editor="editor"
+            >
+              <template #link>
+                <button
+                  type="button"
+                  :class="[ns.e('menu-item')]"
+                  title="image"
+                  @click="show = !show"
+                >
+                  <nuxt-icon
+                    filled
+                    name="link-m"
+                    class="w-6 h-6 text-gray-500"
+                  ></nuxt-icon>
+                </button>
+              </template>
 
-            <template v-slot:image>
-              <input
-                type="file"
-                class="hidden"
-                ref="upload"
-                @change="uploadImageHandler"
-              />
-              <button
-                type="button"
-                :class="[ns.e('menu-item')]"
-                title="image"
-                @click="showFileHandler"
-              >
-                <nuxt-icon
-                  filled
-                  name="image-line"
-                  class="w-6 h-6 text-gray-500"
-                ></nuxt-icon>
-              </button>
-            </template>
-
-            <template v-slot:color>
-              <button
-                type="button"
-                :class="[ns.e('menu-item')]"
-                title="color"
-                @click="showColorBox"
-              >
-                <nuxt-icon
-                  filled
-                  name="font-color"
-                  class="w-6 h-6 text-gray-500"
-                ></nuxt-icon>
-              </button>
-
-              <div style="position: relative">
+              <template v-slot:image>
                 <input
-                  id="color-box"
-                  ref="color"
-                  style="visibility: hidden"
-                  type="color"
-                  @input="
-                    editor.chain().focus().setColor($event.target.value).run()
-                  "
-                  :value="editor.getAttributes('textStyle').color"
+                  type="file"
+                  class="hidden"
+                  ref="upload"
+                  @change="uploadImageHandler"
+                />
+                <button
+                  type="button"
+                  :class="[ns.e('menu-item')]"
+                  title="image"
+                  @click="showFileHandler"
+                >
+                  <nuxt-icon
+                    filled
+                    name="image-line"
+                    class="w-6 h-6 text-gray-500"
+                  ></nuxt-icon>
+                </button>
+              </template>
+
+              <template v-slot:color>
+                <button
+                  type="button"
+                  :class="[ns.e('menu-item')]"
+                  title="color"
+                  @click="showColorBox"
+                >
+                  <nuxt-icon
+                    filled
+                    name="font-color"
+                    class="w-6 h-6 text-gray-500"
+                  ></nuxt-icon>
+                </button>
+
+                <div style="position: relative">
+                  <input
+                    id="color-box"
+                    ref="color"
+                    style="visibility: hidden"
+                    type="color"
+                    @input="
+                      editor.chain().focus().setColor($event.target.value).run()
+                    "
+                    :value="editor.getAttributes('textStyle').color"
+                  />
+                </div>
+              </template>
+            </menu-bar>
+            <div>
+              <base-button type="primary" @click="handleSave()"
+                >ذخیره</base-button
+              >
+            </div>
+          </div>
+
+          <div class="w-3/4 mx-auto mt-10">
+            <base-form :model="form" ref="formRef" class="">
+              <div class="mb-8 w-3/4">
+                <base-form-item
+                  :model="form"
+                  prop="name"
+                  :rules="[
+                    {
+                      required: true,
+                      message: '  نام  الزامی می باشد',
+                    },
+                  ]"
+                  label="نام"
+                >
+                  <input
+                    v-model="form.name"
+                    class="px-3 py-2 placeholder:text-base text-base placeholder:font-semibold font-semibold border-b border-gray-200 w-full"
+                    placeholder="نام صفحه را وارد کنید (عنوانی که برای کاربران در منو نمایش داده می شود)"
+                  />
+                </base-form-item>
+              </div>
+              <div>
+                <base-form-item
+                  :model="form"
+                  prop="title"
+                  :rules="[
+                    {
+                      required: true,
+                      message: '  عنوان  الزامی می باشد',
+                    },
+                  ]"
+                  label="عنوان"
+                >
+                  <textarea
+                    v-model="form.title"
+                    class="px-3 py-2 placeholder:text-2xl text-2xl w-full"
+                    placeholder="عنوان صفحه را وارد کنید"
+                  ></textarea>
+                </base-form-item>
+              </div>
+
+              <div>
+                <editor-content
+                  v-bind="$attrs"
+                  class="editor__content"
+                  :editor="editor"
                 />
               </div>
-            </template>
-          </menu-bar>
-          <div class="w-3/4 mx-auto mt-10">
-            <div class="mb-8 w-3/4">
-              <input
-                class="px-3 py-2 placeholder:text-base text-base placeholder:font-semibold font-semibold border-b border-gray-200 w-full"
-                placeholder="نام صفحه را وارد کنید (عنوانی که برای کاربران در منو نمایش داده می شود)"
-              />
-            </div>
-            <div>
-              <textarea
-                class="px-3 py-2 placeholder:text-2xl text-2xl w-full"
-                placeholder="عنوان صفحه را وارد کنید"
-              ></textarea>
-            </div>
-
-            <div>
-              <editor-content
-                v-bind="$attrs"
-                class="editor__content"
-                :editor="editor"
-              />
-            </div>
+            </base-form>
           </div>
 
           <base-dialog
@@ -118,6 +154,7 @@
           </base-dialog>
         </div>
       </div>
+      <template #footer> </template>
     </base-dialog>
   </div>
 </template>
@@ -134,14 +171,25 @@ import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
+import { BaseFormItem, BaseForm } from "@/components/base/form";
+import BaseMessage from "@/components/base/message";
+import { FormItemContext } from "~/core/tokens";
 
 const props = defineProps({
   visible: {
     type: Boolean,
     default: false,
   },
+  selected: {
+    type: Object,
+  },
 });
-const emits = defineEmits([UPDATE_MODEL_EVENT, "update:visible", "close"]);
+const emits = defineEmits([
+  UPDATE_MODEL_EVENT,
+  "update:visible",
+  "close",
+  "create",
+]);
 
 const ns = useNamespace("tiptap");
 
@@ -152,10 +200,16 @@ const editor = ref<any>(null);
 const file = ref<any>(null);
 const color = ref<any>(null);
 const show = ref(false);
+const project_id = ref(null);
+const route = useRoute();
+const formRef: Ref<FormItemContext | null> = ref(null);
+const loader = ref(false);
 const placeholder = ref(
   "آیا می دانستید که می توانید انواع چیزهای جالب مانند فهرست مطالب، تاریخ یا نقشه راه را به این صفحه اضافه کنید؟ برای باز کردن یک لیست، / را تایپ کنید"
 );
 const form = ref({
+  title: "",
+  name: null,
   content: "",
 });
 
@@ -223,7 +277,46 @@ const uploadImageHandler = (event) => {
     .catch((error) => {});
 };
 
+const handleSave = () => {
+  formRef.value?.validate(async (valid: any): Promise<void> => {
+    if (valid) {
+      loader.value = true;
+      try {
+        const formData = {
+          title: form.value.title,
+          name: form.value.name,
+          content: form.value.content,
+          parent_id: props?.selected?.id,
+          project_id: project_id.value,
+        };
+        const data = await useApiService.post(
+          `portal/projects/${project_id.value}/pages`,
+          formData
+        );
+        if (data.success) {
+          BaseMessage({
+            message: "ساخت  صفحه با موفقیت انجام شد!",
+            type: "success",
+            duration: 4000,
+            center: true,
+            offset: 20,
+          });
+          emits("create", true);
+          form.value.title = null;
+          handleCloseCreatePage();
+        }
+
+        loader.value = false;
+      } catch (error) {
+        loader.value = false;
+      }
+    } else {
+    }
+  });
+};
+
 onMounted(() => {
+  project_id.value = route.params.id;
   editor.value = new Editor({
     extensions: [
       StarterKit.configure({
@@ -243,7 +336,10 @@ onMounted(() => {
     ],
     content: form.value.content,
     onUpdate: () => {
-      emits(UPDATE_MODEL_EVENT, editor.value.getHTML());
+      // emits(UPDATE_MODEL_EVENT, editor.value.getHTML());
+      console.log("aaaa", editor.value.getHTML());
+
+      form.value.content = editor.value.getHTML();
     },
   });
 });

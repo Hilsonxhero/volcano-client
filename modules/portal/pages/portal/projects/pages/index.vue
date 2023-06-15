@@ -10,7 +10,7 @@
           to="/"
         >
           <div class="flex items-center">
-            <span class="ml-2">ساخت صفحه</span>
+            <span class="ml-2">ساخت عنوان صفحه</span>
             <nuxt-icon name="add"></nuxt-icon>
           </div>
         </base-button>
@@ -21,9 +21,9 @@
       <base-collapse accordion class="product-reviews__collapse">
         <base-collapse-item
           class="bg-white shadow-lg rounded-2xl py-2 px-3 mb-2"
-          v-for="(reviewItem, index) in 3"
+          v-for="(head, index) in pages"
           :data-index="index + 1"
-          title="تست"
+          :title="head.title"
           :name="index + 1"
         >
           <template #actions>
@@ -31,7 +31,7 @@
               <nuxt-icon
                 class="w-6 h-6"
                 name="add"
-                @click="handleShowCreatePage"
+                @click="handleShowCreatePage(head)"
               ></nuxt-icon>
             </BaseButton>
             <BaseButton icon>
@@ -42,12 +42,12 @@
             </BaseButton>
           </template>
           <div
-            v-for="(item, index) in 3"
+            v-for="(page, index) in head.children"
             :index="index"
             class="bg-white border border-gray-300 rounded-2xl p-2 flex justify-between items-center mb-2"
           >
             <div>
-              <div class="text-gray-700">لورم ایپسوم متن</div>
+              <div class="text-gray-700">{{ page.title }}</div>
             </div>
             <div class="flex items-center">
               <BaseButton icon>
@@ -66,10 +66,13 @@
     </div>
 
     <PageDialog
+      :selected="selectd_page"
       :visible="visible_create_page"
+      @create="handleOnCreatePage()"
       @close="handleClosePageDialog()"
     />
     <PageHeadDialog
+      @create="handleOnCreatePageHead()"
       :visible="visible_create_head"
       @close="handleCloseCreateHead()"
     />
@@ -81,11 +84,19 @@ import { BaseCollapseItem, BaseCollapse } from "@/components/base/collapse";
 import PageDialog from "@/modules/portal/components/pages/PageDialog.vue";
 import PageHeadDialog from "@/modules/portal/components/pages/PageHeadDialog.vue";
 
+definePageMeta({
+  layout: "project",
+});
+
 const visible_create_page = ref(false);
-
 const visible_create_head = ref(false);
+const project_id = ref(null);
+const route = useRoute();
+const pages = ref([]);
+const selectd_page: Ref<Object> = ref({});
 
-const handleShowCreatePage = () => {
+const handleShowCreatePage = (page: any) => {
+  selectd_page.value = page;
   visible_create_page.value = true;
 };
 
@@ -101,8 +112,24 @@ const handleClosePageDialog = () => {
   visible_create_page.value = false;
 };
 
-definePageMeta({
-  layout: "project",
+const handleOnCreatePageHead = () => {
+  fetchPages();
+};
+const handleOnCreatePage = () => {
+  fetchPages();
+};
+
+const fetchPages = async () => {
+  const { data } = await useApiService.get(
+    `portal/projects/${project_id.value}/pages`
+  );
+  pages.value = data;
+  console.log("data", data);
+};
+
+onMounted(() => {
+  project_id.value = route.params.id;
+  fetchPages();
 });
 </script>
 
