@@ -122,7 +122,7 @@ const handleShowNav = () => {
   active.value = true;
   emits("show-nav", active.value);
 };
-
+const handleFilterModal = () => {};
 const handleLogout = async () => {};
 
 const showAccountDialog = () => {

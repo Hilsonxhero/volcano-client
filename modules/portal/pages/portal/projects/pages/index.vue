@@ -85,8 +85,6 @@
 </template>
 
 <script setup lang="ts">
-import CKeditor from "@/components/common/CKeditor.vue";
-
 import { BaseCollapseItem, BaseCollapse } from "@/components/base/collapse";
 import PageDialog from "@/modules/portal/components/pages/PageDialog.vue";
 import PageHeadDialog from "@/modules/portal/components/pages/PageHeadDialog.vue";

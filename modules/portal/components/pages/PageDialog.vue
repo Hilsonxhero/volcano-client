@@ -131,9 +131,6 @@
                 </base-form-item>
               </div>
 
-              <!-- <CKeditor /> -->
-              <!-- <TextEditor /> -->
-
               <editor-content class="" :editor="editor" />
             </base-form>
           </div>
@@ -181,7 +178,6 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { BaseFormItem, BaseForm } from "@/components/base/form";
 import BaseMessage from "@/components/base/message";
 import { FormItemContext } from "~/core/tokens";
-import CKeditor from "@/components/common/CKeditor.client.vue";
 import { ResizableMedia } from "@/components/common/tiptap/extentions/resizableMedia";
 
 const props = defineProps({

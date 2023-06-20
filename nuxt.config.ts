@@ -1,10 +1,9 @@
-
-import ckeditor5 from '@ckeditor/vite-plugin-ckeditor5';
 export default defineNuxtConfig({
     modules: [
         '@pinia/nuxt',
         'nuxt-swiper',
         'nuxt-icons',
+        // '~/modules/i18n',
         '@nuxtjs/i18n',
         '~/modules/web/module',
         '~/modules/auth/module',
@@ -33,9 +32,9 @@ export default defineNuxtConfig({
     },
 
     vite: {
-        plugins: [
-            ckeditor5({ theme: require.resolve('@ckeditor/ckeditor5-theme-lark') })
-        ]
+        // plugins: [
+
+        // ]
     }
 
 })
