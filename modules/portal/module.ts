@@ -10,20 +10,6 @@ export default defineNuxtModule({
 
     setup(options: any, nuxt: Nuxt) {
 
-
-        // nuxt.hook('components:dirs', (dirs) => {
-        //     dirs.push({
-        //         path: join(__dirname, 'components/base'),
-        //         prefix: 'Base'
-        //     })
-        // })
-
-
-        // nuxt.hook('autoImports:dirs', (dirs) => {
-        //     dirs.push(resolve(__dirname, './composables'))
-        // })
-
-
         nuxt.hook('pages:extend', (pages) => {
             pages.push(
                 {

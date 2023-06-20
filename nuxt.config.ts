@@ -1,4 +1,5 @@
 
+import ckeditor5 from '@ckeditor/vite-plugin-ckeditor5';
 export default defineNuxtConfig({
     modules: [
         '@pinia/nuxt',
@@ -30,5 +31,11 @@ export default defineNuxtConfig({
             autoprefixer: {},
         },
     },
+
+    vite: {
+        plugins: [
+            ckeditor5({ theme: require.resolve('@ckeditor/ckeditor5-theme-lark') })
+        ]
+    }
 
 })

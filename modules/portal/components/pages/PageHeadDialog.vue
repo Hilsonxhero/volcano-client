@@ -2,7 +2,7 @@
   <div>
     <base-dialog
       @close="handleCloseCreateHead()"
-      title="ایجاد عنوان صفحات"
+      :title="head_edit_mode ? 'ویرایش عنوان صفحه' : 'ایجاد عنوان صفحه'"
       custom-class=""
       v-model="visible_create_head"
     >
@@ -25,11 +25,7 @@
 
       <template #footer="{ close }">
         <div class="flex items-center space-x-reverse space-x-4">
-          <base-button
-            type="primary"
-            :loading="loader"
-            @click="handleCreatePageHead"
-          >
+          <base-button type="primary" :loading="loader" @click="handleSave">
             تایید
           </base-button>
           <base-button type="text" @click="close"> لغو </base-button>
@@ -44,16 +40,18 @@ import { BaseFormItem, BaseForm } from "@/components/base/form";
 import { UPDATE_MODEL_EVENT } from "~/core/constants";
 import { FormItemContext } from "~/core/tokens";
 import BaseMessage from "@/components/base/message";
+import { head } from "lodash-unified";
 
 const props = defineProps({
   visible: {
     type: Boolean,
     default: false,
   },
+  head: {},
 });
 
-const emits = defineEmits([UPDATE_MODEL_EVENT, "close", "create"]);
-
+const emits = defineEmits([UPDATE_MODEL_EVENT, "close", "store"]);
+const head_edit_mode = ref(false);
 const visible_create_head = ref(true);
 const formRef: Ref<FormItemContext | null> = ref(null);
 const project_id = ref(null);
@@ -64,7 +62,18 @@ const loader = ref(false);
 const route = useRoute();
 
 const handleCloseCreateHead = () => {
+  form.value.title = "";
+  head_edit_mode.value = false;
+  // formRef.value?.resetFields();
   emits("close", false);
+};
+
+const handleSave = () => {
+  if (props.head) {
+    handleUpdatePageHead();
+  } else {
+    handleCreatePageHead();
+  }
 };
 
 const handleCreatePageHead = () => {
@@ -77,6 +86,7 @@ const handleCreatePageHead = () => {
           parent_id: null,
           project_id: project_id.value,
         };
+
         const data = await useApiService.post(
           `portal/projects/${project_id.value}/pages`,
           formData
@@ -89,7 +99,44 @@ const handleCreatePageHead = () => {
             center: true,
             offset: 20,
           });
-          emits("create", true);
+          emits("store", true);
+          form.value.title = "";
+          handleCloseCreateHead();
+        }
+
+        loader.value = false;
+      } catch (error) {
+        loader.value = false;
+      }
+    } else {
+    }
+  });
+};
+
+const handleUpdatePageHead = () => {
+  formRef.value?.validate(async (valid: any): Promise<void> => {
+    if (valid) {
+      loader.value = true;
+      try {
+        const formData = {
+          title: form.value.title,
+          parent_id: null,
+          project_id: project_id.value,
+        };
+
+        const data = await useApiService.patch(
+          `portal/projects/${project_id.value}/pages/${props.head?.id}`,
+          formData
+        );
+        if (data.success) {
+          BaseMessage({
+            message: "ویرایش عنوان صفحه با موفقیت انجام شد!",
+            type: "success",
+            duration: 4000,
+            center: true,
+            offset: 20,
+          });
+          emits("store", true);
           form.value.title = null;
           handleCloseCreateHead();
         }
@@ -106,10 +153,19 @@ const handleCreatePageHead = () => {
 watch(
   () => props.visible,
   (val) => {
-    formRef.value?.resetFields();
     visible_create_head.value = val;
   },
   { immediate: true }
+);
+
+watch(
+  () => props.head,
+  (val) => {
+    if (val) {
+      head_edit_mode.value = true;
+      form.value.title = val?.title;
+    }
+  }
 );
 
 onMounted(() => {

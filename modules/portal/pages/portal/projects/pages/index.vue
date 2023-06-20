@@ -34,29 +34,32 @@
                 @click="handleShowCreatePage(head)"
               ></nuxt-icon>
             </BaseButton>
-            <BaseButton icon>
+            <BaseButton @click="handleShowUpdatePageHead(head)" icon>
               <nuxt-icon class="w-6 h-6" name="magicpen"></nuxt-icon>
             </BaseButton>
-            <BaseButton icon>
+            <BaseButton @click="handleDeleteHeadPage(head, index)" icon>
               <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
             </BaseButton>
           </template>
           <div
-            v-for="(page, index) in head.children"
-            :index="index"
+            v-for="(page, i) in head.children"
+            :index="i"
             class="bg-white border border-gray-300 rounded-2xl p-2 flex justify-between items-center mb-2"
           >
             <div>
               <div class="text-gray-700">{{ page.title }}</div>
             </div>
             <div class="flex items-center">
-              <BaseButton icon>
+              <BaseButton icon @click="handleShowUpdatePage(page)">
                 <nuxt-icon name="magicpen"></nuxt-icon>
               </BaseButton>
               <BaseButton icon>
                 <nuxt-icon name="share"></nuxt-icon>
               </BaseButton>
-              <BaseButton icon>
+              <BaseButton
+                icon
+                @click="handleDeletePage(head.children, page, i)"
+              >
                 <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
               </BaseButton>
             </div>
@@ -66,13 +69,15 @@
     </div>
 
     <PageDialog
+      :page="selectd_child_page"
       :selected="selectd_page"
       :visible="visible_create_page"
       @create="handleOnCreatePage()"
       @close="handleClosePageDialog()"
     />
     <PageHeadDialog
-      @create="handleOnCreatePageHead()"
+      :head="selected_head"
+      @store="handleOnCreatePageHead()"
       :visible="visible_create_head"
       @close="handleCloseCreateHead()"
     />
@@ -80,9 +85,13 @@
 </template>
 
 <script setup lang="ts">
+import CKeditor from "@/components/common/CKeditor.vue";
+
 import { BaseCollapseItem, BaseCollapse } from "@/components/base/collapse";
 import PageDialog from "@/modules/portal/components/pages/PageDialog.vue";
 import PageHeadDialog from "@/modules/portal/components/pages/PageHeadDialog.vue";
+import { BaseMessageBox } from "@/components/base/message-box";
+import BaseMessage from "@/components/base/message";
 
 definePageMeta({
   layout: "project",
@@ -94,21 +103,33 @@ const project_id = ref(null);
 const route = useRoute();
 const pages = ref([]);
 const selectd_page: Ref<Object> = ref({});
+const selectd_child_page: Ref<Object | null> = ref(null);
+const selected_head = ref(null);
 
 const handleShowCreatePage = (page: any) => {
   selectd_page.value = page;
+  visible_create_page.value = true;
+};
+const handleShowUpdatePage = (page: any) => {
+  selectd_child_page.value = page;
   visible_create_page.value = true;
 };
 
 const handleShowCreatePageHead = () => {
   visible_create_head.value = true;
 };
+const handleShowUpdatePageHead = (head: any) => {
+  selected_head.value = head;
+  visible_create_head.value = true;
+};
 
 const handleCloseCreateHead = () => {
+  selected_head.value = null;
   visible_create_head.value = false;
 };
 
 const handleClosePageDialog = () => {
+  selectd_child_page.value = null;
   visible_create_page.value = false;
 };
 
@@ -119,12 +140,63 @@ const handleOnCreatePage = () => {
   fetchPages();
 };
 
+const handleDeleteHeadPage = (head: any, index: any) => {
+  BaseMessageBox.confirm(
+    `آیا از حذف عنوان صفحه  اطمینان دارید ؟!`,
+    "پیام تایید",
+    {
+      confirmButtonText: "تایید",
+      cancelButtonText: "لغو",
+      type: "warning",
+    }
+  )
+    .then(async () => {
+      const data = await useApiService.remove(
+        `portal/projects/${project_id.value}/pages/${head?.id}`
+      );
+      if (data.success) {
+        pages.value.splice(index, 1);
+        BaseMessage({
+          message: "حذف عنوان صفحه با موفقیت انجام شد!",
+          type: "success",
+          duration: 4000,
+          center: true,
+          offset: 20,
+        });
+      }
+    })
+    .catch(() => {});
+};
+
+const handleDeletePage = (head: any, page: any, index: any) => {
+  BaseMessageBox.confirm(`آیا از حذف  صفحه  اطمینان دارید ؟!`, "پیام تایید", {
+    confirmButtonText: "تایید",
+    cancelButtonText: "لغو",
+    type: "warning",
+  })
+    .then(async () => {
+      const data = await useApiService.remove(
+        `portal/projects/${project_id.value}/pages/${page?.id}`
+      );
+      if (data.success) {
+        head.splice(index, 1);
+        BaseMessage({
+          message: "حذف  صفحه با موفقیت انجام شد!",
+          type: "success",
+          duration: 4000,
+          center: true,
+          offset: 20,
+        });
+      }
+    })
+    .catch(() => {});
+};
+
 const fetchPages = async () => {
   const { data } = await useApiService.get(
     `portal/projects/${project_id.value}/pages`
   );
   pages.value = data;
-  console.log("data", data);
 };
 
 onMounted(() => {

@@ -59,10 +59,10 @@
 
       <template #footer="{ close }">
         <div class="flex items-center space-x-reverse space-x-4">
-          <hx-button variant="primary" @click="handleSetLink">
+          <base-button type="primary" @click="handleSetLink">
             تایید
-          </hx-button>
-          <hx-button variant="light" @click="close"> لغو </hx-button>
+          </base-button>
+          <base-button type="text" @click="close"> لغو </base-button>
         </div>
       </template>
     </hx-modal>

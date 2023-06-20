@@ -8,79 +8,85 @@
     >
       <div>
         <div class="">
-          <div class="flex justify-between items-center">
-            <menu-bar
-              class="editor__header sticky top-0 bg-white z-10"
-              :editor="editor"
-            >
-              <template #link>
-                <button
-                  type="button"
-                  :class="[ns.e('menu-item')]"
-                  title="image"
-                  @click="show = !show"
-                >
-                  <nuxt-icon
-                    filled
-                    name="link-m"
-                    class="w-6 h-6 text-gray-500"
-                  ></nuxt-icon>
-                </button>
-              </template>
-
-              <template v-slot:image>
-                <input
-                  type="file"
-                  class="hidden"
-                  ref="upload"
-                  @change="uploadImageHandler"
-                />
-                <button
-                  type="button"
-                  :class="[ns.e('menu-item')]"
-                  title="image"
-                  @click="showFileHandler"
-                >
-                  <nuxt-icon
-                    filled
-                    name="image-line"
-                    class="w-6 h-6 text-gray-500"
-                  ></nuxt-icon>
-                </button>
-              </template>
-
-              <template v-slot:color>
-                <button
-                  type="button"
-                  :class="[ns.e('menu-item')]"
-                  title="color"
-                  @click="showColorBox"
-                >
-                  <nuxt-icon
-                    filled
-                    name="font-color"
-                    class="w-6 h-6 text-gray-500"
-                  ></nuxt-icon>
-                </button>
-
-                <div style="position: relative">
-                  <input
-                    id="color-box"
-                    ref="color"
-                    style="visibility: hidden"
-                    type="color"
-                    @input="
-                      editor.chain().focus().setColor($event.target.value).run()
-                    "
-                    :value="editor.getAttributes('textStyle').color"
-                  />
-                </div>
-              </template>
-            </menu-bar>
-            <div>
-              <base-button type="primary" @click="handleSave()"
-                >ذخیره</base-button
+          <div class="sticky top-0 z-[999] justify-between items-center">
+            <div class="flex justify-between items-center">
+              <menu-bar
+                class="editor__header sticky top-0 bg-white z-10"
+                :editor="editor"
               >
+                <template #link>
+                  <button
+                    type="button"
+                    :class="[ns.e('menu-item')]"
+                    title="image"
+                    @click="show = !show"
+                  >
+                    <nuxt-icon
+                      filled
+                      name="link-m"
+                      class="w-6 h-6 text-gray-500"
+                    ></nuxt-icon>
+                  </button>
+                </template>
+
+                <template v-slot:image>
+                  <input
+                    type="file"
+                    class="hidden"
+                    ref="upload"
+                    @change="uploadImageHandler"
+                  />
+                  <button
+                    type="button"
+                    :class="[ns.e('menu-item')]"
+                    title="image"
+                    @click="showFileHandler"
+                  >
+                    <nuxt-icon
+                      filled
+                      name="image-line"
+                      class="w-6 h-6 text-gray-500"
+                    ></nuxt-icon>
+                  </button>
+                </template>
+
+                <template v-slot:color>
+                  <button
+                    type="button"
+                    :class="[ns.e('menu-item')]"
+                    title="color"
+                    @click="showColorBox"
+                  >
+                    <nuxt-icon
+                      filled
+                      name="font-color"
+                      class="w-6 h-6 text-gray-500"
+                    ></nuxt-icon>
+                  </button>
+
+                  <div style="position: relative">
+                    <input
+                      id="color-box"
+                      ref="color"
+                      style="visibility: hidden"
+                      type="color"
+                      @input="
+                        editor
+                          .chain()
+                          .focus()
+                          .setColor($event.target.value)
+                          .run()
+                      "
+                      :value="editor.getAttributes('textStyle').color"
+                    />
+                  </div>
+                </template>
+              </menu-bar>
+              <div>
+                <base-button type="primary" @click="handleSave()"
+                  >ذخیره</base-button
+                >
+              </div>
             </div>
           </div>
 
@@ -119,19 +125,16 @@
                 >
                   <textarea
                     v-model="form.title"
-                    class="px-3 py-2 placeholder:text-2xl text-2xl w-full"
+                    class="px-3 py-2 placeholder:text-2xl text-2xl w-full resize-none"
                     placeholder="عنوان صفحه را وارد کنید"
                   ></textarea>
                 </base-form-item>
               </div>
 
-              <div>
-                <editor-content
-                  v-bind="$attrs"
-                  class="editor__content"
-                  :editor="editor"
-                />
-              </div>
+              <!-- <CKeditor /> -->
+              <!-- <TextEditor /> -->
+
+              <editor-content class="" :editor="editor" />
             </base-form>
           </div>
 
@@ -148,24 +151,28 @@
                 <base-button type="primary" @click="handleSetLink">
                   تایید
                 </base-button>
-                <hx-button variant="light" @click="close"> لغو </hx-button>
+                <base-button type="text" @click="close"> لغو </base-button>
               </div>
             </template>
           </base-dialog>
         </div>
       </div>
+
       <template #footer> </template>
     </base-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
+import TextEditor from "@/components/common/TextEditor.client.vue";
+
 import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 import { UPDATE_MODEL_EVENT } from "~/core/constants";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
 import Image from "@tiptap/extension-image";
 import Highlight from "@tiptap/extension-highlight";
+import TextAlign from "@/components/common/tiptap/extentions";
 import MenuBar from "@/components/common/tiptap/tiptap-menu.vue";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
@@ -174,6 +181,8 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { BaseFormItem, BaseForm } from "@/components/base/form";
 import BaseMessage from "@/components/base/message";
 import { FormItemContext } from "~/core/tokens";
+import CKeditor from "@/components/common/CKeditor.client.vue";
+import { ResizableMedia } from "@/components/common/tiptap/extentions/resizableMedia";
 
 const props = defineProps({
   visible: {
@@ -181,6 +190,9 @@ const props = defineProps({
     default: false,
   },
   selected: {
+    type: Object,
+  },
+  page: {
     type: Object,
   },
 });
@@ -204,6 +216,7 @@ const project_id = ref(null);
 const route = useRoute();
 const formRef: Ref<FormItemContext | null> = ref(null);
 const loader = ref(false);
+const page_edit_mode = ref(false);
 const placeholder = ref(
   "آیا می دانستید که می توانید انواع چیزهای جالب مانند فهرست مطالب، تاریخ یا نقشه راه را به این صفحه اضافه کنید؟ برای باز کردن یک لیست، / را تایپ کنید"
 );
@@ -228,7 +241,23 @@ watch(
   }
 );
 
+watch(
+  () => props.page,
+  (val) => {
+    if (val) {
+      page_edit_mode.value = true;
+      form.value.title = val?.title;
+      form.value.name = val?.name;
+      form.value.content = val?.content;
+    }
+  }
+);
+
 const handleCloseCreatePage = () => {
+  form.value.title = "";
+  form.value.name = "";
+  form.value.content = "";
+  page_edit_mode.value = false;
   emits("close", false);
 };
 
@@ -272,12 +301,27 @@ const uploadImageHandler = (event) => {
   useApiService
     .post("/upload/editor", data)
     .then(({ data }) => {
-      editor.value.commands.setImage({ src: data.data });
+      editor.value.commands.setMedia({
+        src: data,
+        "media-type": "img",
+        alt: "Something else",
+        title: "Something",
+        width: "800",
+        height: "400",
+      });
     })
     .catch((error) => {});
 };
 
 const handleSave = () => {
+  if (props.page) {
+    handleUpdatePage();
+  } else {
+    handleCreatePage();
+  }
+};
+
+const handleCreatePage = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
@@ -315,6 +359,43 @@ const handleSave = () => {
   });
 };
 
+const handleUpdatePage = () => {
+  formRef.value?.validate(async (valid: any): Promise<void> => {
+    if (valid) {
+      loader.value = true;
+      try {
+        const formData = {
+          title: form.value.title,
+          name: form.value.name,
+          content: form.value.content,
+          parent_id: props?.page?.parent_id,
+          project_id: project_id.value,
+        };
+        const data = await useApiService.patch(
+          `portal/projects/${project_id.value}/pages/${props.page.id}`,
+          formData
+        );
+        if (data.success) {
+          BaseMessage({
+            message: "ویرایش  صفحه با موفقیت انجام شد!",
+            type: "success",
+            duration: 4000,
+            center: true,
+            offset: 20,
+          });
+          emits("create", true);
+          handleCloseCreatePage();
+        }
+
+        loader.value = false;
+      } catch (error) {
+        loader.value = false;
+      }
+    } else {
+    }
+  });
+};
+
 onMounted(() => {
   project_id.value = route.params.id;
   editor.value = new Editor({
@@ -322,7 +403,11 @@ onMounted(() => {
       StarterKit.configure({
         history: true,
       }),
-      Image,
+      ResizableMedia,
+      Image.configure({}),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      }),
       Link.configure({
         openOnClick: false,
       }),
@@ -337,7 +422,6 @@ onMounted(() => {
     content: form.value.content,
     onUpdate: () => {
       // emits(UPDATE_MODEL_EVENT, editor.value.getHTML());
-      console.log("aaaa", editor.value.getHTML());
 
       form.value.content = editor.value.getHTML();
     },

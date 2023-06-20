@@ -18,7 +18,7 @@ export const dialogProps = buildProps({
   },
   destroyOnClose: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   closeOnClickModal: {
     type: Boolean,

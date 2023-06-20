@@ -162,3 +162,26 @@
 .auth-module-cover {
   background: #ffde91;
 }
+
+.fade-in-linear-enter-active,
+.fade-in-linear-leave-active {
+  transition: getCssVar("transition-fade", "linear");
+}
+
+.fade-in-linear-enter-from,
+.fade-in-linear-leave-to {
+  opacity: 0;
+}
+
+// .ck-balloon-panel {
+//   display: none !important;
+// }
+.ck-powered-by-balloon {
+  display: none !important;
+}
+.ck.ck-toolbar {
+  border: unset !important;
+}
+.ck.ck-editor__main > .ck-editor__editable {
+  border: unset !important;
+}

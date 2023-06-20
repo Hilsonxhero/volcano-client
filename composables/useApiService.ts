@@ -52,11 +52,14 @@ export const post = (request: string, params?: SearchParameters, opts?: UseFetch
 export const put = (request: string, params: SearchParameters, opts?: UseFetchOptions): Promise<void> | void => {
     return useApiService(request, { ...opts, method: "PUT", body: params })
 };
+export const patch = (request: string, params: SearchParameters, opts?: UseFetchOptions): Promise<void> | void => {
+    return useApiService(request, { ...opts, method: "PATCH", body: params })
+};
 
-export const remove = (request: string, params: SearchParameters, opts?: UseFetchOptions): Promise<void> | void => {
+export const remove = (request: string, params?: SearchParameters, opts?: UseFetchOptions): Promise<void> | void => {
     return useApiService(request, { ...opts, method: "DELETE", body: params })
 };
 
 
-export default { get, post, put, remove };
+export default { get, post, put, patch, remove };
 
