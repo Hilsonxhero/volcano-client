@@ -11,6 +11,7 @@
     <slot name="link"></slot>
     <slot name="image"></slot>
     <slot name="color"></slot>
+    <slot name="backColor"></slot>
   </div>
 </template>
 
@@ -164,6 +165,19 @@ const items = ref([
     icon: "arrow-go-forward-line",
     title: "Redo",
     action: (): void | Function => props.editor.chain().focus().redo().run(),
+  },
+  {
+    type: "divider",
+  },
+  {
+    icon: "table",
+    title: "Table",
+    action: (): void | Function =>
+      props.editor.commands.insertTable({
+        rows: 3,
+        cols: 3,
+        withHeaderRow: true,
+      }),
   },
 ]);
 </script>

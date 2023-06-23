@@ -326,7 +326,7 @@ const isAlign = computed<boolean>(() => !!props.node.attrs.dataAlign);
   }
 
   &.align-left {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   &.align-center {
@@ -334,7 +334,7 @@ const isAlign = computed<boolean>(() => !!props.node.attrs.dataAlign);
   }
 
   &.align-right {
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .horizontal-resize-handle,

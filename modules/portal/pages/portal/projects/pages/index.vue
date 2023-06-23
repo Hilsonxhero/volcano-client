@@ -27,12 +27,8 @@
           :name="index + 1"
         >
           <template #actions>
-            <BaseButton icon>
-              <nuxt-icon
-                class="w-6 h-6"
-                name="add"
-                @click="handleShowCreatePage(head)"
-              ></nuxt-icon>
+            <BaseButton icon @click="handleShowCreatePage(head)">
+              <nuxt-icon class="w-6 h-6" name="add"></nuxt-icon>
             </BaseButton>
             <BaseButton @click="handleShowUpdatePageHead(head)" icon>
               <nuxt-icon class="w-6 h-6" name="magicpen"></nuxt-icon>

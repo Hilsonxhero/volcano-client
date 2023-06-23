@@ -172,16 +172,103 @@
 .fade-in-linear-leave-to {
   opacity: 0;
 }
+// .ProseMirror {
+//   table {
+//     width: 100%;
+//     border-collapse: collapse;
 
-// .ck-balloon-panel {
-//   display: none !important;
+//     th,
+//     td {
+//       padding: 8px;
+//       text-align: left;
+//       border-bottom: 1px solid #ddd;
+//     }
+
+//     th {
+//       background-color: #f2f2f2;
+//     }
+
+//     tr:nth-child(even) {
+//       background-color: #f9f9f9;
+//     }
+
+//     tr:hover {
+//       background-color: #e6e6e6;
+//     }
+
+//     td:first-child {
+//       border-left: none;
+//     }
+
+//     td:last-child {
+//       border-right: none;
+//     }
+
+//     td:empty:before {
+//       content: "-";
+//       color: #999;
+//     }
+//   }
 // }
-.ck-powered-by-balloon {
-  display: none !important;
+.ProseMirror table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+  direction: rtl;
 }
-.ck.ck-toolbar {
-  border: unset !important;
+.ProseMirror table td,
+.ProseMirror table th {
+  min-width: 1em;
+  border: 2px solid #ced4da;
+  padding: 7px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+  text-align: right;
 }
-.ck.ck-editor__main > .ck-editor__editable {
-  border: unset !important;
+.ProseMirror table td > *,
+.ProseMirror table th > * {
+  margin-bottom: 0;
+}
+.ProseMirror table th {
+  font-weight: 700;
+  text-align: left;
+  background-color: #f1f3f5;
+}
+.ProseMirror table .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
+}
+.ProseMirror table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #adf;
+  pointer-events: none;
+}
+.ProseMirror table p {
+  margin: 0;
+}
+.tableWrapper {
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+.resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}
+
+.dir-ltr {
+  direction: ltr;
 }

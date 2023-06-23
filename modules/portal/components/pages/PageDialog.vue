@@ -68,7 +68,7 @@
                     <input
                       id="color-box"
                       ref="color"
-                      style="visibility: hidden"
+                      style="display: none"
                       type="color"
                       @input="
                         editor
@@ -78,6 +78,38 @@
                           .run()
                       "
                       :value="editor.getAttributes('textStyle').color"
+                    />
+                  </div>
+                </template>
+
+                <template v-slot:backColor>
+                  <button
+                    type="button"
+                    :class="[ns.e('menu-item')]"
+                    title="color"
+                    @click="showBackColorBox"
+                  >
+                    <nuxt-icon
+                      filled
+                      name="text-bg"
+                      class="w-6 h-6 text-gray-500"
+                    ></nuxt-icon>
+                  </button>
+
+                  <div style="position: relative">
+                    <input
+                      id="bc-box"
+                      ref="backColor"
+                      style="display: none"
+                      type="color"
+                      @input="
+                        editor
+                          .chain()
+                          .focus()
+                          .setBackColor($event.target.value)
+                          .run()
+                      "
+                      :value="editor.getAttributes('textStyle').backgroundColor"
                     />
                   </div>
                 </template>
@@ -106,7 +138,7 @@
                 >
                   <input
                     v-model="form.name"
-                    class="px-3 py-2 placeholder:text-base text-base placeholder:font-semibold font-semibold border-b border-gray-200 w-full"
+                    class="py-2 placeholder:text-base text-base placeholder:font-semibold font-semibold border-b border-gray-200 w-full"
                     placeholder="نام صفحه را وارد کنید (عنوانی که برای کاربران در منو نمایش داده می شود)"
                   />
                 </base-form-item>
@@ -125,7 +157,7 @@
                 >
                   <textarea
                     v-model="form.title"
-                    class="px-3 py-2 placeholder:text-2xl text-2xl w-full resize-none"
+                    class="py-2 placeholder:text-2xl text-2xl w-full resize-none"
                     placeholder="عنوان صفحه را وارد کنید"
                   ></textarea>
                 </base-form-item>
@@ -173,13 +205,24 @@ import TextAlign from "@/components/common/tiptap/extentions";
 import MenuBar from "@/components/common/tiptap/tiptap-menu.vue";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
+import { BackColor } from "@/components/common/tiptap/extentions/backColor";
+
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { BaseFormItem, BaseForm } from "@/components/base/form";
 import BaseMessage from "@/components/base/message";
 import { FormItemContext } from "~/core/tokens";
 import { ResizableMedia } from "@/components/common/tiptap/extentions/resizableMedia";
+// import Table from "@tiptap/extension-table";
+// import { Table } from "@/components/common/tiptap/extentions/table";
 
+// import TableRow from "@tiptap/extension-table-row";
+// import TableCell from "@tiptap/extension-table-cell";
+// import TableHeader from "@tiptap/extension-table-header";
+import { Table } from "@/components/common/tiptap/extentions/supercharged-table/extension-table";
+import { TableCell } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-cell";
+import { TableHeader } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-header";
+import { TableRow } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-row";
 const props = defineProps({
   visible: {
     type: Boolean,
@@ -213,6 +256,7 @@ const route = useRoute();
 const formRef: Ref<FormItemContext | null> = ref(null);
 const loader = ref(false);
 const page_edit_mode = ref(false);
+const backColor = ref(null);
 const placeholder = ref(
   "آیا می دانستید که می توانید انواع چیزهای جالب مانند فهرست مطالب، تاریخ یا نقشه راه را به این صفحه اضافه کنید؟ برای باز کردن یک لیست، / را تایپ کنید"
 );
@@ -258,8 +302,13 @@ const handleCloseCreatePage = () => {
 };
 
 const showColorBox = () => {
-  // document.getElementById("color-box").click();
+  color.value.click();
 };
+
+const showBackColorBox = () => {
+  backColor.value.click();
+};
+
 const showFileHandler = () => {
   upload.value.click();
 };
@@ -397,9 +446,10 @@ onMounted(() => {
   editor.value = new Editor({
     extensions: [
       StarterKit.configure({
-        history: true,
+        // history: true,
       }),
       ResizableMedia,
+      BackColor,
       Image.configure({}),
       TextAlign.configure({
         types: ["heading", "paragraph"],
@@ -407,8 +457,13 @@ onMounted(() => {
       Link.configure({
         openOnClick: false,
       }),
+      Table.configure({
+        resizable: false,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
       Placeholder.configure({
-        // emptyEditorClass: 'is-editor-empty',
         placeholder: placeholder.value,
       }),
       TextStyle,
@@ -418,8 +473,7 @@ onMounted(() => {
     content: form.value.content,
     onUpdate: () => {
       // emits(UPDATE_MODEL_EVENT, editor.value.getHTML());
-
-      form.value.content = editor.value.getHTML();
+      // form.value.content = editor.value.getHTML();
     },
   });
 });
