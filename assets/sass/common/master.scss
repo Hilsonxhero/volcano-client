@@ -272,3 +272,15 @@
 .dir-ltr {
   direction: ltr;
 }
+
+.tippy-select-dropdown {
+  pointer-events: unset !important;
+  .tippy-box {
+    max-width: unset !important;
+    background-color: unset !important;
+    box-shadow: unset !important;
+  }
+  .tippy-content {
+    padding: unset !important;
+  }
+}

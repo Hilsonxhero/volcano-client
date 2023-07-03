@@ -84,7 +84,6 @@ const handleSubmit = async () => {
   const formDate = {
     phone: form.value.username,
   };
-  console.log("formDate", formDate);
 
   const data = await store.authenticate(formDate);
   end.value = data.ttl * 1000;

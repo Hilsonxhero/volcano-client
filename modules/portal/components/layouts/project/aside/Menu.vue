@@ -15,7 +15,14 @@
         <template v-for="(menuItem, j) in item.pages" :key="j">
           <template v-if="menuItem.heading">
             <div class="menu-item">
-              <router-link class="menu-link" active-class="active" to="/">
+              <router-link
+                class="menu-link"
+                active-class="active"
+                :to="{
+                  name: menuItem.route,
+                  params: { id: $route.params.id, slug: $route.params.slug },
+                }"
+              >
                 <span
                   v-if="menuItem.svgIcon"
                   class="bg-gray-200 rounded-2xl flex justify-center items-center min-w-[2.75rem] h-[2.75rem] ml-2"
@@ -125,13 +132,14 @@
 </template>
 
 <script lang="ts" setup>
-//@ts-nocheckk
+//@ts-nocheck
 import { BaseCollapseItem, BaseCollapse } from "@/components/base/collapse";
 import { useAuthStore } from "@/modules/auth/store";
+import { usePortalStore } from "@/modules/portal/store/portal";
 
+const portalStore = usePortalStore();
 const router = useRouter();
 const store = useAuthStore();
-
 const route = useRoute();
 const scrollElRef = ref<null | HTMLElement>(null);
 
@@ -139,15 +147,20 @@ const pages = ref([
   {
     // heading: "تست",
     pages: [
-      {
-        heading: "تابلو",
-        route: "",
-        svgIcon: "board",
-      },
+      // {
+      //   heading: "تابلو",
+      //   route: "",
+      //   svgIcon: "board",
+      // },
       {
         heading: "صفحات",
-        route: "",
+        route: "portal-projects-pages-index",
         svgIcon: "note-bulk",
+      },
+      {
+        heading: "کاربران",
+        route: "portal-projects-users-index",
+        svgIcon: "group",
       },
     ],
   },

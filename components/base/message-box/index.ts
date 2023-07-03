@@ -4,14 +4,11 @@ import { getCurrentInstance } from 'vue'
 import MessageBox from './src/VMessageBox'
 import type { App } from 'vue'
 
-// console.log("appContext", appContext);
 
-// const nuxt = useNuxtApp()
-// console.log("nuxt", nuxt.vueApp);
 
 
 MessageBox.install = (app: App) => {
-    console.log("app", app);
+
 
     MessageBox._context = app._context
     app.config.globalProperties.$msgbox = MessageBox

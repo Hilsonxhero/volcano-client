@@ -38,16 +38,15 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/:slug/pages',
                     file: resolve(__dirname, './pages/portal/projects/pages/index.vue')
                 },
-
                 {
-                    name: 'portal-projects-pages-create',
-                    path: '/portal/projects/:id/:slug/pages/create',
-                    file: resolve(__dirname, './pages/portal/projects/pages/create.vue')
+                    name: 'portal-projects-users-index',
+                    path: '/portal/projects/:id/:slug/users',
+                    file: resolve(__dirname, './pages/portal/projects/users/index.vue')
                 },
                 {
-                    name: 'portal-projects-pages-edit',
-                    path: '/portal/projects/:id/:slug/pages/edit/:page',
-                    file: resolve(__dirname, './pages/portal/projects/pages/edit.vue')
+                    name: 'portal-invite-confirmation',
+                    path: '/portal/projects/invite/confirmation',
+                    file: resolve(__dirname, './pages/portal/projects/users/invite/confirmation.vue')
                 },
                 {
                     name: 'software-projects-pages-index',

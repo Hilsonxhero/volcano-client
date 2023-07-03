@@ -19,7 +19,9 @@
 <script setup lang="ts">
 import BaseHeader from "@/modules/portal/components/layouts/project/header/Header.vue";
 import BaseAside from "@/modules/portal/components/layouts/project/aside/Aside.vue";
+import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 
+import { usePortalStore } from "@/modules/portal/store/portal";
 useHead({
   title: "پنل کاربر",
   bodyAttrs: {
@@ -27,14 +29,16 @@ useHead({
       "page-loading-enabled header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed toolbar-tablet-and-mobile-fixed aside-enabled aside-fixed",
   },
 });
-
+const loading = ref(true);
 const active = ref(false);
-
+const store = usePortalStore();
+const route = useRoute();
+const project_id = ref(null);
+provide("show", active);
 const handleShowNav = (value: boolean) => {
   active.value = value;
 };
-
-provide("show", active);
+onMounted(() => {});
 
 // HtmlClass.init();
 </script>

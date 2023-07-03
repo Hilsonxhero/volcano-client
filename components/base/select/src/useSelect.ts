@@ -25,7 +25,7 @@ const TAG_BASE_WIDTH = {
 
 const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
   // inject
-
+  const { t } = useI18n()
   const nsSelectV2 = useNamespace("select");
   const nsInput = useNamespace("input");
   const { form: elForm, formItem: elFormItem } = useFormItem();
@@ -58,7 +58,7 @@ const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
 
   // data refs
   const selectedIndex = ref(-1);
-  // const popperSize = ref(-1)
+  const popperSize = ref(-1)
 
   // DOM & Component refs
   const controlRef = ref(null);
@@ -182,9 +182,9 @@ const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
     );
   });
 
-  // const calculatePopperSize = () => {
-  //   popperSize.value = selectRef.value?.offsetWidth || 200
-  // }
+  const calculatePopperSize = () => {
+    popperSize.value = selectRef.value?.offsetWidth || 200
+  }
 
   const inputWrapperStyle = computed(() => {
     return {
@@ -354,7 +354,7 @@ const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
 
   const handleResize = () => {
     resetInputWidth();
-    // calculatePopperSize()
+    calculatePopperSize()
     // popper.value?.updatePopper?.()
     if (props.multiple) {
       return resetInputHeight();
@@ -684,7 +684,7 @@ const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
       }
     }
     clearAllNewOption();
-    // calculatePopperSize()
+    calculatePopperSize()
   };
 
   // in order to track these individually, we need to turn them into refs instead of watching the entire
@@ -764,7 +764,7 @@ const useSelect = (props: ExtractPropTypes<typeof SelectProps>, emit) => {
     tagMaxWidth,
     nsSelectV2,
     nsInput,
-
+    popperSize,
     // refs items exports
     calculatorRef,
     controlRef,

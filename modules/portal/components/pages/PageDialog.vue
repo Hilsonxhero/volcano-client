@@ -193,9 +193,6 @@
 </template>
 
 <script setup lang="ts">
-import TextEditor from "@/components/common/TextEditor.client.vue";
-
-import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 import { UPDATE_MODEL_EVENT } from "~/core/constants";
 import { Editor, EditorContent } from "@tiptap/vue-3";
 import StarterKit from "@tiptap/starter-kit";
@@ -206,19 +203,12 @@ import MenuBar from "@/components/common/tiptap/tiptap-menu.vue";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
 import { BackColor } from "@/components/common/tiptap/extentions/backColor";
-
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { BaseFormItem, BaseForm } from "@/components/base/form";
 import BaseMessage from "@/components/base/message";
 import { FormItemContext } from "~/core/tokens";
 import { ResizableMedia } from "@/components/common/tiptap/extentions/resizableMedia";
-// import Table from "@tiptap/extension-table";
-// import { Table } from "@/components/common/tiptap/extentions/table";
-
-// import TableRow from "@tiptap/extension-table-row";
-// import TableCell from "@tiptap/extension-table-cell";
-// import TableHeader from "@tiptap/extension-table-header";
 import { Table } from "@/components/common/tiptap/extentions/supercharged-table/extension-table";
 import { TableCell } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-cell";
 import { TableHeader } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-header";
@@ -241,9 +231,7 @@ const emits = defineEmits([
   "close",
   "create",
 ]);
-
 const ns = useNamespace("tiptap");
-
 const visible_create_page = ref(false);
 const upload = ref<null | HTMLElement>(null);
 const url = ref(null);
@@ -277,7 +265,7 @@ watch(
 watch(
   () => form.value.content,
   (val, prevVal) => {
-    editor.value.commands.setContent(val);
+    // editor.value.commands.setContent(val);
   }
 );
 
@@ -289,6 +277,7 @@ watch(
       form.value.title = val?.title;
       form.value.name = val?.name;
       form.value.content = val?.content;
+      editor.value.commands.setContent(val?.content);
     }
   }
 );
@@ -472,8 +461,13 @@ onMounted(() => {
     ],
     content: form.value.content,
     onUpdate: () => {
+      const isSame = editor.value.getHTML() === form.value.content;
+      if (isSame) {
+        return;
+      } else {
+        form.value.content = editor.value.getHTML();
+      }
       // emits(UPDATE_MODEL_EVENT, editor.value.getHTML());
-      // form.value.content = editor.value.getHTML();
     },
   });
 });

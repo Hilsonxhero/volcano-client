@@ -6,24 +6,30 @@
     @mouseenter="states.comboBoxHovering = true"
     @mouseleave="states.comboBoxHovering = false"
   >
-    <div
-      ref="selectionRef"
-      class="border-2 rounded-xl h-12"
-      :class="[
-        nsSelectV2.e('wrapper'),
-        nsSelectV2.is('focused', states.isComposing),
-        nsSelectV2.is('hovering', states.comboBoxHovering),
-        nsSelectV2.is('filterable', filterable),
-        nsSelectV2.is('disabled', selectDisabled),
-      ]"
+    <tippy
+      placement="bottom"
+      :interactive="false"
+      role="dropdown"
+      @show="handleOnShow"
     >
-      <div v-if="$slots.prefix">
-        <slot name="prefix" />
-      </div>
-      <div v-if="multiple" :class="nsSelectV2.e('selection')">
-        <template v-if="collapseTags && modelValue.length > 0">
-          <div :class="nsSelectV2.e('selected-item')">
-            <!-- <el-tag :closable="
+      <div
+        ref="selectionRef"
+        class="border-2 rounded-xl h-12"
+        :class="[
+          nsSelectV2.e('wrapper'),
+          nsSelectV2.is('focused', states.isComposing),
+          nsSelectV2.is('hovering', states.comboBoxHovering),
+          nsSelectV2.is('filterable', filterable),
+          nsSelectV2.is('disabled', selectDisabled),
+        ]"
+      >
+        <div v-if="$slots.prefix">
+          <slot name="prefix" />
+        </div>
+        <div v-if="multiple" :class="nsSelectV2.e('selection')">
+          <template v-if="collapseTags && modelValue.length > 0">
+            <div :class="nsSelectV2.e('selected-item')">
+              <!-- <el-tag :closable="
                   !selectDisabled && !states.cachedOptions[0]?.disable
                 " :size="collapseTagSize" type="info" disable-transitions
                   @close="deleteTag($event, states.cachedOptions[0])">
@@ -32,8 +38,8 @@
                   }">{{ states.cachedOptions[0]?.label }}</span>
                 </el-tag> -->
 
-            <div>tag value</div>
-            <!-- <el-tag v-if="modelValue.length > 1" :closable="false" :size="collapseTagSize" type="info"
+              <div>tag value</div>
+              <!-- <el-tag v-if="modelValue.length > 1" :closable="false" :size="collapseTagSize" type="info"
                   disable-transitions>
 
                   <div v-if="collapseTagsTooltip">
@@ -68,135 +74,138 @@
                     maxWidth: `${tagMaxWidth}px`,
                   }">+ {{ modelValue.length - 1 }}</span>
                 </el-tag> -->
-            <div>tag value</div>
-          </div>
-        </template>
+              <div>tag value</div>
+            </div>
+          </template>
 
-        <template v-else>
-          <div
-            v-for="(selected, idx) in states.cachedOptions"
-            :key="idx"
-            :class="nsSelectV2.e('selected-item')"
-          >
-            <!-- <el-tag :key="getValueKey(selected)" :closable="!selectDisabled && !selected.disabled"
+          <template v-else>
+            <div
+              v-for="(selected, idx) in states.cachedOptions"
+              :key="idx"
+              :class="nsSelectV2.e('selected-item')"
+            >
+              <!-- <el-tag :key="getValueKey(selected)" :closable="!selectDisabled && !selected.disabled"
                   :size="collapseTagSize" type="info" disable-transitions @close="deleteTag($event, selected)">
                   <span :class="nsSelectV2.e('tags-text')" :style="{
                     maxWidth: `${tagMaxWidth}px`,
                   }">{{ getLabel(selected) }}</span>
                 </el-tag> -->
 
-            <div>tag value</div>
+              <div>tag value</div>
+            </div>
+          </template>
+          <div
+            :class="[
+              nsSelectV2.e('selected-item'),
+              nsSelectV2.e('input-wrapper'),
+            ]"
+            :style="inputWrapperStyle"
+          >
+            <input
+              :id="id"
+              ref="inputRef"
+              v-model-text="states.displayInputValue"
+              :autocomplete="autocomplete"
+              aria-autocomplete="list"
+              aria-haspopup="listbox"
+              autocapitalize="off"
+              :aria-expanded="expanded"
+              :aria-labelledby="label"
+              :class="[
+                nsSelectV2.is(selectSize),
+                nsSelectV2.e('combobox-input'),
+              ]"
+              :disabled="disabled"
+              role="combobox"
+              :readonly="!filterable"
+              spellcheck="false"
+              type="text"
+              :name="name"
+              :unselectable="expanded ? 'on' : undefined"
+              @update:modelValue="onUpdateInputValue"
+              @focus="handleFocus"
+              @input="onInput"
+              @compositionstart="handleCompositionStart"
+              @compositionupdate="handleCompositionUpdate"
+              @compositionend="handleCompositionEnd"
+            />
+            <span
+              v-if="filterable"
+              ref="calculatorRef"
+              aria-hidden="true"
+              :class="nsSelectV2.e('input-calculator')"
+              v-text="states.displayInputValue"
+            />
           </div>
-        </template>
-        <div
-          :class="[
-            nsSelectV2.e('selected-item'),
-            nsSelectV2.e('input-wrapper'),
-          ]"
-          :style="inputWrapperStyle"
-        >
-          <input
-            :id="id"
-            ref="inputRef"
-            v-model-text="states.displayInputValue"
-            :autocomplete="autocomplete"
-            aria-autocomplete="list"
-            aria-haspopup="listbox"
-            autocapitalize="off"
-            :aria-expanded="expanded"
-            :aria-labelledby="label"
-            :class="[nsSelectV2.is(selectSize), nsSelectV2.e('combobox-input')]"
-            :disabled="disabled"
-            role="combobox"
-            :readonly="!filterable"
-            spellcheck="false"
-            type="text"
-            :name="name"
-            :unselectable="expanded ? 'on' : undefined"
-            @update:modelValue="onUpdateInputValue"
-            @focus="handleFocus"
-            @input="onInput"
-            @compositionstart="handleCompositionStart"
-            @compositionupdate="handleCompositionUpdate"
-            @compositionend="handleCompositionEnd"
-          />
+        </div>
+        <template v-else>
+          <div
+            :class="[
+              nsSelectV2.e('selected-item'),
+              nsSelectV2.e('input-wrapper'),
+            ]"
+          >
+            <input
+              :id="id"
+              ref="inputRef"
+              v-model-text="states.displayInputValue"
+              aria-autocomplete="list"
+              aria-haspopup="listbox"
+              :aria-labelledby="label"
+              :aria-expanded="expanded"
+              autocapitalize="off"
+              :autocomplete="autocomplete"
+              :class="nsSelectV2.e('combobox-input')"
+              :disabled="disabled"
+              :name="name"
+              role="combobox"
+              :readonly="!filterable"
+              spellcheck="false"
+              type="text"
+              :unselectable="expanded ? 'on' : undefined"
+              @compositionstart="handleCompositionStart"
+              @compositionupdate="handleCompositionUpdate"
+              @compositionend="handleCompositionEnd"
+              @focus="handleFocus"
+              @input="onInput"
+              @update:modelValue="onUpdateInputValue"
+            />
+          </div>
           <span
             v-if="filterable"
             ref="calculatorRef"
             aria-hidden="true"
-            :class="nsSelectV2.e('input-calculator')"
+            :class="[
+              nsSelectV2.e('selected-item'),
+              nsSelectV2.e('input-calculator'),
+            ]"
             v-text="states.displayInputValue"
           />
-        </div>
-      </div>
-      <template v-else>
-        <div
+        </template>
+        <span
+          v-if="shouldShowPlaceholder"
           :class="[
-            nsSelectV2.e('selected-item'),
-            nsSelectV2.e('input-wrapper'),
+            nsSelectV2.e('placeholder'),
+            nsSelectV2.is(
+              'transparent',
+              states.isComposing ||
+                (placeholder && multiple
+                  ? modelValue.length === 0
+                  : !hasModelValue)
+            ),
           ]"
         >
-          <input
-            :id="id"
-            ref="inputRef"
-            v-model-text="states.displayInputValue"
-            aria-autocomplete="list"
-            aria-haspopup="listbox"
-            :aria-labelledby="label"
-            :aria-expanded="expanded"
-            autocapitalize="off"
-            :autocomplete="autocomplete"
-            :class="nsSelectV2.e('combobox-input')"
-            :disabled="disabled"
-            :name="name"
-            role="combobox"
-            :readonly="!filterable"
-            spellcheck="false"
-            type="text"
-            :unselectable="expanded ? 'on' : undefined"
-            @compositionstart="handleCompositionStart"
-            @compositionupdate="handleCompositionUpdate"
-            @compositionend="handleCompositionEnd"
-            @focus="handleFocus"
-            @input="onInput"
-            @update:modelValue="onUpdateInputValue"
-          />
-        </div>
-        <span
-          v-if="filterable"
-          ref="calculatorRef"
-          aria-hidden="true"
-          :class="[
-            nsSelectV2.e('selected-item'),
-            nsSelectV2.e('input-calculator'),
-          ]"
-          v-text="states.displayInputValue"
-        />
-      </template>
-      <span
-        v-if="shouldShowPlaceholder"
-        :class="[
-          nsSelectV2.e('placeholder'),
-          nsSelectV2.is(
-            'transparent',
-            states.isComposing ||
-              (placeholder && multiple
-                ? modelValue.length === 0
-                : !hasModelValue)
-          ),
-        ]"
-      >
-        {{ currentPlaceholder }}
-      </span>
-      <span :class="nsSelectV2.e('suffix')">
-        <nuxt-icon
-          name="arrow-down"
-          class="w-6 h-6"
-          v-show="!showClearBtn"
-          :class="[nsSelectV2.e('caret'), nsInput.e('icon'), iconReverse]"
-        ></nuxt-icon>
+          {{ currentPlaceholder }}
+        </span>
+        <span :class="nsSelectV2.e('suffix')">
+          <nuxt-icon
+            name="arrow-down"
+            class="w-6 h-6"
+            v-show="!showClearBtn"
+            :class="[nsSelectV2.e('caret'), nsInput.e('icon'), iconReverse]"
+          ></nuxt-icon>
 
-        <!-- <el-icon v-if="iconComponent" v-show="!showClearBtn"
+          <!-- <el-icon v-if="iconComponent" v-show="!showClearBtn"
               :class="[nsSelectV2.e('caret'), nsInput.e('icon'), iconReverse]">
               <component :is="iconComponent" />
             </el-icon>
@@ -204,30 +213,34 @@
               @click.prevent.stop="handleClear">
               <component :is="clearIcon" />
             </el-icon> -->
-        <!-- <el-icon v-if="validateState " :class="[nsInput.e('icon'), nsInput.e('validateIcon')]">
+          <!-- <el-icon v-if="validateState " :class="[nsInput.e('icon'), nsInput.e('validateIcon')]">
               <component :is="validateIcon" />
             </el-icon> -->
-      </span>
-    </div>
-    <div v-show="dropdownMenuVisible">
-      <el-select-menu
-        ref="menuRef"
-        :data="filteredOptions"
-        :hovering-index="states.hoveringIndex"
-        :scrollbar-always-on="scrollbarAlwaysOn"
-      >
-        <template #default="scope">
-          <slot v-bind="scope" />
-        </template>
-        <template #empty>
-          <slot name="empty">
-            <p :class="nsSelectV2.e('empty')">
-              {{ emptyText ? emptyText : "" }}
-            </p>
-          </slot>
-        </template>
-      </el-select-menu>
-    </div>
+        </span>
+      </div>
+
+      <template #content>
+        <div>
+          <el-select-menu
+            ref="menuRef"
+            :data="filteredOptions"
+            :hovering-index="states.hoveringIndex"
+            :scrollbar-always-on="scrollbarAlwaysOn"
+          >
+            <template #default="scope">
+              <slot v-bind="scope" />
+            </template>
+            <template #empty>
+              <slot name="empty">
+                <p :class="nsSelectV2.e('empty')">
+                  {{ emptyText ? emptyText : "" }}
+                </p>
+              </slot>
+            </template>
+          </el-select-menu>
+        </div>
+      </template>
+    </tippy>
   </div>
 </template>
 
@@ -268,6 +281,31 @@ export default defineComponent({
     const API = useSelect(props, emit);
     const { iconReverse, expanded } = useSelect(props, emit);
 
+    const popperOptions = ref({
+      strategy: "fixed",
+      modifiers: [
+        {
+          name: "flip",
+          options: {
+            fallbackPlacements: ["bottom", "right"],
+          },
+        },
+        {
+          name: "preventOverflow",
+          options: {
+            altAxis: true,
+            tether: false,
+          },
+        },
+      ],
+    });
+
+    const handleOnShow = (instance: any) => {
+      instance.popper.classList.add("tippy-select-dropdown");
+      // instance.popper.classList.add(`w-[${API.popperSize.value}px]`);
+      instance.popper.style.width = `${API.popperSize.value}px`;
+    };
+
     const selectRef = ref(null);
     // TODO, remove the any cast to align the actual API.
     provide(selectV2InjectionKey, {
@@ -291,7 +329,7 @@ export default defineComponent({
     //   API.expanded.value = false;
     // });
 
-    return API;
+    return { popperOptions, handleOnShow, ...API };
   },
 });
 </script>

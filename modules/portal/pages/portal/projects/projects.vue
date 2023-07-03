@@ -123,9 +123,7 @@ useInfiniteScroll(
 
 watch(
   () => infiniteRef.value,
-  (val) => {
-    console.log("val", val);
-  }
+  (val) => {}
 );
 
 const fetchProjects = async () => {
@@ -161,8 +159,9 @@ const handleOnCreateProject = () => {
   fetchProjects();
 };
 const setContainerHeight = () => {
-  // infiniteRef.value.style.height = `${window.innerHeight - 250}px`;
-  useResizeEvent.setElementHieght(infiniteRef.value, null, 250);
+  if (infiniteRef.value) {
+    useResizeEvent.setElementHieght(infiniteRef.value, null, 250);
+  }
 };
 
 onMounted(async () => {

@@ -120,7 +120,7 @@ const handleCreateProject = () => {
           "portal/projects/setup",
           formData
         );
-        console.log("data", data);
+
         if (data.success) {
           BaseMessage({
             message: "ساخت پروژه با موفقیت انجام شد!",
@@ -144,9 +144,6 @@ const handleCreateProject = () => {
   });
 };
 const handleCloseCreateProject = () => {
-  //   formRef.value?.resetField();
-  //   console.log("sfsdfds");
-
   emits(UPDATE_MODEL_EVENT, false);
 };
 </script>

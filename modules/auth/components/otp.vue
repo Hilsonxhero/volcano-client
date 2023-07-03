@@ -83,6 +83,7 @@ const resend = ref<boolean>(false);
 const store = useAuthStore();
 const code = ref(null);
 const loader = ref(false);
+const route = useRoute();
 const router = useRouter();
 const ttl_time = ref<any>(props.end);
 const error = ref<any>(null);
@@ -102,7 +103,11 @@ const handleSendCode = async () => {
 
     if (data.success) {
       await store.init();
-      navigateTo("/portal/dashboard");
+      // console.log("route.query.backUrl", route.query.backUrl);
+
+      const backUrl = route.query.backUrl || "/portal/dashboard";
+
+      navigateTo(backUrl);
     } else {
       error.value = data.data;
       // HxNotification.info({

@@ -19,7 +19,9 @@
 <script setup lang="ts">
 import BaseHeader from "@/modules/portal/components/header/Header.vue";
 import BaseAside from "@/modules/portal/components/aside/Aside.vue";
-
+definePageMeta({
+  // middleware: ["auth"],
+});
 useHead({
   title: "پنل کاربر",
   bodyAttrs: {

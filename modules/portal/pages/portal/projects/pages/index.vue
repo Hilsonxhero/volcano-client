@@ -27,13 +27,13 @@
           :name="index + 1"
         >
           <template #actions>
-            <BaseButton icon @click="handleShowCreatePage(head)">
+            <BaseButton icon @click.stop="handleShowCreatePage(head)">
               <nuxt-icon class="w-6 h-6" name="add"></nuxt-icon>
             </BaseButton>
-            <BaseButton @click="handleShowUpdatePageHead(head)" icon>
+            <BaseButton @click.stop="handleShowUpdatePageHead(head)" icon>
               <nuxt-icon class="w-6 h-6" name="magicpen"></nuxt-icon>
             </BaseButton>
-            <BaseButton @click="handleDeleteHeadPage(head, index)" icon>
+            <BaseButton @click.stop="handleDeleteHeadPage(head, index)" icon>
               <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
             </BaseButton>
           </template>
@@ -89,6 +89,7 @@ import BaseMessage from "@/components/base/message";
 
 definePageMeta({
   layout: "project",
+  // middleware: ["check-route"],
 });
 
 const visible_create_page = ref(false);

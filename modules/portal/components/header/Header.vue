@@ -131,9 +131,7 @@ const showAccountDialog = () => {
   visible_account.value = true;
 };
 
-onMounted(() => {
-  console.log("user", store?.user?.user);
-});
+onMounted(() => {});
 </script>
 
 <style scoped></style>
