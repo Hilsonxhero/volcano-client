@@ -56,6 +56,9 @@ export const ResizableMedia = Node.create<MediaOptions>({
       'media-type': {
         default: null
       },
+      'class': {
+        default: null
+      },
       alt: {
         default: null,
       },

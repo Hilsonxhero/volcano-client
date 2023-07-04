@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import BaseHeader from "@/modules/portal/components/layouts/software/header/Header.vue";
-import BaseAside from "@/modules/portal/components/layouts/software/aside/Aside.vue";
+import BaseHeader from "@/modules/software/components/header/Header.vue";
+import BaseAside from "@/modules/software/components/aside/Aside.vue";
 
 useHead({
   title: "پنل کاربر",

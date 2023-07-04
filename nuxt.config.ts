@@ -8,6 +8,7 @@ export default defineNuxtConfig({
         '~/modules/web/module',
         '~/modules/auth/module',
         '~/modules/portal/module',
+        '~/modules/software/module',
     ],
 
     i18n: {

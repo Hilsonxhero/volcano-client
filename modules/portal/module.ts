@@ -48,11 +48,7 @@ export default defineNuxtModule({
                     path: '/portal/projects/invite/confirmation',
                     file: resolve(__dirname, './pages/portal/projects/users/invite/confirmation.vue')
                 },
-                {
-                    name: 'software-projects-pages-index',
-                    path: '/software/projects/:id/:slug/pages',
-                    file: resolve(__dirname, './pages/software/projects/pages/index.vue')
-                },
+
             )
         })
 

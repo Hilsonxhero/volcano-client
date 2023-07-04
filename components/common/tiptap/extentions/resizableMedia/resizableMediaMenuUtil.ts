@@ -15,6 +15,7 @@ export const resizableMediaActions: ResizableMediaAction[] = [
     action: (updateAttributes) => updateAttributes({
       dataAlign: 'right',
       dataFloat: null,
+      class: 'media-align-right',
     }),
     icon: "textalign-right",
     isActive: (attrs) => attrs.dataAlign === 'right'
@@ -23,6 +24,7 @@ export const resizableMediaActions: ResizableMediaAction[] = [
     tooltip: 'Align center',
     action: (updateAttributes) => updateAttributes({
       dataAlign: 'center',
+      class: 'media-align-center',
       dataFloat: null,
     }),
     icon: "textalign-center",
@@ -33,6 +35,7 @@ export const resizableMediaActions: ResizableMediaAction[] = [
     tooltip: 'Align left',
     action: (updateAttributes) => updateAttributes({
       dataAlign: 'left',
+      class: 'media-align-left',
       dataFloat: null,
     }),
     icon: "textalign-left",
@@ -42,6 +45,7 @@ export const resizableMediaActions: ResizableMediaAction[] = [
     tooltip: 'Float right',
     action: (updateAttributes) => updateAttributes({
       dataAlign: null,
+      class: 'media-float-right',
       dataFloat: 'right',
     }),
     icon: "textalign-justifyright",
@@ -51,6 +55,7 @@ export const resizableMediaActions: ResizableMediaAction[] = [
     tooltip: 'Float left',
     action: (updateAttributes) => updateAttributes({
       dataAlign: null,
+      class: 'media-float-left',
       dataFloat: 'left',
     }),
     icon: "textalign-justifyleft",
