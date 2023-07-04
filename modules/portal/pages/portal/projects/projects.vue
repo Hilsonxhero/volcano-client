@@ -100,6 +100,7 @@ import BaseMessage from "@/components/base/message";
 import { useInfiniteScroll } from "@vueuse/core";
 definePageMeta({
   layout: "portal",
+  middleware: ["auth"],
 });
 const projects = ref([]);
 const loading = ref(true);

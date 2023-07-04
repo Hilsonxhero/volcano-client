@@ -59,12 +59,12 @@
             <div
               class="leading-[1.5625rem] mb-2 text-sm font-bold lg:text-typo lg:font-extrabold"
             >
-              لورم ایپسوم متن ساختگی
+              {{ store.user?.user?.email }}
             </div>
             <div
               class="text-typo-light text-xs leading-5 lg:font-bold text-right"
             >
-              091234343434
+              {{ store.user?.user?.username }}
             </div>
           </div>
         </div>
@@ -100,8 +100,10 @@
 
 <script setup lang="ts">
 import BaseLogo from "@/components/app/BaseLogo.vue";
+import { useAuthStore } from "@/modules/auth/store";
 
 const visible_account = ref(false);
+const store = useAuthStore();
 
 const pages = ref([
   {

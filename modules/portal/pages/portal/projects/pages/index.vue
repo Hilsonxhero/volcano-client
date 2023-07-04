@@ -137,7 +137,7 @@ import { useClipboard } from "@vueuse/core";
 
 definePageMeta({
   layout: "project",
-  // middleware: ["check-route"],
+  middleware: ["auth"],
 });
 const visible_share = ref(false);
 const visible_create_page = ref(false);

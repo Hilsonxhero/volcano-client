@@ -22,11 +22,7 @@ export default defineNuxtModule({
                     path: '/portal/projects',
                     file: resolve(__dirname, './pages/portal/projects/projects.vue')
                 },
-                {
-                    name: 'portal-projects-create',
-                    path: '/portal/projects/create',
-                    file: resolve(__dirname, './pages/portal/projects/create.vue')
-                },
+
                 {
                     name: 'portal-projects-show',
                     path: '/portal/projects/:id/:slug',

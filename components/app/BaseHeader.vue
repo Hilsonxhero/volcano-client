@@ -5,14 +5,12 @@
         <div class="h-16">
           <div class="flex items-center h-full justify-between">
             <div class="flex items-center">
-              <base-button
-                class="block lg:hidden"
-                icon
-                variant="gray"
-                @click="showNavHandler"
-              >
-                <nuxt-icon class="text-gray-400" name="menu-bulk"></nuxt-icon>
-              </base-button>
+              <div class="block lg:hidden">
+                <base-button icon variant="gray" @click="showNavHandler">
+                  <nuxt-icon class="text-gray-400" name="menu-bulk"></nuxt-icon>
+                </base-button>
+              </div>
+
               <nuxt-link to="/" class="hidden lg:block">
                 <div href="" class="t-header__logo">
                   <img src="~/assets/media/logo-base.svg" class="" />

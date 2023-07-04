@@ -92,6 +92,7 @@ import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 
 definePageMeta({
   layout: "portal",
+  middleware: ["auth"],
 });
 
 const loading = ref(true);

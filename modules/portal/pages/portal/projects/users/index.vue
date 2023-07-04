@@ -67,7 +67,11 @@
             </template>
 
             <template v-slot:cell-actions="{ row: user, index: index }">
-              <base-button size="small" icon>
+              <base-button
+                @click="handleDeleteUser(user, index)"
+                size="small"
+                icon
+              >
                 <nuxt-icon name="trash"></nuxt-icon>
               </base-button>
             </template>
@@ -87,9 +91,12 @@
 import InviteUserDialog from "@/modules/portal/components/portal/projects/users/InviteUserDialog.vue";
 import { BaseDataTable } from "@/components/base/datatable";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
+import BaseMessage from "@/components/base/message";
+import { BaseMessageBox } from "@/components/base/message-box";
 
 definePageMeta({
   layout: "project",
+  middleware: ["auth"],
 });
 // @ts-nocheck
 const visible_invite_user = ref(false);
@@ -141,25 +148,11 @@ const handleChangePage = (page) => {
   current_page.value = page;
   fetchUsers();
 };
-const roles = ref([
-  { title: "aaa", id: 1 },
-  { title: "sss", id: 2 },
-  { title: "xxx", id: 3 },
-  { title: "aaa", id: 1 },
-  { title: "sss", id: 2 },
-  { title: "xxx", id: 3 },
-  { title: "aaa", id: 1 },
-  { title: "sss", id: 2 },
-  { title: "xxx", id: 3 },
-]);
 
-const handleOnInviteUser = () => {
-  console.log("im here !");
-};
+const handleOnInviteUser = () => {};
 const handleShowInviteMember = () => {
   visible_invite_user.value = true;
 };
-
 const fetchUsers = async () => {
   let params = {
     page: current_page.value,
@@ -176,6 +169,31 @@ const fetchUsers = async () => {
     tableData.value = data.members;
   } catch (error) {}
 };
+
+const handleDeleteUser = (user: any, index: any) => {
+  BaseMessageBox.confirm(`آیا از حذف  کاربر  اطمینان دارید ؟!`, "پیام تایید", {
+    confirmButtonText: "تایید",
+    cancelButtonText: "لغو",
+    type: "warning",
+  })
+    .then(async () => {
+      const data = await useApiService.remove(
+        `portal/projects/${project_id.value}/users/${user?.id}`
+      );
+      if (data.success) {
+        tableData.value.splice(index, 1);
+        BaseMessage({
+          message: "حذف  صفحه با موفقیت انجام شد!",
+          type: "success",
+          duration: 4000,
+          center: true,
+          offset: 20,
+        });
+      }
+    })
+    .catch(() => {});
+};
+
 onMounted(() => {
   fetchUsers();
   project_id.value = route.params.id;

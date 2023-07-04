@@ -20,8 +20,10 @@
 import BaseHeader from "@/modules/portal/components/layouts/project/header/Header.vue";
 import BaseAside from "@/modules/portal/components/layouts/project/aside/Aside.vue";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
-
 import { usePortalStore } from "@/modules/portal/store/portal";
+
+definePageMeta({});
+
 useHead({
   title: "پنل کاربر",
   bodyAttrs: {
