@@ -3,7 +3,7 @@
     <div
       class="menu flex-col menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500"
     >
-      <template v-for="(item, i) in MainMenuConfig" :key="i">
+      <template v-for="(item, i) in pages" :key="i">
         <div v-if="item.heading" class="menu-item">
           <div class="menu-content pt-8 pb-2">
             <span class="menu-section text-gray-400 text-uppercase text-sm">
@@ -15,13 +15,16 @@
         <template v-for="(menuItem, j) in item.pages" :key="j">
           <template v-if="menuItem.heading">
             <div class="menu-item">
-              <router-link class="menu-link" active-class="active" to="/">
+              <router-link
+                class="menu-link"
+                active-class="active"
+                :to="menuItem.route"
+              >
                 <span
                   v-if="menuItem.svgIcon"
                   class="bg-gray-200 rounded-2xl flex justify-center items-center min-w-[2.75rem] h-[2.75rem] ml-2"
                 >
                   <span class="svg-icon svg-icon-2">
-                    <!-- <inline-svg :src="menuItem.svgIcon" /> -->
                     <nuxt-icon
                       :name="menuItem.svgIcon"
                       class="w-6 h-6"
@@ -136,6 +139,24 @@ const store = useAuthStore();
 
 const route = useRoute();
 const scrollElRef = ref<null | HTMLElement>(null);
+
+const pages = ref([
+  {
+    pages: [
+      {
+        heading: "داشبورد",
+        route: { name: "portal-dashboard" },
+
+        svgIcon: "note-bulk",
+      },
+      {
+        heading: "پروژه ها",
+        route: { name: "portal-projects-index" },
+        svgIcon: "group",
+      },
+    ],
+  },
+]);
 
 onMounted(() => {
   if (scrollElRef.value) {

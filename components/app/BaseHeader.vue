@@ -61,12 +61,23 @@
                 <!-- <BaseButton class="mr-2" variant="light">
                   <nuxt-icon name="user-bulk"></nuxt-icon>
                 </BaseButton> -->
-                <nuxt-link
-                  :to="{ name: 'auth' }"
-                  class="text-white overflow-hidden relative rounded-[14px] py-4 px-8 border border-white border-solid ml-4"
-                >
-                  ورود
-                </nuxt-link>
+                <template v-if="isLoggedIn">
+                  <nuxt-link
+                    :to="{ name: 'auth' }"
+                    class="text-white overflow-hidden relative rounded-[14px] py-4 px-8 border border-white border-solid ml-4"
+                  >
+                    حساب کاربری
+                  </nuxt-link>
+                </template>
+                <template v-else>
+                  <nuxt-link
+                    :to="{ name: 'auth' }"
+                    class="text-white overflow-hidden relative rounded-[14px] py-4 px-8 border border-white border-solid ml-4"
+                  >
+                    ورود
+                  </nuxt-link>
+                </template>
+
                 <a
                   href=""
                   class="primary-button-two text-white overflow-hidden relative rounded-[14px] py-4 px-8"
@@ -84,6 +95,11 @@
 
 <script setup lang="ts">
 import { onClickOutside } from "@vueuse/core";
+import { useAuthStore } from "@/modules/auth/store";
+import { storeToRefs } from "pinia";
+
+const store = useAuthStore();
+const { user, isLoggedIn } = storeToRefs(store);
 
 const menus = ref([
   { title: "صفحه اصلی", to: "" },

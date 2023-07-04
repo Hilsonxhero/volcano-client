@@ -31,6 +31,11 @@ export default defineNuxtModule({
                     path: '/',
                     file: resolve(__dirname, './pages/home.vue')
                 },
+                {
+                    name: '403',
+                    path: '/403',
+                    file: resolve(__dirname, './pages/errors/403.vue')
+                },
             )
         })
 

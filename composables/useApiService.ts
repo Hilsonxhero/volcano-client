@@ -24,16 +24,15 @@ export const useApiService = (request: string, opts?: UseFetchOptions): Promise<
         credentials: 'include',
         headers,
         onResponse({ request, response, options }) {
-            // Process the response data
+            if (response.status == 403) {
+                navigateTo("/403")
+            }
         },
         onResponseError({ request, response, options }) {
-            // Handle the response errors
         },
         onRequest({ request, options }) {
-            // Set the request headers
         },
         onRequestError({ request, options, error }) {
-            // Handle the request errors
         },
         ...opts
     })

@@ -5,6 +5,8 @@ export default defineNuxtPlugin((nuxtApp) => {
         const store = useAuthStore();
         return store.init()
     }
+
+
 })
 
 

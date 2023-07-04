@@ -49,7 +49,7 @@
               <BaseButton icon @click="handleShowUpdatePage(page)">
                 <nuxt-icon name="magicpen"></nuxt-icon>
               </BaseButton>
-              <BaseButton icon>
+              <BaseButton @click="handleSharePage(page)" icon>
                 <nuxt-icon name="share"></nuxt-icon>
               </BaseButton>
               <BaseButton
@@ -77,6 +77,53 @@
       :visible="visible_create_head"
       @close="handleCloseCreateHead()"
     />
+
+    <base-dialog title="اشتراک گذاری" width="50%" v-model="visible_share">
+      <div class="mx-4 flex flex-col items-center">
+        <base-button block variant="light" @click="handleCopyPagePath()">
+          <div class="flex items-center">
+            <div class="text-gray-500 ml-2">
+              <span v-if="!copied">کپی کردن لینک</span>
+              <span v-else>کپی شد!</span>
+            </div>
+            <span>
+              <nuxt-icon
+                class="text-gray-500"
+                name="clipboard-text"
+              ></nuxt-icon>
+            </span>
+          </div>
+        </base-button>
+
+        <div class="text-gray-400 text-xs text-center my-4">
+          این صفحه را با دیگران به اشتراک بگذارید!
+        </div>
+
+        <!-- <div class="grid grid-cols-12 gap-2">
+          <a
+            target="_blank"
+            :href="`https://wa.me/?text=${product_path}`"
+            class="col-span-6 flex rounded-md items-center justify-center scm-whatsapp-bc p-2"
+          >
+            <div class="scm-whatsapp-tc ml-2">واتساپ</div>
+            <div>
+              <nuxt-icon class="scm-whatsapp-tc" name="whatsapp"></nuxt-icon>
+            </div>
+          </a>
+          <a
+            target="_blank"
+            :href="`https://t.me/share/url?text=${product_path}`"
+            class="col-span-6 flex rounded-md items-center justify-center scm-telegram-bc p-2"
+          >
+            <div class="scm-telegram-tc ml-2">تلگرام</div>
+            <div>
+              <nuxt-icon class="scm-telegram-tc" name="telegram"></nuxt-icon>
+            </div>
+          </a>
+        </div> -->
+      </div>
+      <template #footer> </template>
+    </base-dialog>
   </div>
 </template>
 
@@ -86,12 +133,13 @@ import PageDialog from "@/modules/portal/components/pages/PageDialog.vue";
 import PageHeadDialog from "@/modules/portal/components/pages/PageHeadDialog.vue";
 import { BaseMessageBox } from "@/components/base/message-box";
 import BaseMessage from "@/components/base/message";
+import { useClipboard } from "@vueuse/core";
 
 definePageMeta({
   layout: "project",
   // middleware: ["check-route"],
 });
-
+const visible_share = ref(false);
 const visible_create_page = ref(false);
 const visible_create_head = ref(false);
 const project_id = ref(null);
@@ -100,6 +148,10 @@ const pages = ref([]);
 const selectd_page: Ref<Object> = ref({});
 const selectd_child_page: Ref<Object | null> = ref(null);
 const selected_head = ref(null);
+const page_path = ref(null);
+const selected_page_share = ref(null);
+const project_slug = ref(null);
+const { text, copy, copied, isSupported } = useClipboard({ page_path });
 
 const handleShowCreatePage = (page: any) => {
   selectd_page.value = page;
@@ -133,6 +185,17 @@ const handleOnCreatePageHead = () => {
 };
 const handleOnCreatePage = () => {
   fetchPages();
+};
+const handleSharePage = (page) => {
+  console.log("page", page);
+  selected_page_share.value = page;
+  visible_share.value = true;
+};
+const handleCopyPagePath = () => {
+  copy(
+    window.location.host +
+      `/software/projects/${project_id.value}/${project_slug.value}/pages/${selected_page_share.value.id}`
+  );
 };
 
 const handleDeleteHeadPage = (head: any, index: any) => {
@@ -196,6 +259,8 @@ const fetchPages = async () => {
 
 onMounted(() => {
   project_id.value = route.params.id;
+  project_slug.value = route.params.slug;
+
   fetchPages();
 });
 </script>

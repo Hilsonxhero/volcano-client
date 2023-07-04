@@ -49,15 +49,15 @@
               </p>
             </div>
 
-            <ul class="avatar-group flex items-center mb-0 mt-3 pr-2">
+            <ul class="avatar-group flex items-center mb-0 mt-3 mr-2">
               <li
-                v-for="(member, index) in 3"
+                v-for="(member, index) in project.members"
                 :key="index"
                 class="avatar w-[2rem] h-[2rem] -mr-[0.8rem] relative avatar-sm"
               >
                 <img
-                  class="avatar-img rounded-[50%] w-full h-full object-cover border-2 border-white"
-                  src="~/assets/media/faces/1.jpg"
+                  class="avatar-img rounded-[50%] w-full h-full object-cover border border-gray-300"
+                  src="~/assets/media/faces/blank.png"
                   alt="avatar"
                 />
               </li>
