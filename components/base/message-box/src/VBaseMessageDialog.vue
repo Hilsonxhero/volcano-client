@@ -35,7 +35,9 @@
               :class="[ns.e('status'), typeClass]"
               @click="handleAction('close')"
             >
-              <nuxt-icon name="close-square" class="w-6 h-6"></nuxt-icon>
+              <Suspense>
+                <nuxt-icon name="close-square" class="w-6 h-6"></nuxt-icon>
+              </Suspense>
             </base-button>
           </div>
           <!-- <button v-if="showClose" type="button" :class="ns.e('headerbtn')"
@@ -243,7 +245,7 @@ export default defineComponent({
     const contentId = useId();
     const inputId = useId();
 
-    const btnSize = "test";
+    const btnSize = "small";
 
     // const iconComponent = computed(
     //     () => state.icon || TypeComponentsMap[state.type] || ''

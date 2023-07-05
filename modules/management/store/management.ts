@@ -2,7 +2,7 @@
 
 import { defineStore } from "pinia";
 
-export const usePortalStore = defineStore("portal", () => {
+export const useManagementStore = defineStore("management", () => {
     const project = ref({});
     const fetchProject = async (payload) => {
         try {

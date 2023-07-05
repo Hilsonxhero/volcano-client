@@ -47,11 +47,11 @@
         <!--begin::Table body-->
         <tbody class="fw-bold text-gray-600">
           <template v-if="getItems.length">
-            <template v-for="(item, i) in getItems" :key="i">
+            <template v-for="(item, index) in getItems" :key="index">
               <tr class="odd">
                 <template v-for="(cell, i) in tableHeader" :key="i">
                   <td :class="{ 'text-end': tableHeader.length - 1 === i }">
-                    <slot :name="`cell-${cell.key}`" :row="item">
+                    <slot :name="`cell-${cell.key}`" :row="item" :index="index">
                       {{ item[prop] }}
                     </slot>
                   </td>
@@ -178,8 +178,6 @@ export default defineComponent({
     const vnodeProps = getCurrentInstance()?.vnode.props || {};
 
     watch(data.value, () => {
-      console.log("hereee");
-
       if ("onCurrentChange" in vnodeProps) {
         currentSort.value = label.value + order.value;
       } else {
@@ -191,7 +189,19 @@ export default defineComponent({
       () => props.tableData,
       (val) => {
         data.value = val;
-        console.log("hereee");
+      }
+    );
+
+    watch(
+      () => props.total,
+      (val) => {
+        pagination.value.total = val;
+      }
+    );
+    watch(
+      () => props.rowsPerPage,
+      (val) => {
+        pagination.value.rowsPerPage = val;
       }
     );
 

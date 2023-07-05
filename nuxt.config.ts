@@ -9,6 +9,7 @@ export default defineNuxtConfig({
         '~/modules/auth/module',
         '~/modules/portal/module',
         '~/modules/software/module',
+        '~/modules/management/module',
     ],
 
     i18n: {

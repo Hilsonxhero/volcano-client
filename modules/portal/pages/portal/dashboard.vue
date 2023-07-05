@@ -99,7 +99,7 @@ const loading = ref(true);
 const projects = ref([]);
 
 onMounted(async () => {
-  const { data } = await useApiService.get("portal/dashboard");
+  const { data } = await useApiService.get("application/portal/dashboard");
   projects.value = data.projects;
   loading.value = false;
 });

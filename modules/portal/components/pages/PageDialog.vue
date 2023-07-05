@@ -368,7 +368,7 @@ const handleCreatePage = () => {
           project_id: project_id.value,
         };
         const data = await useApiService.post(
-          `portal/projects/${project_id.value}/pages`,
+          `application/portal/projects/${project_id.value}/pages`,
           formData
         );
         if (data.success) {
@@ -406,7 +406,7 @@ const handleUpdatePage = () => {
           project_id: project_id.value,
         };
         const data = await useApiService.patch(
-          `portal/projects/${project_id.value}/pages/${props.page.id}`,
+          `application/portal/projects/${project_id.value}/pages/${props.page.id}`,
           formData
         );
         if (data.success) {

@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const personalInfo = async () => {
         try {
-            const { data } = await useApiService.get(`user/profile/personal`);
+            const { data } = await useApiService.get(`application/user/profile/personal`);
             user.value = data?.user;
         } catch (error) {
             return error;
@@ -22,7 +22,7 @@ export const useAuthStore = defineStore("auth", () => {
     const init = async () => {
         if (!checked.value)
             try {
-                const { data } = await useApiService.get(`user/init`);
+                const { data } = await useApiService.get(`application/user/init`);
                 user.value = data;
                 isLoggedIn.value = data?.is_logged_in;
                 checked.value = true;
@@ -36,7 +36,7 @@ export const useAuthStore = defineStore("auth", () => {
     const login = async (form) => {
         try {
             checked.value = false;
-            const { data } = await useApiService.post(`auth/otp/login`, form);
+            const { data } = await useApiService.post(`application/auth/otp/login`, form);
             isLoggedIn.value = true;
             return data;
         } catch (error) {
@@ -47,7 +47,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const authenticate = async (form) => {
         try {
-            const { data } = await useApiService.post(`auth/otp/authenticate`, form);
+            const { data } = await useApiService.post(`application/auth/otp/authenticate`, form);
             return data;
         } catch (error) {
             return error;
@@ -57,7 +57,7 @@ export const useAuthStore = defineStore("auth", () => {
     const logout = async () => {
         try {
             checked.value = false;
-            const { data } = await useApiService.post(`auth/logout`);
+            const { data } = await useApiService.post(`application/auth/logout`);
             user.value = null;
             isLoggedIn.value = false;
         } catch (error) {

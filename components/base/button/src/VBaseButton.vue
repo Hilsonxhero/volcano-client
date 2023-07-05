@@ -81,7 +81,6 @@
 
 <script lang="ts" setup>
 import { Text, computed, inject, ref, useSlots } from "vue";
-
 import { buttonGroupContextKey } from "@/core/tokens";
 import { buttonEmits, buttonProps } from "./VButton";
 import { useButtonCustomStyle } from "./VButtonCustom";
@@ -134,10 +133,16 @@ const shouldAddSpace = computed(() => {
 const buttonStyle = useButtonCustomStyle(props);
 
 const handleClick = (evt: MouseEvent) => {
-  if (props.nativeType === "reset") {
-    form?.resetFields();
+  // if (props.nativeType === "reset") {
+  //   form?.resetFields();
+  // }
+  // emit("click", evt);
+  if (!props.to) {
+    // return;
+    emit("click", evt);
+  } else {
+    navigateTo(props.to);
   }
-  emit("click", evt);
 };
 
 defineExpose({

@@ -6,6 +6,10 @@
     :aria-labelledby="isGroup ? labelId : undefined"
   >
     <div :class="ns.e('content')" :style="contentStyle">
+      <div class="mb-1">
+        <label class="" for="">{{ label }}</label>
+      </div>
+
       <slot />
       <transition :name="`${ns.namespace.value}-zoom-in-top`">
         <slot v-if="shouldShowError" name="error" :error="validateMessage">

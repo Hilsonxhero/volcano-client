@@ -39,7 +39,7 @@ const page = ref({});
 
 const handleFetchProject = async () => {
   const data = await useApiService.get(
-    `software/projects/${project_id.value}/pages/${page_id.value}`
+    `application/software/projects/${project_id.value}/pages/${page_id.value}`
   );
   page.value = data.data;
   loading.value = false;

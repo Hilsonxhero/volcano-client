@@ -3,12 +3,7 @@
     <div class="mb-3 flex justify-between items-center">
       <h1 class="text-2xl text-gray-600">پروژه ها</h1>
       <div>
-        <base-button
-          @click="handleShowCreateProject()"
-          type="primary"
-          class=""
-          to="/"
-        >
+        <base-button @click="handleShowCreateProject()" type="primary" class="">
           <div class="flex items-center">
             <span class="ml-2">ساخت پروژه</span>
             <nuxt-icon name="add"></nuxt-icon>
@@ -136,7 +131,7 @@ const fetchProjects = async () => {
         page: +pager.value?.current_page ?? 1,
       };
       loading.value = true;
-      const { data } = await useApiService.get("portal/projects", {
+      const { data } = await useApiService.get("application/portal/projects", {
         params: params,
       });
       data.projects.map((item, index) => {

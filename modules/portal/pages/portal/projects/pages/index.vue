@@ -7,7 +7,6 @@
           @click="handleShowCreatePageHead()"
           type="primary"
           class=""
-          to="/"
         >
           <div class="flex items-center">
             <span class="ml-2">ساخت عنوان صفحه</span>
@@ -210,7 +209,7 @@ const handleDeleteHeadPage = (head: any, index: any) => {
   )
     .then(async () => {
       const data = await useApiService.remove(
-        `portal/projects/${project_id.value}/pages/${head?.id}`
+        `application/portal/projects/${project_id.value}/pages/${head?.id}`
       );
       if (data.success) {
         pages.value.splice(index, 1);
@@ -234,7 +233,7 @@ const handleDeletePage = (head: any, page: any, index: any) => {
   })
     .then(async () => {
       const data = await useApiService.remove(
-        `portal/projects/${project_id.value}/pages/${page?.id}`
+        `application/portal/projects/${project_id.value}/pages/${page?.id}`
       );
       if (data.success) {
         head.splice(index, 1);
@@ -252,7 +251,7 @@ const handleDeletePage = (head: any, page: any, index: any) => {
 
 const fetchPages = async () => {
   const { data } = await useApiService.get(
-    `portal/projects/${project_id.value}/pages`
+    `application/portal/projects/${project_id.value}/pages`
   );
   pages.value = data;
 };

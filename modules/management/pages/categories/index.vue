@@ -11,17 +11,16 @@
       <template #default>
         <section>
           <div class="mb-3 flex justify-between items-center">
-            <h1 class="text-2xl text-gray-600">عضو های پروژه</h1>
+            <h1 class="text-2xl text-gray-600">دسته بندی ها</h1>
             <div>
               <base-button
-                @click="handleShowInviteMember"
                 size="small"
                 type="primary"
                 class=""
-                to="/"
+                :to="{ name: 'management-categories-create' }"
               >
                 <div class="flex items-center">
-                  <span class="ml-2">عضو جدید</span>
+                  <span class="ml-2"> ایجاد دسته بندی</span>
                   <nuxt-icon name="add"></nuxt-icon>
                 </div>
               </base-button>
@@ -33,17 +32,13 @@
             :total="pager.total"
             :rows-per-page="pager.per_page"
             :tableData="tableData"
-            :single-item-index="index"
-            search-placeholder="جستجوی کاربر"
+            search-placeholder="جستجوی دسته بندی"
             :table-header="tableHeader"
             :enable-items-per-page-dropdown="false"
             :on-current-change="true"
             @current-change="handleChangePage"
           >
-            <template #left>
-              <!-- <hx-button :to="{ name: 'users create' }"> کاربر جدید </hx-button> -->
-              <div>www</div>
-            </template>
+            <template #left> </template>
             <template v-slot:cell-checkbox="{ row }">
               <div
                 class="form-check form-check-sm form-check-custom form-check-solid"
@@ -52,55 +47,63 @@
               </div>
             </template>
 
-            <template v-slot:cell-username="{ row }">
-              <span> {{ row?.username }}</span>
+            <template v-slot:cell-title="{ row }">
+              <span> {{ row?.title }}</span>
             </template>
-            <template v-slot:cell-email="{ row }"> {{ row?.email }} </template>
-
-            <template v-slot:cell-phone="{ row }"> {{ row?.phone }} </template>
-            <template v-slot:cell-role="{ row }"> {{ row?.role }} </template>
-
+            <template v-slot:cell-parent="{ row }">
+              <template v-if="row.parent">
+                {{ row?.parent?.title }}
+              </template>
+              <template v-else> ندارد </template>
+            </template>
             <template v-slot:cell-status="{ row }">
               <base-button outlined type="success" size="small">{{
                 row?.status
               }}</base-button>
             </template>
 
-            <template v-slot:cell-actions="{ row: user, index: index }">
-              <base-button
-                @click="handleDeleteUser(user, index)"
-                size="small"
-                icon
-              >
-                <nuxt-icon name="trash"></nuxt-icon>
-              </base-button>
+            <template v-slot:cell-actions="{ row: category, index }">
+              <div class="flex items-center">
+                <base-button
+                  @click="handleDeleteUser(category, index)"
+                  size="small"
+                  icon
+                >
+                  <nuxt-icon name="trash"></nuxt-icon>
+                </base-button>
+                <base-button
+                  :to="{
+                    name: 'management-categories-edit',
+                    params: { id: category.id },
+                  }"
+                  size="small"
+                  icon
+                >
+                  <nuxt-icon name="magicpen"></nuxt-icon>
+                </base-button>
+              </div>
             </template>
           </BaseDataTable>
         </section>
       </template>
     </base-skeleton>
-
-    <InviteUserDialog
-      @create="handleOnInviteUser"
-      v-model="visible_invite_user"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import InviteUserDialog from "@/modules/portal/components/portal/projects/users/InviteUserDialog.vue";
-import { BaseDataTable } from "@/components/base/datatable";
-import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import BaseMessage from "@/components/base/message";
 import { BaseMessageBox } from "@/components/base/message-box";
+import { BaseDataTable } from "@/components/base/datatable";
+import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 
 definePageMeta({
-  layout: "project",
+  layout: "management",
   middleware: ["auth"],
 });
-// @ts-nocheck
-const visible_invite_user = ref(false);
-const index = ref(null);
+const loading = ref(true);
+const pager = ref({});
+const current_page = ref(1);
+const route = useRoute();
 const checkedData = ref([]);
 const tableHeader = ref([
   {
@@ -109,23 +112,13 @@ const tableHeader = ref([
   },
 
   {
-    name: "نام کاربری",
-    key: "username",
+    name: "عنوان",
+    key: "title",
     sortable: true,
   },
   {
-    name: "ایمیل",
-    key: "email",
-    sortable: true,
-  },
-  {
-    name: "شماره همراه",
-    key: "phone",
-    sortable: true,
-  },
-  {
-    name: "سطح دسترسی",
-    key: "role",
+    name: "دسته پدر",
+    key: "parent",
     sortable: true,
   },
   {
@@ -138,52 +131,47 @@ const tableHeader = ref([
     key: "actions",
   },
 ]);
-const loading = ref(true);
 const tableData = ref([]);
-const route = useRoute();
-const project_id = ref(null);
-const pager = ref({});
-const current_page = ref(1);
+
 const handleChangePage = (page) => {
   current_page.value = page;
-  fetchUsers();
+  fetchCategories();
 };
 
-const handleOnInviteUser = () => {};
-const handleShowInviteMember = () => {
-  visible_invite_user.value = true;
-};
-const fetchUsers = async () => {
+const fetchCategories = async () => {
   let params = {
     page: current_page.value,
   };
   try {
-    const { data } = await useApiService.get(
-      `application/portal/projects/${route.params.id}/users`,
-      {
-        params: params,
-      }
-    );
+    const { data } = await useApiService.get(`management/categories`, {
+      params: params,
+    });
     loading.value = false;
     pager.value = data.pager;
-    tableData.value = data.members;
+    tableData.value = data.categories;
   } catch (error) {}
 };
 
-const handleDeleteUser = (user: any, index: any) => {
-  BaseMessageBox.confirm(`آیا از حذف  کاربر  اطمینان دارید ؟!`, "پیام تایید", {
-    confirmButtonText: "تایید",
-    cancelButtonText: "لغو",
-    type: "warning",
-  })
+const handleDeleteUser = (category: any, index: any) => {
+  console.log("index", index);
+
+  BaseMessageBox.confirm(
+    `آیا از حذف  دسته بندی  اطمینان دارید ؟!`,
+    "پیام تایید",
+    {
+      confirmButtonText: "تایید",
+      cancelButtonText: "لغو",
+      type: "warning",
+    }
+  )
     .then(async () => {
       const data = await useApiService.remove(
-        `application/portal/projects/${project_id.value}/users/${user?.id}`
+        `management/categories/${category?.id}`
       );
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  صفحه با موفقیت انجام شد!",
+          message: "حذف  دسته بندی با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,
@@ -195,7 +183,8 @@ const handleDeleteUser = (user: any, index: any) => {
 };
 
 onMounted(() => {
-  fetchUsers();
-  project_id.value = route.params.id;
+  fetchCategories();
 });
 </script>
+
+<style scoped></style>

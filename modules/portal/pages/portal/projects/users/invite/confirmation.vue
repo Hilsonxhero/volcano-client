@@ -71,7 +71,7 @@ const handleConfirmInvite = async () => {
       token: token.value,
     };
     const data = await useApiService.post(
-      "portal/projects/invite/membership/confirmation",
+      "application/portal/projects/invite/membership/confirmation",
       formData
     );
     if (data.success) {
@@ -97,7 +97,7 @@ const handleDeclineInvite = async () => {
       token: token.value,
     };
     const data = await useApiService.post(
-      "portal/projects/invite/membership/decline",
+      "application/portal/projects/invite/membership/decline",
       formData
     );
     if (data.success) {
@@ -114,7 +114,7 @@ const fetchInvite = async () => {
   try {
     loading.value = true;
     const data = await useApiService.get(
-      `portal/projects/invite/show/${invite_id.value}`
+      `application/portal/projects/invite/show/${invite_id.value}`
     );
     console.log("data", data);
     invite.value = data.data;

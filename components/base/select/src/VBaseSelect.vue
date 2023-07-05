@@ -14,7 +14,7 @@
     >
       <div
         ref="selectionRef"
-        class="border-2 rounded-xl h-12"
+        class="rounded-xl h-12"
         :class="[
           nsSelectV2.e('wrapper'),
           nsSelectV2.is('focused', states.isComposing),

@@ -36,6 +36,9 @@ export const buttonProps = buildProps({
     type: String,
     default: () => "",
   },
+  to: {
+    type: [String, Object],
+  },
   plain: Boolean,
   text: Boolean,
   link: Boolean,

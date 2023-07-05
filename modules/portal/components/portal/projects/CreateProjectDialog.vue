@@ -117,7 +117,7 @@ const handleCreateProject = () => {
           description: form.value.description,
         };
         const data = await useApiService.post(
-          "portal/projects/setup",
+          "application/portal/projects/setup",
           formData
         );
 

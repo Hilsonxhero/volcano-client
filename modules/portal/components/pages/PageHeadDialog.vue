@@ -88,7 +88,7 @@ const handleCreatePageHead = () => {
         };
 
         const data = await useApiService.post(
-          `portal/projects/${project_id.value}/pages`,
+          `application/portal/projects/${project_id.value}/pages`,
           formData
         );
         if (data.success) {
@@ -125,7 +125,7 @@ const handleUpdatePageHead = () => {
         };
 
         const data = await useApiService.patch(
-          `portal/projects/${project_id.value}/pages/${props.head?.id}`,
+          `application/portal/projects/${project_id.value}/pages/${props.head?.id}`,
           formData
         );
         if (data.success) {

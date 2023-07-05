@@ -6,7 +6,7 @@ export const useSoftwareStore = defineStore("software", () => {
     const project = ref({});
     const fetchProject = async (payload) => {
         try {
-            const { data } = await useApiService.get(`software/projects/${payload}/show`);
+            const { data } = await useApiService.get(`application/software/projects/${payload}/show`);
             project.value = data;
             return data
         } catch (error) {

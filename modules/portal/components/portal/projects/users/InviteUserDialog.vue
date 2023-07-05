@@ -155,7 +155,7 @@ const handleInviteUser = () => {
           ],
         };
         const data = await useApiService.post(
-          "portal/projects/invite/membership",
+          "application/portal/projects/invite/membership",
           formData
         );
 
@@ -185,7 +185,7 @@ const handleInviteUser = () => {
 
 const fetchRoles = async () => {
   try {
-    const data = await useApiService.get("portal/roles");
+    const data = await useApiService.get("application/portal/roles");
     role_groups.value = data.data;
   } catch (error) {}
 };
