@@ -171,8 +171,8 @@ const pages = ref([
       },
       {
         heading: "سطح دسترسی ها",
-        route: { name: "portal-projects-index" },
-        active: "projects",
+        route: { name: "management-roles-index" },
+        active: "roles",
         svgIcon: "shield-tick",
       },
       {
@@ -183,8 +183,8 @@ const pages = ref([
       },
       {
         heading: "مقالات",
-        route: { name: "portal-projects-index" },
-        active: "projects",
+        route: { name: "management-articles-index" },
+        active: "articles",
         svgIcon: "articles-bulk",
       },
       {

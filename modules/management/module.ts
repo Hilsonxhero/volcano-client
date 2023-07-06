@@ -46,6 +46,38 @@ export default defineNuxtModule({
                     path: '/management/users/edit/:id',
                     file: resolve(__dirname, './pages/users/edit.vue')
                 },
+
+                {
+                    name: 'management-roles-index',
+                    path: '/management/roles',
+                    file: resolve(__dirname, './pages/roles/index.vue')
+                },
+                {
+                    name: 'management-roles-create',
+                    path: '/management/roles/create',
+                    file: resolve(__dirname, './pages/roles/create.vue')
+                },
+                {
+                    name: 'management-roles-edit',
+                    path: '/management/roles/edit/:id',
+                    file: resolve(__dirname, './pages/roles/edit.vue')
+                },
+
+                {
+                    name: 'management-articles-index',
+                    path: '/management/articles',
+                    file: resolve(__dirname, './pages/articles/index.vue')
+                },
+                {
+                    name: 'management-articles-create',
+                    path: '/management/articles/create',
+                    file: resolve(__dirname, './pages/articles/create.vue')
+                },
+                {
+                    name: 'management-articles-edit',
+                    path: '/management/articles/edit/:id',
+                    file: resolve(__dirname, './pages/articles/edit.vue')
+                },
             )
         })
     }

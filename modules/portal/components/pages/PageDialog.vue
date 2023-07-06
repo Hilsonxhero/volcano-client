@@ -333,7 +333,7 @@ const uploadImageHandler = (event) => {
   const data = new FormData();
   data.append("file", file.value);
   useApiService
-    .post("/upload/editor", data)
+    .post("application/upload/editor", data)
     .then(({ data }) => {
       editor.value.commands.setMedia({
         src: data,

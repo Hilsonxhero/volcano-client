@@ -10,69 +10,31 @@
       </template>
       <template #default>
         <div>
-          <h2 class="text-2xl my-4 text-gray-600">ایجاد کاربر</h2>
+          <h2 class="text-2xl my-4 text-gray-600">ویرایش مقاله</h2>
         </div>
         <div class="bg-white shadow-xl rounded-xl p-4">
           <base-form
-            @submit.prevent="handleCreateUser"
+            @submit.prevent="handleUpdateArticle"
             :model="form"
             ref="formRef"
             class="h-full grid grid-cols-12 gap-2"
           >
             <base-form-item
               :model="form"
-              prop="username"
+              prop="title"
               :rules="[
                 {
                   required: true,
-                  message: '  نام کاربری  الزامی می باشد',
+                  message: '   عنوان  الزامی می باشد',
                 },
               ]"
-              label="نام کاربری"
+              label=" عنوان"
               class="col-span-12 lg:col-span-4"
             >
               <base-input
-                v-model="form.username"
-                placeholder="نام کاربری "
+                v-model="form.title"
+                placeholder=" عنوان "
               ></base-input>
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="email"
-              :rules="[
-                {
-                  required: true,
-                  message: '   ایمیل الزامی می باشد',
-                },
-              ]"
-              label="ایمیل"
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-input
-                v-model="form.email"
-                placeholder="ایمیل "
-              ></base-input>
-              <BaseValidationError :errors="validation_errros" field="email" />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="phone"
-              :rules="[
-                {
-                  required: true,
-                  message: '   شماره همراه الزامی می باشد',
-                },
-              ]"
-              label="شماره همراه"
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-input
-                v-model="form.phone"
-                placeholder="شماره همراه "
-              ></base-input>
-              <BaseValidationError :errors="validation_errros" field="phone" />
             </base-form-item>
 
             <base-form-item
@@ -94,45 +56,22 @@
 
             <base-form-item
               class="col-span-12 lg:col-span-4"
-              prop="role_group"
+              prop="category_id"
               :rules="[
                 {
                   required: true,
-                  message: 'گروه سطح دسترسی الزامی می باشد',
+                  message: '  دسته بندی الزامی می باشد',
                 },
               ]"
-              label="گروه سطح دسترسی"
+              label="  دسته بندی"
             >
               <base-select
-                v-model="form.role_group"
+                v-model="form.category_id"
                 filterable
-                placeholder="گروه سطح دسترسی"
+                placeholder="  دسته بندی"
                 value-key="id"
                 label="title"
-                :options="role_groups"
-                @change="handleChangeRoleGroup"
-              >
-              </base-select>
-            </base-form-item>
-
-            <base-form-item
-              class="col-span-12 lg:col-span-4"
-              prop="role"
-              :rules="[
-                {
-                  required: true,
-                  message: 'گروه سطح دسترسی الزامی می باشد',
-                },
-              ]"
-              label="سطح دسترسی"
-            >
-              <base-select
-                v-model="form.role"
-                filterable
-                placeholder=" سطح دسترسی"
-                value-key="id"
-                label="title"
-                :options="roles"
+                :options="categories"
               >
               </base-select>
             </base-form-item>
@@ -140,11 +79,49 @@
             <base-form-item
               :model="form"
               prop="image"
-              label="پروفایل کاربری"
+              label=" متن"
               class="col-span-12 mt-8"
             >
               <div>
-                <base-upload :max="1" v-model="form.image"></base-upload>
+                <TiptapEditor
+                  :content="form.content"
+                  v-model="form.content"
+                  placeholder="متن مقاله را وارد کنید"
+                />
+              </div>
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="description"
+              label="توضیحات"
+              class="col-span-12 mt-4"
+            >
+              <base-input
+                class="h-[80px] resize-none"
+                input-class="resize-none"
+                type="textarea"
+                v-model="form.description"
+                placeholder=" توضیحات "
+              ></base-input>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="description"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="image"
+              label=" تضویر"
+              class="col-span-12 mt-8"
+            >
+              <div>
+                <base-upload
+                  :max="1"
+                  v-model="form.image"
+                  :sources="form.media?.thumb"
+                ></base-upload>
               </div>
             </base-form-item>
 
@@ -157,10 +134,10 @@
                   type="primary"
                   block
                 >
-                  ایجاد
+                  ویرایش
                 </base-button>
                 <base-button
-                  :to="{ name: 'management-users-index' }"
+                  :to="{ name: 'management-articles-index' }"
                   class="w-full mr-2"
                 >
                   لغو
@@ -175,7 +152,6 @@
 </template>
 
 <script setup lang="ts">
-import { UPDATE_MODEL_EVENT } from "~/core/constants";
 import {
   BaseFormItem,
   BaseForm,
@@ -185,6 +161,7 @@ import {
 import { FormItemContext } from "~/core/tokens";
 import BaseMessage from "@/components/base/message";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
+import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 
 definePageMeta({
   layout: "management",
@@ -194,54 +171,57 @@ const loading = ref(true);
 const loader = ref(false);
 const formRef: Ref<FormItemContext | null> = ref(null);
 const form = ref({
-  username: null,
-  email: null,
-  phone: null,
+  title: null,
+  status: null,
+  category_id: null,
   image: null,
-  avatar: null,
-  role: null,
-  role_group: null,
-  sattus: null,
+  content: null,
+  description: null,
 });
+const article_id = ref(null);
 const validation_errros = ref([]);
-const role_groups = ref([]);
-const roles = ref([]);
+const categories = ref([]);
 const statuses = ref([
-  { title: "فعال", key: "active" },
-  { title: "غیر فعال", key: "inactive" },
-  { title: "مسدود", key: "ban" },
+  { title: "فعال", key: "enable" },
+  { title: "غیر فعال", key: "disable" },
+  { title: "در حال انتظار", key: "pending" },
+  { title: "رد شده", key: "rejected" },
 ]);
-const users = ref([]);
 const route = useRoute();
-const handleCreateUser = () => {
+const handleUpdateArticle = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
       try {
         const formData = {
-          username: form.value.username,
-          email: form.value.email,
+          id: article_id.value,
+          title: form.value.title,
+          category_id: form.value.category_id,
           status: form.value.status,
-          phone: form.value.phone,
-          avatar: form.value.image?.base64,
-          role: form.value.role,
+          content: form.value.content,
+          image: form.value.image?.base64,
+          description: form.value.description,
         };
-        const data = await useApiService.post(`management/users`, formData);
+        const data = await useApiService.put(
+          `management/articles/${article_id.value}`,
+          formData
+        );
 
         if (data.success) {
           BaseMessage({
-            message: "ایجاد کاربر با موفقیت انجام شد!",
+            message: "ویرایش مقاله با موفقیت انجام شد!",
             type: "success",
             duration: 4000,
             center: true,
             offset: 20,
           });
-          form.value.username = null;
-          form.value.phone = null;
-          form.value.email = null;
-          form.value.image = null;
+          form.value.title = null;
+          form.value.category_id = null;
+          form.value.content = null;
+          form.value.description = null;
+          form.value.status = null;
           formRef.value.resetFields();
-          navigateTo({ name: "management-users-index" });
+          navigateTo({ name: "management-articles-index" });
         } else {
         }
 
@@ -255,22 +235,33 @@ const handleCreateUser = () => {
   });
 };
 
-const handleChangeRoleGroup = (val) => {
-  const role_group = role_groups.value.find((role, i) => role.id == val);
-
-  roles.value = role_group.children;
+const fetchCategories = async () => {
+  try {
+    const data = await useApiService.get(`management/category/select`);
+    categories.value = data.data;
+  } catch (error) {}
 };
 
-const fetchRoles = async () => {
+const fetchArticle = async () => {
   try {
-    const data = await useApiService.get("application/portal/roles");
-    role_groups.value = data.data;
+    const data = await useApiService.get(
+      `management/articles/${article_id.value}`
+    );
+    console.log("data", data);
+    form.value.title = data.data.title;
+    form.value.category_id = data.data.category.id;
+    form.value.status = data.data.status;
+    form.value.content = data.data.content;
+    form.value.description = data.data.description;
+    form.value.media = data.data.media;
     loading.value = false;
   } catch (error) {}
 };
 
 onMounted(async () => {
-  await fetchRoles();
+  article_id.value = route.params.id;
+  await fetchCategories();
+  await fetchArticle();
 });
 </script>
 

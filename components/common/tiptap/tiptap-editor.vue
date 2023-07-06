@@ -1,6 +1,9 @@
 <template>
   <div class="editor" v-if="editor">
-    <menu-bar class="editor__header" :editor="editor">
+    <menu-bar
+      class="editor__header sticky top-0 bg-white z-10"
+      :editor="editor"
+    >
       <template #link>
         <button
           type="button"
@@ -8,7 +11,11 @@
           title="image"
           @click="show = !show"
         >
-          <hx-icon icon="link-m" class="w-6 h-6 text-gray-500"></hx-icon>
+          <nuxt-icon
+            filled
+            name="link-m"
+            class="w-6 h-6 text-gray-500"
+          ></nuxt-icon>
         </button>
       </template>
 
@@ -25,7 +32,11 @@
           title="image"
           @click="showFileHandler"
         >
-          <hx-icon icon="image-line" class="w-6 h-6 text-gray-500"></hx-icon>
+          <nuxt-icon
+            filled
+            name="image-line"
+            class="w-6 h-6 text-gray-500"
+          ></nuxt-icon>
         </button>
       </template>
 
@@ -36,17 +47,49 @@
           title="color"
           @click="showColorBox"
         >
-          <hx-icon icon="font-color" class="w-6 h-6 text-gray-500"></hx-icon>
+          <nuxt-icon
+            filled
+            name="font-color"
+            class="w-6 h-6 text-gray-500"
+          ></nuxt-icon>
         </button>
 
         <div style="position: relative">
           <input
             id="color-box"
             ref="color"
-            style="visibility: hidden"
+            style="display: none"
             type="color"
             @input="editor.chain().focus().setColor($event.target.value).run()"
             :value="editor.getAttributes('textStyle').color"
+          />
+        </div>
+      </template>
+
+      <template v-slot:backColor>
+        <button
+          type="button"
+          :class="[ns.e('menu-item')]"
+          title="color"
+          @click="showBackColorBox"
+        >
+          <nuxt-icon
+            filled
+            name="text-bg"
+            class="w-6 h-6 text-gray-500"
+          ></nuxt-icon>
+        </button>
+
+        <div style="position: relative">
+          <input
+            id="bc-box"
+            ref="backColor"
+            style="display: none"
+            type="color"
+            @input="
+              editor.chain().focus().setBackColor($event.target.value).run()
+            "
+            :value="editor.getAttributes('textStyle').backgroundColor"
           />
         </div>
       </template>
@@ -54,8 +97,13 @@
 
     <editor-content v-bind="$attrs" class="editor__content" :editor="editor" />
 
-    <hx-modal :show="show" title="پیوست لینک" @close="show = !show">
-      <hx-input v-model="url" placeholder="مسیر پیوست"></hx-input>
+    <base-dialog
+      @close="show != show"
+      title="ایجاد لینک"
+      custom-class=""
+      v-model="show"
+    >
+      <base-input v-model="url" placeholder="مسیر پیوست"></base-input>
 
       <template #footer="{ close }">
         <div class="flex items-center space-x-reverse space-x-4">
@@ -65,7 +113,7 @@
           <base-button type="text" @click="close"> لغو </base-button>
         </div>
       </template>
-    </hx-modal>
+    </base-dialog>
   </div>
 </template>
 
@@ -78,10 +126,16 @@ import Highlight from "@tiptap/extension-highlight";
 import MenuBar from "./tiptap-menu.vue";
 import TextStyle from "@tiptap/extension-text-style";
 import { Color } from "@tiptap/extension-color";
+import { BackColor } from "@/components/common/tiptap/extentions/backColor";
+
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
-
+import { Table } from "@/components/common/tiptap/extentions/supercharged-table/extension-table";
+import { TableCell } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-cell";
+import { TableHeader } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-header";
+import { TableRow } from "@/components/common/tiptap/extentions/supercharged-table/extension-table-row";
 import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ResizableMedia } from "@/components/common/tiptap/extentions/resizableMedia";
 
 const ns = useNamespace("tiptap");
 const props = defineProps({
@@ -103,9 +157,14 @@ const url = ref(null);
 const editor = ref<any>(null);
 const file = ref<any>(null);
 const color = ref<any>(null);
+const backColor = ref(null);
 
 const showColorBox = () => {
-  // document.getElementById("color-box").click();
+  color.value.click();
+};
+
+const showBackColorBox = () => {
+  backColor.value.click();
 };
 const showFileHandler = () => {
   upload.value.click();
@@ -142,9 +201,16 @@ const uploadImageHandler = (event) => {
   const data = new FormData();
   data.append("file", file.value);
   useApiService
-    .post("/upload/editor", data)
+    .post("application/upload/editor", data)
     .then(({ data }) => {
-      editor.value.commands.setImage({ src: data.data });
+      editor.value.commands.setMedia({
+        src: data,
+        "media-type": "img",
+        alt: "Something else",
+        title: "Something",
+        width: "800",
+        height: "400",
+      });
     })
     .catch((error) => {});
 };
@@ -155,10 +221,18 @@ onMounted(() => {
       StarterKit.configure({
         history: true,
       }),
-      Image,
+      ResizableMedia,
+      BackColor,
+      Image.configure({}),
       Link.configure({
         openOnClick: false,
       }),
+      Table.configure({
+        resizable: false,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
       Placeholder.configure({
         // emptyEditorClass: 'is-editor-empty',
         placeholder: props.placeholder,
