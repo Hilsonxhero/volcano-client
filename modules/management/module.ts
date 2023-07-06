@@ -78,6 +78,22 @@ export default defineNuxtModule({
                     path: '/management/articles/edit/:id',
                     file: resolve(__dirname, './pages/articles/edit.vue')
                 },
+
+                {
+                    name: 'management-pages-index',
+                    path: '/management/pages',
+                    file: resolve(__dirname, './pages/pages/index.vue')
+                },
+                {
+                    name: 'management-pages-create',
+                    path: '/management/pages/create',
+                    file: resolve(__dirname, './pages/pages/create.vue')
+                },
+                {
+                    name: 'management-pages-edit',
+                    path: '/management/pages/edit/:id',
+                    file: resolve(__dirname, './pages/pages/edit.vue')
+                },
             )
         })
     }

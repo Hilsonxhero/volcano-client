@@ -189,8 +189,8 @@ const pages = ref([
       },
       {
         heading: "صفحات",
-        route: { name: "portal-projects-index" },
-        active: "projects",
+        route: { name: "management-pages-index" },
+        active: "pages",
         svgIcon: "note-bulk",
       },
       {
