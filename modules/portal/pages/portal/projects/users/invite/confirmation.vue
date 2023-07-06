@@ -116,7 +116,6 @@ const fetchInvite = async () => {
     const data = await useApiService.get(
       `application/portal/projects/invite/show/${invite_id.value}`
     );
-    console.log("data", data);
     invite.value = data.data;
     loading.value = false;
   } catch (error) {

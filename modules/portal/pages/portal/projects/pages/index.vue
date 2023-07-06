@@ -186,7 +186,6 @@ const handleOnCreatePage = () => {
   fetchPages();
 };
 const handleSharePage = (page) => {
-  console.log("page", page);
   selected_page_share.value = page;
   visible_share.value = true;
 };

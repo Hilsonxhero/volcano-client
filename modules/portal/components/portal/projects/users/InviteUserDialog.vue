@@ -135,7 +135,6 @@ watch(
 );
 
 const handleChangeRoleGroup = (val) => {
-  console.log("val", val);
   const role_group = role_groups.value.find((role, i) => role.id == val);
   roles.value = role_group.children;
 };

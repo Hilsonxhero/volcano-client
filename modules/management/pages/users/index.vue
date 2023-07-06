@@ -16,7 +16,7 @@
                 <base-input
                   class="w-full lg:w-[250px]"
                   v-model="search"
-                  placeholder="جستجوی دسته بندی"
+                  placeholder="جستجوی کاربر"
                 >
                   <template #prefix>
                     <nuxt-icon name="search-status"></nuxt-icon>
@@ -29,10 +29,10 @@
                   size="small"
                   type="primary"
                   class="w-full lg:w-auto"
-                  :to="{ name: 'management-categories-create' }"
+                  :to="{ name: 'management-users-create' }"
                 >
                   <div class="flex items-center">
-                    <span class="ml-2"> ایجاد دسته بندی</span>
+                    <span class="ml-2"> ایجاد کاربر</span>
                     <nuxt-icon name="add"></nuxt-icon>
                   </div>
                 </base-button>
@@ -46,7 +46,7 @@
             :pager="pager"
             :search="search"
             :current-page="pager.current_page"
-            search-placeholder="جستجوی دسته بندی"
+            search-placeholder="جستجوی کاربر"
             :table-header="tableHeader"
             :enable-items-per-page-dropdown="false"
             :on-current-change="true"
@@ -61,33 +61,46 @@
               </div>
             </template>
 
-            <template v-slot:cell-title="{ row }">
+            <template v-slot:cell-username="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
               >
-                {{ row?.title }}
+                {{ row?.username }}
               </div>
             </template>
-            <template v-slot:cell-parent="{ row }">
-              <template v-if="row.parent">
-                <div
-                  class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
-                >
-                  {{ row?.parent?.title }}
-                </div>
-              </template>
-              <template v-else> ندارد </template>
+            <template v-slot:cell-email="{ row }">
+              <div
+                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
+              >
+                {{ row?.email }}
+              </div>
             </template>
+            <template v-slot:cell-phone="{ row }">
+              <div
+                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
+              >
+                {{ row?.phone }}
+              </div>
+            </template>
+
             <template v-slot:cell-status="{ row }">
               <base-button outlined type="success" size="small">{{
                 row?.status
               }}</base-button>
             </template>
 
-            <template v-slot:cell-actions="{ row: category, index }">
+            <template v-slot:cell-created_at="{ row }">
+              <div
+                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
+              >
+                {{ row?.created_at }}
+              </div>
+            </template>
+
+            <template v-slot:cell-actions="{ row: user, index }">
               <div class="flex items-center">
                 <base-button
-                  @click="handleDeleteCategory(category, index)"
+                  @click="handleDeleteUser(user, index)"
                   size="small"
                   icon
                 >
@@ -95,8 +108,8 @@
                 </base-button>
                 <base-button
                   :to="{
-                    name: 'management-categories-edit',
-                    params: { id: category.id },
+                    name: 'management-users-edit',
+                    params: { id: user.id },
                   }"
                   size="small"
                   icon
@@ -136,18 +149,28 @@ const tableHeader = ref([
   },
 
   {
-    name: "عنوان",
-    key: "title",
+    name: "نام کاربری",
+    key: "username",
     sortable: true,
   },
   {
-    name: "دسته پدر",
-    key: "parent",
+    name: "ایمیل",
+    key: "email",
+    sortable: true,
+  },
+  {
+    name: "شماره همراه",
+    key: "phone",
     sortable: true,
   },
   {
     name: "وضعیت",
     key: "status",
+    sortable: false,
+  },
+  {
+    name: "تاریخ عضویت",
+    key: "created_at",
     sortable: false,
   },
   {
@@ -160,52 +183,46 @@ const tableData = ref([]);
 watch(
   () => search.value,
   (val) => {
-    // fetchCategories();
+    // fetchUsers();
     debouncedOnInputChange();
   }
 );
 
 const handleChangePage = (page) => {
   current_page.value = page;
-  fetchCategories();
+  fetchUsers();
 };
 
-const fetchCategories = async () => {
+const fetchUsers = async () => {
   let params = {
     page: current_page.value,
     q: search.value,
   };
   // loading.value = true;
   try {
-    const { data } = await useApiService.get(`management/categories`, {
+    const { data } = await useApiService.get(`management/users`, {
       params: params,
     });
     loading.value = false;
     pager.value = data.pager;
-    tableData.value = data.categories;
+    tableData.value = data.users;
   } catch (error) {}
 };
 
-const debouncedOnInputChange = debounce(fetchCategories, 200);
+const debouncedOnInputChange = debounce(fetchUsers, 200);
 
-const handleDeleteCategory = (category: any, index: any) => {
-  BaseMessageBox.confirm(
-    `آیا از حذف  دسته بندی  اطمینان دارید ؟!`,
-    "پیام تایید",
-    {
-      confirmButtonText: "تایید",
-      cancelButtonText: "لغو",
-      type: "warning",
-    }
-  )
+const handleDeleteUser = (user: any, index: any) => {
+  BaseMessageBox.confirm(`آیا از حذف  کاربر  اطمینان دارید ؟!`, "پیام تایید", {
+    confirmButtonText: "تایید",
+    cancelButtonText: "لغو",
+    type: "warning",
+  })
     .then(async () => {
-      const data = await useApiService.remove(
-        `management/categories/${category?.id}`
-      );
+      const data = await useApiService.remove(`management/users/${user?.id}`);
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  دسته بندی با موفقیت انجام شد!",
+          message: "حذف  کاربر با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,
@@ -217,7 +234,7 @@ const handleDeleteCategory = (category: any, index: any) => {
 };
 
 onMounted(() => {
-  fetchCategories();
+  fetchUsers();
 });
 </script>
 

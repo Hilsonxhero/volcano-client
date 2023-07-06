@@ -103,7 +103,6 @@ const handleSendCode = async () => {
 
     if (data.success) {
       await store.init();
-      // console.log("route.query.backUrl", route.query.backUrl);
 
       const backUrl = route.query.backUrl || "/portal/dashboard";
 

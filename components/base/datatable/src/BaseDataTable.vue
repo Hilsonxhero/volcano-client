@@ -1,6 +1,6 @@
 <template>
   <div class="dataTables_wrapper dt-bootstrap4 no-footer">
-    <div class="table-responsive">
+    <div class="table-responsive overflow-x-auto">
       <table
         :class="[loading && 'overlay overlay-block']"
         class="table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer"
@@ -131,7 +131,7 @@ import {
   getCurrentInstance,
 } from "vue";
 import arraySort from "array-sort";
-
+import { debugWarn, isArray, isBoolean, isNumber, isString } from "@/utils";
 interface IPagination {
   page: number;
   total: number;
@@ -153,6 +153,7 @@ export default defineComponent({
       type: Array as () => Array<IHeaderConfiguration>,
       required: true,
     },
+    search: {},
     tableData: { type: Array, required: true },
     emptyTableText: { type: String, default: "No data found" },
     loading: { type: Boolean, default: false },
@@ -193,15 +194,26 @@ export default defineComponent({
     );
 
     watch(
+      () => props.search,
+      (val) => {}
+    );
+
+    watch(
       () => props.total,
       (val) => {
         pagination.value.total = val;
       }
     );
     watch(
-      () => props.rowsPerPage,
+      () => props.total,
       (val) => {
-        pagination.value.rowsPerPage = val;
+        pagination.value.total = val;
+      }
+    );
+    watch(
+      () => props.currentPage,
+      (val) => {
+        pagination.value.page = val;
       }
     );
 
@@ -213,6 +225,12 @@ export default defineComponent({
 
     const getItems = computed(() => {
       if ("onCurrentChange" in vnodeProps) {
+        // let results: Array<any> = data.value;
+        // if (props.search !== "") {
+        //   results = results.filter((obj, key) => {
+        //     return searchingFunc(obj, props.search);
+        //   });
+        // }
         return data.value;
       } else {
         const clone = JSON.parse(JSON.stringify(data.value));
@@ -264,6 +282,17 @@ export default defineComponent({
       }
     };
 
+    const searchingFunc = (obj: any, value: any): boolean => {
+      for (let key in obj) {
+        if (!Number.isInteger(obj[key]) && !(typeof obj[key] === "object")) {
+          if (obj[key].indexOf(value) != -1) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
     return {
       pagination,
       currentPageChange,
@@ -271,6 +300,7 @@ export default defineComponent({
       sort,
       currentSort,
       setItemsPerPage,
+      searchingFunc,
     };
   },
 });

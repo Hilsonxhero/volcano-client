@@ -165,8 +165,8 @@ const pages = ref([
       },
       {
         heading: "کاربران",
-        route: { name: "portal-projects-index" },
-        active: "projects",
+        route: { name: "management-users-index" },
+        active: "users",
         svgIcon: "group",
       },
       {

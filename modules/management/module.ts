@@ -31,6 +31,21 @@ export default defineNuxtModule({
                     path: '/management/categories/edit/:id',
                     file: resolve(__dirname, './pages/categories/edit.vue')
                 },
+                {
+                    name: 'management-users-index',
+                    path: '/management/users',
+                    file: resolve(__dirname, './pages/users/index.vue')
+                },
+                {
+                    name: 'management-users-create',
+                    path: '/management/users/create',
+                    file: resolve(__dirname, './pages/users/create.vue')
+                },
+                {
+                    name: 'management-users-edit',
+                    path: '/management/users/edit/:id',
+                    file: resolve(__dirname, './pages/users/edit.vue')
+                },
             )
         })
     }
