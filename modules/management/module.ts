@@ -94,6 +94,12 @@ export default defineNuxtModule({
                     path: '/management/pages/edit/:id',
                     file: resolve(__dirname, './pages/pages/edit.vue')
                 },
+
+                {
+                    name: 'management-setting-index',
+                    path: '/management/setting',
+                    file: resolve(__dirname, './pages/setting/index.vue')
+                },
             )
         })
     }
