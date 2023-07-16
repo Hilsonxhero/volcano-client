@@ -4,6 +4,9 @@
   position: relative;
   // vertical-align: middle;
   font-size: 14px;
+  &.is-disabled {
+    pointer-events: none;
+  }
 
   &__wrapper {
     background-color: rgb(245, 245, 245);

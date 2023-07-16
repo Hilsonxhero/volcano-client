@@ -64,6 +64,17 @@ export default defineNuxtModule({
                 },
 
                 {
+                    name: 'management-permissions-index',
+                    path: '/management/permissions',
+                    file: resolve(__dirname, './pages/permissions/index.vue')
+                },
+                {
+                    name: 'management-permissions-edit',
+                    path: '/management/permissions/edit/:id',
+                    file: resolve(__dirname, './pages/permissions/edit.vue')
+                },
+
+                {
                     name: 'management-articles-index',
                     path: '/management/articles',
                     file: resolve(__dirname, './pages/articles/index.vue')
@@ -100,6 +111,23 @@ export default defineNuxtModule({
                     path: '/management/setting',
                     file: resolve(__dirname, './pages/setting/index.vue')
                 },
+
+                {
+                    name: 'management-services-index',
+                    path: '/management/services',
+                    file: resolve(__dirname, './pages/services/index.vue')
+                },
+                {
+                    name: 'management-services-create',
+                    path: '/management/services/create',
+                    file: resolve(__dirname, './pages/services/create.vue')
+                },
+                {
+                    name: 'management-services-edit',
+                    path: '/management/services/edit/:id',
+                    file: resolve(__dirname, './pages/services/edit.vue')
+                },
+
             )
         })
     }

@@ -1,7 +1,11 @@
 <template>
   <div
     ref="selectRef"
-    :class="[nsSelectV2.b(), nsSelectV2.m(selectSize)]"
+    :class="[
+      nsSelectV2.b(),
+      nsSelectV2.m(selectSize),
+      nsSelectV2.is('disabled', selectDisabled),
+    ]"
     @click.stop="toggleMenu"
     @mouseenter="states.comboBoxHovering = true"
     @mouseleave="states.comboBoxHovering = false"

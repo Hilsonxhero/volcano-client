@@ -10,11 +10,11 @@
       </template>
       <template #default>
         <div>
-          <h2 class="text-2xl my-4 text-gray-600">ایجاد سطح دسترسی</h2>
+          <h2 class="text-2xl my-4 text-gray-600">ویرایش مجوز</h2>
         </div>
         <div class="bg-white shadow-xl rounded-xl p-4">
           <base-form
-            @submit.prevent="handleCreateRole"
+            @submit.prevent="handleUpdatePermission"
             :model="form"
             ref="formRef"
             class="h-full grid grid-cols-12 gap-2"
@@ -25,15 +25,16 @@
               :rules="[
                 {
                   required: true,
-                  message: '  نام سطح دسترسیی  الزامی می باشد',
+                  message: '  نام  مجوزی  الزامی می باشد',
                 },
               ]"
-              label="نام سطح دسترسیی"
+              label="نام  مجوزی"
               class="col-span-12 lg:col-span-4"
             >
               <base-input
+                readonly
                 v-model="form.name"
-                placeholder="نام سطح دسترسیی "
+                placeholder="نام  مجوزی "
               ></base-input>
               <BaseValidationError :errors="validation_errros" field="name" />
             </base-form-item>
@@ -63,52 +64,22 @@
               :rules="[
                 {
                   required: true,
-                  message: 'گروه سطح دسترسی الزامی می باشد',
+                  message: 'گروه  مجوز الزامی می باشد',
                 },
               ]"
-              label="گروه سطح دسترسی"
+              label="گروه  مجوز"
             >
               <base-select
+                disabled
                 v-model="form.parent_id"
                 filterable
-                placeholder="گروه سطح دسترسی"
+                placeholder="گروه  مجوز"
                 value-key="id"
                 label="title"
-                :options="role_groups"
+                :options="permission_groups"
               >
               </base-select>
             </base-form-item>
-
-            <div class="col-span-12">
-              <div class="grid grid-cols-12 gap-2 mt-8">
-                <div
-                  class="col-span-4"
-                  v-for="(permission, index) in permissions"
-                  :key="index"
-                >
-                  <div>
-                    <h2>{{ permission.title }}</h2>
-                  </div>
-                  <base-checkbox-group v-model="selectedPermissions">
-                    <base-checkbox
-                      v-for="(childPermission, j) in permission.children"
-                      :label="childPermission.id"
-                      >{{ childPermission.title }}</base-checkbox
-                    >
-                  </base-checkbox-group>
-                  <!-- <ul>
-                    <li
-                      v-for="(childPermission, j) in permission.children"
-                      :key="j"
-                    >
-                      <base-checkbox
-                        :label="childPermission.title"
-                      ></base-checkbox>
-                    </li>
-                  </ul> -->
-                </div>
-              </div>
-            </div>
 
             <div class="flex flex-col justify-between lg:items-center mt-8">
               <div class="w-full flex items-center">
@@ -119,10 +90,10 @@
                   type="primary"
                   block
                 >
-                  ایجاد
+                  ویرایش
                 </base-button>
                 <base-button
-                  :to="{ name: 'management-roles-index' }"
+                  :to="{ name: 'management-permissions-index' }"
                   class="w-full mr-2"
                 >
                   لغو
@@ -146,7 +117,6 @@ import {
 import { FormItemContext } from "~/core/tokens";
 import BaseMessage from "@/components/base/message";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
-import { BaseCheckbox, BaseCheckboxGroup } from "@/components/base/checkbox";
 
 definePageMeta({
   layout: "management",
@@ -154,32 +124,35 @@ definePageMeta({
 });
 const loading = ref(true);
 const loader = ref(false);
-const selectedPermissions = ref([]);
 const formRef: Ref<FormItemContext | null> = ref(null);
 const form = ref({
   title: null,
   name: null,
   parent_id: null,
 });
+const permission_id = ref(null);
 const validation_errros = ref([]);
-const role_groups = ref([]);
-const permissions = ref([]);
+const permission_groups = ref([]);
 const route = useRoute();
-const handleCreateRole = () => {
+const handleUpdatePermission = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
       try {
         const formData = {
+          id: permission_id.value,
           title: form.value.title,
           name: form.value.name,
           parent_id: form.value.parent_id,
-          permissions: selectedPermissions.value,
         };
-        const data = await useApiService.post(`management/roles`, formData);
+        const data = await useApiService.put(
+          `management/permissions/${permission_id.value}`,
+          formData
+        );
+
         if (data.success) {
           BaseMessage({
-            message: "ایجاد سطح دسترسی با موفقیت انجام شد!",
+            message: "ویرایش  مجوز با موفقیت انجام شد!",
             type: "success",
             duration: 4000,
             center: true,
@@ -189,7 +162,7 @@ const handleCreateRole = () => {
           form.value.name = null;
           form.value.parent_id = null;
           formRef.value.resetFields();
-          navigateTo({ name: "management-roles-index" });
+          navigateTo({ name: "management-permissions-index" });
         } else {
         }
 
@@ -203,27 +176,30 @@ const handleCreateRole = () => {
   });
 };
 
-const fetchRoles = async () => {
+const fetchPermissions = async () => {
   try {
-    const data = await useApiService.get("application/portal/roles");
-    role_groups.value = data.data;
+    const data = await useApiService.get("management/permission/select");
+    permission_groups.value = data.data;
     loading.value = false;
   } catch (error) {}
 };
 
-const fetchPermissions = async () => {
-  console.log("aaaaa");
-
+const fetchPermission = async () => {
   try {
-    const data = await useApiService.get("management/permission/select/parent");
-    permissions.value = data.data;
+    const data = await useApiService.get(
+      `management/permissions/${permission_id.value}`
+    );
+    form.value.title = data.data.title;
+    form.value.name = data.data.name;
+    form.value.parent_id = data.data.parent_id;
     loading.value = false;
   } catch (error) {}
 };
 
 onMounted(async () => {
+  permission_id.value = route.params.id;
   await fetchPermissions();
-  await fetchRoles();
+  await fetchPermission();
 });
 </script>
 

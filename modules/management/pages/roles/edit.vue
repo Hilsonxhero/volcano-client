@@ -14,7 +14,7 @@
         </div>
         <div class="bg-white shadow-xl rounded-xl p-4">
           <base-form
-            @submit.prevent="handleCreateRole"
+            @submit.prevent="handleUpdateRole"
             :model="form"
             ref="formRef"
             class="h-full grid grid-cols-12 gap-2"
@@ -79,6 +79,27 @@
               </base-select>
             </base-form-item>
 
+            <div class="col-span-12">
+              <div class="grid grid-cols-12 gap-2 mt-8">
+                <div
+                  class="col-span-4"
+                  v-for="(permission, index) in permissions"
+                  :key="index"
+                >
+                  <div>
+                    <h2>{{ permission.title }}</h2>
+                  </div>
+                  <base-checkbox-group v-model="selectedPermissions">
+                    <base-checkbox
+                      v-for="(childPermission, j) in permission.children"
+                      :label="childPermission.id"
+                      >{{ childPermission.title }}</base-checkbox
+                    >
+                  </base-checkbox-group>
+                </div>
+              </div>
+            </div>
+
             <div class="flex flex-col justify-between lg:items-center mt-8">
               <div class="w-full flex items-center">
                 <base-button
@@ -115,6 +136,7 @@ import {
 import { FormItemContext } from "~/core/tokens";
 import BaseMessage from "@/components/base/message";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
+import { BaseCheckbox, BaseCheckboxGroup } from "@/components/base/checkbox";
 
 definePageMeta({
   layout: "management",
@@ -131,8 +153,10 @@ const form = ref({
 const role_id = ref(null);
 const validation_errros = ref([]);
 const role_groups = ref([]);
+const permissions = ref([]);
+const selectedPermissions = ref([]);
 const route = useRoute();
-const handleCreateRole = () => {
+const handleUpdateRole = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
@@ -142,6 +166,7 @@ const handleCreateRole = () => {
           title: form.value.title,
           name: form.value.name,
           parent_id: form.value.parent_id,
+          permissions: selectedPermissions.value,
         };
         const data = await useApiService.put(
           `management/roles/${role_id.value}`,
@@ -182,6 +207,14 @@ const fetchRoles = async () => {
   } catch (error) {}
 };
 
+const fetchPermissions = async () => {
+  try {
+    const data = await useApiService.get("management/permission/select/parent");
+    permissions.value = data.data;
+    loading.value = false;
+  } catch (error) {}
+};
+
 const fetchRole = async () => {
   try {
     const data = await useApiService.get(`management/roles/${role_id.value}`);
@@ -189,12 +222,14 @@ const fetchRole = async () => {
     form.value.title = data.data.title;
     form.value.name = data.data.name;
     form.value.parent_id = data.data.parent_id;
+    selectedPermissions.value = data.data.permissions;
     loading.value = false;
   } catch (error) {}
 };
 
 onMounted(async () => {
   role_id.value = route.params.id;
+  await fetchPermissions();
   await fetchRoles();
   await fetchRole();
 });

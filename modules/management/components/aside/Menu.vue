@@ -170,15 +170,22 @@ const pages = ref([
         svgIcon: "group",
       },
       {
-        heading: "سطح دسترسی ها",
-        route: { name: "management-roles-index" },
-        active: "roles",
+        heading: "مجوز  ها",
+        route: { name: "management-permissions-index" },
+        active: "permissions",
         svgIcon: "shield-tick",
       },
       {
+        heading: "سطح دسترسی ها",
+        route: { name: "management-roles-index" },
+        active: "roles",
+        svgIcon: "security-user",
+      },
+
+      {
         heading: "خدمات",
-        route: { name: "portal-projects-index" },
-        active: "projects",
+        route: { name: "management-services-index" },
+        active: "services",
         svgIcon: "services-bulk",
       },
       {
