@@ -89,6 +89,39 @@ export default defineNuxtModule({
                     path: '/management/articles/edit/:id',
                     file: resolve(__dirname, './pages/articles/edit.vue')
                 },
+                // projects
+                {
+                    name: 'management-projects-index',
+                    path: '/management/projects',
+                    file: resolve(__dirname, './pages/projects/index.vue')
+                },
+                {
+                    name: 'management-projects-create',
+                    path: '/management/projects/create',
+                    file: resolve(__dirname, './pages/projects/create.vue')
+                },
+                {
+                    name: 'management-projects-edit',
+                    path: '/management/projects/edit/:id',
+                    file: resolve(__dirname, './pages/projects/edit.vue')
+                },
+
+                // project pages
+                {
+                    name: 'management-project-pages-index',
+                    path: '/management/projects/:project/pages',
+                    file: resolve(__dirname, './pages/projects/pages/index.vue')
+                },
+                {
+                    name: 'management-project-pages-create',
+                    path: '/management/projects/:project/pages/create',
+                    file: resolve(__dirname, './pages/projects/pages/create.vue')
+                },
+                {
+                    name: 'management-project-pages-edit',
+                    path: '/management/projects/:project/pages/edit/:id',
+                    file: resolve(__dirname, './pages/projects/pages/edit.vue')
+                },
 
                 {
                     name: 'management-pages-index',

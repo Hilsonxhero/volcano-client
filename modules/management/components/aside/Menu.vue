@@ -159,7 +159,7 @@ const pages = ref([
       },
       {
         heading: "پروژه ها",
-        route: { name: "portal-projects-index" },
+        route: { name: "management-projects-index" },
         active: "projects",
         svgIcon: "projects",
       },

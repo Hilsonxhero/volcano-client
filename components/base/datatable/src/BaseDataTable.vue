@@ -37,7 +37,14 @@
                 colspan="1"
                 style="cursor: pointer"
               >
-                {{ cell.name }}
+                <slot
+                  :name="`cell-header-${cell.key}`"
+                  :row="item"
+                  :index="index"
+                >
+                  {{ cell.name }}
+                </slot>
+                <!-- {{ cell.name }} -->
               </th>
             </template>
           </tr>
