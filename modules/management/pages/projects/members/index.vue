@@ -16,23 +16,22 @@
                 <base-input
                   class="w-full lg:w-[250px]"
                   v-model="search"
-                  placeholder="جستجوی پروژه"
+                  placeholder="جستجوی کاربر"
                 >
                   <template #prefix>
                     <nuxt-icon name="search-status"></nuxt-icon>
                   </template>
                 </base-input>
               </div>
-
               <div class="w-full lg:w-auto mt-4 lg:mt-0">
                 <base-button
                   size="small"
                   type="primary"
                   class="w-full lg:w-auto"
-                  :to="{ name: 'management-projects-create' }"
+                  @click="handleShowInviteMember"
                 >
                   <div class="flex items-center">
-                    <span class="ml-2"> ایجاد پروژه</span>
+                    <span class="ml-2"> عضو جدید</span>
                     <nuxt-icon name="add"></nuxt-icon>
                   </div>
                 </base-button>
@@ -46,7 +45,7 @@
             :pager="pager"
             :search="search"
             :current-page="pager.current_page"
-            search-placeholder="جستجوی پروژه"
+            search-placeholder="جستجوی کاربر"
             :table-header="tableHeader"
             :enable-items-per-page-dropdown="false"
             :on-current-change="true"
@@ -61,18 +60,25 @@
               </div>
             </template>
 
-            <template v-slot:cell-title="{ row }">
+            <template v-slot:cell-username="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
               >
-                {{ row?.title }}
+                {{ row?.username }}
               </div>
             </template>
-            <template v-slot:cell-user="{ row }">
+            <template v-slot:cell-email="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
               >
-                {{ row?.user?.username }}
+                {{ row?.email }}
+              </div>
+            </template>
+            <template v-slot:cell-phone="{ row }">
+              <div
+                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
+              >
+                {{ row?.phone }}
               </div>
             </template>
 
@@ -82,58 +88,16 @@
               }}</base-button>
             </template>
 
-            <template v-slot:cell-header-members_count="{ row }">
-              <div class="text-center w-full">تعداد اعضا</div>
-            </template>
-
-            <template v-slot:cell-members_count="{ row }">
-              <div class="text-center w-full">
-                {{ row?.members_count }}
-              </div>
-            </template>
-
-            <template v-slot:cell-create_at="{ row }">
-              <div
-                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
-              >
-                {{ row?.create_at }}
-              </div>
+            <template v-slot:cell-role="{ row }">
+              <base-button outlined size="small">{{
+                row?.role?.title
+              }}</base-button>
             </template>
 
             <template v-slot:cell-actions="{ row: project, index }">
               <div class="flex items-center">
                 <base-button
-                  :to="{
-                    name: 'management-project-pages-index',
-                    params: { project: project.id },
-                  }"
-                  size="small"
-                  icon
-                >
-                  <nuxt-icon name="note-bulk"></nuxt-icon>
-                </base-button>
-                <base-button
-                  :to="{
-                    name: 'management-project-members-index',
-                    params: { project: project.id },
-                  }"
-                  size="small"
-                  icon
-                >
-                  <nuxt-icon name="group"></nuxt-icon>
-                </base-button>
-                <base-button
-                  :to="{
-                    name: 'management-projects-edit',
-                    params: { id: project.id },
-                  }"
-                  size="small"
-                  icon
-                >
-                  <nuxt-icon name="magicpen"></nuxt-icon>
-                </base-button>
-                <base-button
-                  @click="handleDeleteProject(project, index)"
+                  @click="handleDeletePage(project, index)"
                   size="small"
                   icon
                 >
@@ -145,6 +109,7 @@
         </section>
       </template>
     </base-skeleton>
+    <InviteUser @create="handleOnInviteUser" v-model="visible_invite_user" />
   </div>
 </template>
 
@@ -154,6 +119,7 @@ import { BaseMessageBox } from "@/components/base/message-box";
 import { BaseDataTable } from "@/components/base/datatable";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import { debounce } from "lodash-unified";
+import InviteUser from "@/modules/management/components/project/members/InviteUser.vue";
 
 definePageMeta({
   layout: "management",
@@ -171,13 +137,23 @@ const tableHeader = ref([
     sortable: false,
   },
   {
-    name: "عنوان",
-    key: "title",
+    name: "نام کاربری",
+    key: "username",
     sortable: true,
   },
   {
-    name: "سازنده",
-    key: "user",
+    name: "ایمیل",
+    key: "email",
+    sortable: true,
+  },
+  {
+    name: "شماره همراه",
+    key: "phone",
+    sortable: true,
+  },
+  {
+    name: "نقش کاربری",
+    key: "role",
     sortable: true,
   },
   {
@@ -186,66 +162,64 @@ const tableHeader = ref([
     sortable: false,
   },
   {
-    name: "تعداد اعضا",
-    key: "members_count",
-    sortable: false,
-  },
-  {
-    name: "تاریخ ایجاد",
-    key: "create_at",
-    sortable: false,
-  },
-  {
     name: "عملیات",
     key: "actions",
   },
 ]);
+const visible_invite_user = ref(false);
 const tableData = ref([]);
-
+const project_id = ref(null);
 watch(
   () => search.value,
   (val) => {
-    // fetchProjects();
+    // fetchMembers();
     debouncedOnInputChange();
   }
 );
+const handleOnInviteUser = () => {};
 
 const handleChangePage = (page) => {
   current_page.value = page;
-  fetchProjects();
+  fetchMembers();
+};
+const handleShowInviteMember = () => {
+  visible_invite_user.value = true;
 };
 
-const fetchProjects = async () => {
+const fetchMembers = async () => {
   let params = {
     page: current_page.value,
     q: search.value,
   };
   try {
-    const { data } = await useApiService.get(`management/projects`, {
-      params: params,
-    });
+    const { data } = await useApiService.get(
+      `management/project/${project_id.value}/members`,
+      {
+        params: params,
+      }
+    );
     loading.value = false;
     pager.value = data.pager;
-    tableData.value = data.projects;
+    tableData.value = data.members;
   } catch (error) {}
 };
 
-const debouncedOnInputChange = debounce(fetchProjects, 200);
+const debouncedOnInputChange = debounce(fetchMembers, 200);
 
-const handleDeleteProject = (project: any, index: any) => {
-  BaseMessageBox.confirm(`آیا از حذف  پروژه  اطمینان دارید ؟!`, "پیام تایید", {
+const handleDeletePage = (page: any, index: any) => {
+  BaseMessageBox.confirm(`آیا از حذف  کاربر  اطمینان دارید ؟!`, "پیام تایید", {
     confirmButtonText: "تایید",
     cancelButtonText: "لغو",
     type: "warning",
   })
     .then(async () => {
       const data = await useApiService.remove(
-        `management/projects/${project?.id}`
+        `management/project/${project_id.value}/members/${page?.id}`
       );
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  پروژه با موفقیت انجام شد!",
+          message: "حذف  کاربر با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,
@@ -257,7 +231,8 @@ const handleDeleteProject = (project: any, index: any) => {
 };
 
 onMounted(() => {
-  fetchProjects();
+  project_id.value = route.params.project;
+  fetchMembers();
 });
 </script>
 

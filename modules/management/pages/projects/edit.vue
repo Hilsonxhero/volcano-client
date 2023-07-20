@@ -247,7 +247,7 @@ const fetchArticle = async () => {
     const data = await useApiService.get(
       `management/articles/${article_id.value}`
     );
-    console.log("data", data);
+
     form.value.title = data.data.title;
     form.value.category_id = data.data.category.id;
     form.value.status = data.data.status;

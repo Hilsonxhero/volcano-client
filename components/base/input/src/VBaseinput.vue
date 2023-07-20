@@ -70,7 +70,11 @@
         />
 
         <!-- suffix slot -->
-        <span v-if="suffixVisible" :class="nsInput.e('suffix')">
+        <span
+          class="cursor-pointer"
+          v-if="suffixVisible"
+          :class="nsInput.e('suffix')"
+        >
           <span :class="nsInput.e('suffix-inner')">
             <template
               v-if="!showClear || !showPwdVisible || !isWordLimitVisible"

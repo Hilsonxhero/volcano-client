@@ -197,7 +197,6 @@ const fetchService = async () => {
     const data = await useApiService.get(
       `management/services/${service_id.value}`
     );
-    console.log("data", data);
     form.value.title = data.data.title;
     form.value.status = data.data.status;
     form.value.description = data.data.description;

@@ -11,7 +11,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const personalInfo = async () => {
         try {
-            const { data } = await useApiService.get(`application/user/profile/personal`);
+            const { data } = await useApiService.get(`application/user/init`);
             user.value = data?.user;
         } catch (error) {
             return error;
@@ -23,7 +23,7 @@ export const useAuthStore = defineStore("auth", () => {
         if (!checked.value)
             try {
                 const { data } = await useApiService.get(`application/user/init`);
-                user.value = data;
+                user.value = data?.user;
                 isLoggedIn.value = data?.is_logged_in;
                 checked.value = true;
 

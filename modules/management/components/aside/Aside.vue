@@ -15,7 +15,7 @@
         </div>
         <div class="flex flex-col">
           <div class="mr-2 text-gray-600 text-xs">
-            {{ user?.user?.email }}
+            {{ user?.email }}
           </div>
           <div class="mr-2 text-gray-500 text-xs mt-1">پنل مدیریت</div>
         </div>

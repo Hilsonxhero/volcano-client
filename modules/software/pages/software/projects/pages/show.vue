@@ -27,15 +27,18 @@
 <script setup lang="ts">
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 
-definePageMeta({
-  layout: "software",
-});
-
 const project_id = ref(null);
 const page_id = ref(null);
 const route = useRoute();
 const loading = ref(true);
 const page = ref({});
+
+definePageMeta({
+  layout: "software",
+});
+useHead({
+  title: computed(() => page.value.title),
+});
 
 const handleFetchProject = async () => {
   const data = await useApiService.get(

@@ -4,6 +4,7 @@
       <h1 class="text-2xl text-gray-600">صفحه ها</h1>
       <div>
         <base-button
+          size="small"
           @click="handleShowCreatePageHead()"
           type="primary"
           class=""

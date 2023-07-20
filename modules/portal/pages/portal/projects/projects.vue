@@ -3,7 +3,12 @@
     <div class="mb-3 flex justify-between items-center">
       <h1 class="text-2xl text-gray-600">پروژه ها</h1>
       <div>
-        <base-button @click="handleShowCreateProject()" type="primary" class="">
+        <base-button
+          size="small"
+          @click="handleShowCreateProject()"
+          type="primary"
+          class=""
+        >
           <div class="flex items-center">
             <span class="ml-2">ساخت پروژه</span>
             <nuxt-icon name="add"></nuxt-icon>

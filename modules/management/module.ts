@@ -123,6 +123,23 @@ export default defineNuxtModule({
                     file: resolve(__dirname, './pages/projects/pages/edit.vue')
                 },
 
+                // project members
+                {
+                    name: 'management-project-members-index',
+                    path: '/management/projects/:project/members',
+                    file: resolve(__dirname, './pages/projects/members/index.vue')
+                },
+                {
+                    name: 'management-project-members-create',
+                    path: '/management/projects/:project/members/create',
+                    file: resolve(__dirname, './pages/projects/members/create.vue')
+                },
+                {
+                    name: 'management-project-members-edit',
+                    path: '/management/projects/:project/members/edit/:id',
+                    file: resolve(__dirname, './pages/projects/members/edit.vue')
+                },
+
                 {
                     name: 'management-pages-index',
                     path: '/management/pages',

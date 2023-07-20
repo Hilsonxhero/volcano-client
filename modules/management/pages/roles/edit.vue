@@ -218,7 +218,7 @@ const fetchPermissions = async () => {
 const fetchRole = async () => {
   try {
     const data = await useApiService.get(`management/roles/${role_id.value}`);
-    console.log("data", data);
+
     form.value.title = data.data.title;
     form.value.name = data.data.name;
     form.value.parent_id = data.data.parent_id;

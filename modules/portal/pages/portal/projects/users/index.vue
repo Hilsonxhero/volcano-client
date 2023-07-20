@@ -18,7 +18,6 @@
                 size="small"
                 type="primary"
                 class=""
-                to="/"
               >
                 <div class="flex items-center">
                   <span class="ml-2">عضو جدید</span>
@@ -58,7 +57,9 @@
             <template v-slot:cell-email="{ row }"> {{ row?.email }} </template>
 
             <template v-slot:cell-phone="{ row }"> {{ row?.phone }} </template>
-            <template v-slot:cell-role="{ row }"> {{ row?.role }} </template>
+            <template v-slot:cell-role="{ row }">
+              {{ row?.role?.title }}
+            </template>
 
             <template v-slot:cell-status="{ row }">
               <base-button outlined type="success" size="small">{{

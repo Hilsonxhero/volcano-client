@@ -212,8 +212,6 @@ const fetchRoles = async () => {
 };
 
 const fetchPermissions = async () => {
-  console.log("aaaaa");
-
   try {
     const data = await useApiService.get("management/permission/select/parent");
     permissions.value = data.data;

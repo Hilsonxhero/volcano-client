@@ -10,11 +10,11 @@
       </template>
       <template #default>
         <div>
-          <h2 class="text-2xl my-4 text-gray-600">ویرایش مقاله</h2>
+          <h2 class="text-2xl my-4 text-gray-600">ایجاد مقاله</h2>
         </div>
         <div class="bg-white shadow-xl rounded-xl p-4">
           <base-form
-            @submit.prevent="handleUpdateArticle"
+            @submit.prevent="handleCreateUser"
             :model="form"
             ref="formRef"
             class="h-full grid grid-cols-12 gap-2"
@@ -84,7 +84,6 @@
             >
               <div>
                 <TiptapEditor
-                  :content="form.content"
                   v-model="form.content"
                   placeholder="متن مقاله را وارد کنید"
                 />
@@ -117,11 +116,7 @@
               class="col-span-12 mt-8"
             >
               <div>
-                <base-upload
-                  :max="1"
-                  v-model="form.image"
-                  :sources="form.media?.thumb"
-                ></base-upload>
+                <base-upload :max="1" v-model="form.image"></base-upload>
               </div>
             </base-form-item>
 
@@ -134,7 +129,7 @@
                   type="primary"
                   block
                 >
-                  ویرایش
+                  ایجاد
                 </base-button>
                 <base-button
                   :to="{ name: 'management-articles-index' }"
@@ -152,6 +147,7 @@
 </template>
 
 <script setup lang="ts">
+import { UPDATE_MODEL_EVENT } from "~/core/constants";
 import {
   BaseFormItem,
   BaseForm,
@@ -178,7 +174,6 @@ const form = ref({
   content: null,
   description: null,
 });
-const article_id = ref(null);
 const validation_errros = ref([]);
 const categories = ref([]);
 const statuses = ref([
@@ -188,13 +183,12 @@ const statuses = ref([
   { title: "رد شده", key: "rejected" },
 ]);
 const route = useRoute();
-const handleUpdateArticle = () => {
+const handleCreateUser = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
       try {
         const formData = {
-          id: article_id.value,
           title: form.value.title,
           category_id: form.value.category_id,
           status: form.value.status,
@@ -202,14 +196,11 @@ const handleUpdateArticle = () => {
           image: form.value.image?.base64,
           description: form.value.description,
         };
-        const data = await useApiService.put(
-          `management/articles/${article_id.value}`,
-          formData
-        );
+        const data = await useApiService.post(`management/articles`, formData);
 
         if (data.success) {
           BaseMessage({
-            message: "ویرایش مقاله با موفقیت انجام شد!",
+            message: "ایجاد مقاله با موفقیت انجام شد!",
             type: "success",
             duration: 4000,
             center: true,
@@ -239,29 +230,12 @@ const fetchCategories = async () => {
   try {
     const data = await useApiService.get(`management/category/select`);
     categories.value = data.data;
-  } catch (error) {}
-};
-
-const fetchArticle = async () => {
-  try {
-    const data = await useApiService.get(
-      `management/articles/${article_id.value}`
-    );
-
-    form.value.title = data.data.title;
-    form.value.category_id = data.data.category.id;
-    form.value.status = data.data.status;
-    form.value.content = data.data.content;
-    form.value.description = data.data.description;
-    form.value.media = data.data.media;
     loading.value = false;
   } catch (error) {}
 };
 
 onMounted(async () => {
-  article_id.value = route.params.id;
   await fetchCategories();
-  await fetchArticle();
 });
 </script>
 
