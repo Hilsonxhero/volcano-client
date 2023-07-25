@@ -13,7 +13,8 @@
 
               <nuxt-link to="/" class="hidden lg:block">
                 <div href="" class="t-header__logo">
-                  <img src="~/assets/media/logo-base.svg" class="" />
+                  <!-- <img src="~/assets/media/logo-base.svg" class="" /> -->
+                  <img :src="variables?.logo_light" class="" />
                 </div>
               </nuxt-link>
 
@@ -95,6 +96,9 @@
 import { onClickOutside } from "@vueuse/core";
 import { useAuthStore } from "@/modules/auth/store";
 import { storeToRefs } from "pinia";
+import { useWebStore } from "@/modules/web/store";
+const webStore = useWebStore();
+const { variables } = storeToRefs(webStore);
 
 const store = useAuthStore();
 const { user, isLoggedIn } = storeToRefs(store);

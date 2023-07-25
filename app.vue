@@ -7,7 +7,17 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
+import { useWebStore } from "@/modules/web/store";
+
+const webStore = useWebStore();
+const { variables } = storeToRefs(webStore);
+onMounted(() => {
+  webStore.fetchVariables();
+});
+
 useHead({
+  title: computed(() => variables.value?.site_name),
   htmlAttrs: {
     class: "dark",
     "data-theme": "dark",

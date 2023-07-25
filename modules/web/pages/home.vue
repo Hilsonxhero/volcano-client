@@ -12,17 +12,22 @@
               <h1
                 class="home-section-hero__head text-3xl font-semibold leading-[140%] md:text-6xl"
               >
-                <span class="home-section-hero__title"
+                <span class="home-section-hero__title">
+                  {{ variables?.home_title }}
+                </span>
+
+                <!-- <span class="home-section-hero__title"
                   >افزایش بهره‌وری و همکاری</span
                 >
-                برای رشد کسب و کار
+                برای رشد کسب و کار -->
               </h1>
             </div>
             <div class="my-8">
               <p class="text-gray-300 text-sm relative z-[2] md:text-xl">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
+                {{ variables?.home_description }}
+                <!-- لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
                 استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله
-                در ستون و سطرآنچنان که
+                در ستون و سطرآنچنان که -->
               </p>
             </div>
             <div class="flex items-center justify-center">
@@ -295,6 +300,8 @@
 
 <script setup lang="ts">
 import { useDark, useToggle } from "@vueuse/core";
+import { storeToRefs } from "pinia";
+import { useWebStore } from "@/modules/web/store";
 const isDark = useDark({
   selector: "html",
   attribute: "class",
@@ -302,6 +309,9 @@ const isDark = useDark({
   valueLight: "light",
 });
 const toggleDark = useToggle(isDark);
+
+const webStore = useWebStore();
+const { variables } = storeToRefs(webStore);
 </script>
 
 <style lang="scss" scoped></style>

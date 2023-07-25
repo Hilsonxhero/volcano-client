@@ -75,6 +75,15 @@
 
             <base-form-item
               :model="form"
+              prop="is_promotion"
+              label="ویژه شده"
+              class="col-span-12 mt-8"
+            >
+              <base-switch v-model="form.is_promotion" />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
               prop="image"
               label=" تضویر"
               class="col-span-12 mt-8"
@@ -140,6 +149,7 @@ const form = ref({
   image: null,
   content: null,
   description: null,
+  is_promotion: false,
 });
 const service_id = ref(null);
 const validation_errros = ref([]);
@@ -158,7 +168,8 @@ const handleUpdateService = () => {
         formData.append("title", form.value.title);
         formData.append("description", form.value.description);
         formData.append("status", form.value.status);
-        if (form.value.image) {
+        formData.append("is_promotion", form.value.is_promotion ? 1 : 0);
+        if (form.value.image.file) {
           formData.append("media", form.value.image?.file);
         }
         const data = await useApiService.put(
@@ -200,6 +211,7 @@ const fetchService = async () => {
     form.value.title = data.data.title;
     form.value.status = data.data.status;
     form.value.description = data.data.description;
+    form.value.is_promotion = data.data.is_promotion ? true : false;
     form.value.media = data.data.media;
     loading.value = false;
   } catch (error) {}

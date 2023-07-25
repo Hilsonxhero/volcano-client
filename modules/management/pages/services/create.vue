@@ -75,6 +75,15 @@
 
             <base-form-item
               :model="form"
+              prop="is_promotion"
+              label="ویژه شده"
+              class="col-span-12 mt-8"
+            >
+              <base-switch v-model="form.is_promotion" />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
               prop="image"
               label=" تصویر"
               class="col-span-12 mt-8"
@@ -137,6 +146,7 @@ const form = ref({
   image: null,
   content: null,
   description: null,
+  is_promotion: false,
 });
 const validation_errros = ref([]);
 const categories = ref([]);
@@ -154,6 +164,7 @@ const handleCreateUser = () => {
         formData.append("title", form.value.title);
         formData.append("description", form.value.description);
         formData.append("status", form.value.status);
+        formData.append("is_promotion", form.value.is_promotion ? 1 : 0);
         formData.append("media", form.value.image?.file);
         const data = await useApiService.post(`management/services`, formData);
 
