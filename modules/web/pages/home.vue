@@ -48,8 +48,10 @@
             <img
               src="@/assets/media/01.svg"
               alt=""
-              class="absolute top-auto bottom-[20%] -left-[19%] right-auto hidden md:block"
-            /><img
+              class="absolute top-auto bottom-[20%] left-[-19%] right-auto hidden md:block"
+            />
+
+            <img
               src="@/assets/media/02.svg"
               alt=""
               class="absolute top-auto bottom-[39%] left-auto -right-[19%] hidden md:block"
@@ -57,136 +59,11 @@
           </div>
         </div>
 
-        <div class="home-section-services p-10 rounded-2xl">
-          <div class="grid grid-cols-12 gap-4">
-            <div
-              class="col-span-12 md:col-span-4 lg:col-span-3"
-              v-for="(item, index) in 4"
-              :key="index"
-            >
-              <a href="#" class="feature-card blue scale-up w-inline-block"
-                ><div class="icon-wrapper">
-                  <img src="@/assets/media/001.svg" alt="" class="text-white" />
-                </div>
-                <div class="feature-card-text-wrapper">
-                  <h3 class="text-3xl mb-3 text-white">مدیریت پروژه</h3>
-                  <p class="text-white">
-                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                  </p>
-                </div></a
-              >
-            </div>
-          </div>
-        </div>
+        <PromotionServices :items="init_variables?.promotion_services" />
       </div>
     </section>
 
-    <section class="bg-white py-14">
-      <div class="container">
-        <h1 class="text-center text-gray-700 text-4xl font-semibold mb-36">
-          مدیریت کار انعطاف پذیر - از ابتدا تا انتها
-        </h1>
-
-        <div class="grid grid-cols-12 gap-4 lg:gap-y-20 lg:gap-x-20">
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/10.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/11.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/12.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/13.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/14.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/15.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <MainServices :items="init_variables?.main_services" />
 
     <section class="home-section-features py-16">
       <div class="container">
@@ -299,6 +176,9 @@
 </template>
 
 <script setup lang="ts">
+import PromotionServices from "@/modules/web/components/home/service/PromotionServices.vue";
+import MainServices from "@/modules/web/components/home/service/MainServices.vue";
+
 import { useDark, useToggle } from "@vueuse/core";
 import { storeToRefs } from "pinia";
 import { useWebStore } from "@/modules/web/store";
@@ -309,9 +189,23 @@ const isDark = useDark({
   valueLight: "light",
 });
 const toggleDark = useToggle(isDark);
+const init_variables = ref({});
 
 const webStore = useWebStore();
 const { variables } = storeToRefs(webStore);
+const fetchInit = async () => {
+  try {
+    const data = await useApiService.get(`application/init`);
+    console.log("data,", data);
+    init_variables.value = data.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+onMounted(() => {
+  fetchInit();
+});
 </script>
 
 <style lang="scss" scoped></style>

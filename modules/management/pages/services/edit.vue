@@ -92,7 +92,7 @@
                 <base-upload
                   :max="1"
                   v-model="form.image"
-                  :sources="form.media?.thumb"
+                  :sources="form.media?.main"
                 ></base-upload>
               </div>
             </base-form-item>
