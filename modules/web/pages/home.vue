@@ -196,7 +196,6 @@ const { variables } = storeToRefs(webStore);
 const fetchInit = async () => {
   try {
     const data = await useApiService.get(`application/init`);
-    console.log("data,", data);
     init_variables.value = data.data;
   } catch (error) {
     return error;

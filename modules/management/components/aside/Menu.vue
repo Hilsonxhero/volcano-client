@@ -183,10 +183,16 @@ const pages = ref([
       },
 
       {
-        heading: "خدمات",
+        heading: "ویژگی ها",
         route: { name: "management-services-index" },
         active: "services",
         svgIcon: "services-bulk",
+      },
+      {
+        heading: "امکانات",
+        route: { name: "management-features-index" },
+        active: "features",
+        svgIcon: "flash-circle",
       },
       {
         heading: "مقالات",

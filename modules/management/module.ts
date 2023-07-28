@@ -162,6 +162,7 @@ export default defineNuxtModule({
                     file: resolve(__dirname, './pages/setting/index.vue')
                 },
 
+                // services
                 {
                     name: 'management-services-index',
                     path: '/management/services',
@@ -178,6 +179,22 @@ export default defineNuxtModule({
                     file: resolve(__dirname, './pages/services/edit.vue')
                 },
 
+                // features
+                {
+                    name: 'management-features-index',
+                    path: '/management/features',
+                    file: resolve(__dirname, './pages/features/index.vue')
+                },
+                {
+                    name: 'management-features-create',
+                    path: '/management/features/create',
+                    file: resolve(__dirname, './pages/features/create.vue')
+                },
+                {
+                    name: 'management-features-edit',
+                    path: '/management/features/edit/:id',
+                    file: resolve(__dirname, './pages/features/edit.vue')
+                },
             )
         })
     }
