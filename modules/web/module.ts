@@ -36,6 +36,21 @@ export default defineNuxtModule({
                     path: '/403',
                     file: resolve(__dirname, './pages/errors/403.vue')
                 },
+                {
+                    name: 'features-show',
+                    path: '/features/:id/:slug',
+                    file: resolve(__dirname, './pages/features/show.vue')
+                },
+                {
+                    name: 'articles-index',
+                    path: '/articles',
+                    file: resolve(__dirname, './pages/articles/articles.vue')
+                },
+                {
+                    name: 'articles-show',
+                    path: '/articles/:id/:slug',
+                    file: resolve(__dirname, './pages/articles/show.vue')
+                },
             )
         })
 

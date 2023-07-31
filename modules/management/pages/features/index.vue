@@ -46,7 +46,7 @@
             :pager="pager"
             :search="search"
             :current-page="pager.current_page"
-            search-placeholder="جستجوی امکانات"
+            search-placeholder="جستجوی ویژگی"
             :table-header="tableHeader"
             :enable-items-per-page-dropdown="false"
             :on-current-change="true"
@@ -176,15 +176,11 @@ const fetchFeatures = async () => {
 const debouncedOnInputChange = debounce(fetchFeatures, 200);
 
 const handleDeleteService = (service: any, index: any) => {
-  BaseMessageBox.confirm(
-    `آیا از حذف  امکانات  اطمینان دارید ؟!`,
-    "پیام تایید",
-    {
-      confirmButtonText: "تایید",
-      cancelButtonText: "لغو",
-      type: "warning",
-    }
-  )
+  BaseMessageBox.confirm(`آیا از حذف  ویژگی  اطمینان دارید ؟!`, "پیام تایید", {
+    confirmButtonText: "تایید",
+    cancelButtonText: "لغو",
+    type: "warning",
+  })
     .then(async () => {
       const data = await useApiService.remove(
         `management/features/${service?.id}`
@@ -192,7 +188,7 @@ const handleDeleteService = (service: any, index: any) => {
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  امکانات با موفقیت انجام شد!",
+          message: "حذف  ویژگی با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,

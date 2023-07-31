@@ -1,5 +1,5 @@
 <template>
-  <footer class="mt-40">
+  <footer class="mt-40 hidden">
     <div class="container">
       <div
         class="flex justify-center items-center space-x-3 space-x-reverse mb-6"
