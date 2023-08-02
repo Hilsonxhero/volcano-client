@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
 
 
-    css: ["@/assets/sass/main.scss", "@/assets/css/tailwind.css"],
+    css: ["@/assets/sass/main.scss", "@/assets/css/tailwind.css", "@/assets/sass/master.scss"],
 
 
     runtimeConfig: {

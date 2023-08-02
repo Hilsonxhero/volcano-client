@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="t-header py-4 t-sticky-top">
+    <!-- <header class="t-header py-4 t-sticky-top">
       <div class="container">
         <div class="h-16">
           <div class="flex items-center h-full justify-between">
@@ -13,7 +13,6 @@
 
               <nuxt-link to="/" class="hidden lg:block">
                 <div href="" class="t-header__logo">
-                  <!-- <img src="~/assets/media/logo-base.svg" class="" /> -->
                   <img :src="variables?.logo_light" class="" />
                 </div>
               </nuxt-link>
@@ -57,9 +56,6 @@
             ></div>
             <div class="flex items-center">
               <div class="hidden lg:flex">
-                <!-- <BaseButton class="mr-2" variant="light">
-                  <nuxt-icon name="user-bulk"></nuxt-icon>
-                </BaseButton> -->
                 <template v-if="isLoggedIn">
                   <nuxt-link
                     :to="{ name: 'auth' }"
@@ -88,7 +84,78 @@
           </div>
         </div>
       </div>
-    </header>
+    </header> -->
+
+    <div class="section-navbar">
+      <div
+        data-collapse="medium"
+        data-animation="default"
+        data-duration="400"
+        data-w-id="083b3595-12c0-3eb5-8a08-5d830155c0c6"
+        data-easing="ease"
+        data-easing2="ease"
+        role="banner"
+        class="navbar w-nav"
+      >
+        <div class="w-layout-grid grid-navbar">
+          <div data-w-id="083b3595-12c0-3eb5-8a08-5d830155c0c8" class="nav">
+            <a
+              href="/"
+              aria-current="page"
+              class="brand w-nav-brand w--current"
+              aria-label="home"
+              ><img
+                :src="variables?.logo_light"
+                loading="eager"
+                alt=""
+                class="logo"
+            /></a>
+          </div>
+          <div data-w-id="083b3595-12c0-3eb5-8a08-5d830155c0cb" class="nav">
+            <nav role="navigation" class="nav-menu w-nav-menu">
+              <a
+                v-for="(item, index) in menus"
+                href="/features"
+                class="nav-link w-nav-link"
+                >{{ item?.title }}</a
+              >
+            </nav>
+          </div>
+          <div
+            data-w-id="083b3595-12c0-3eb5-8a08-5d830155c0dc"
+            class="nav right"
+          >
+            <div class="extra-nav-menu">
+              <!-- <a href="/log-in" class="nav-link w-nav-link">ورود<br /></a -->
+              <template v-if="isLoggedIn">
+                <nuxt-link :to="{ name: 'auth' }" class="nav-button w-button">
+                  حساب کاربری
+                </nuxt-link>
+              </template>
+              <template v-else>
+                <nuxt-link :to="{ name: 'auth' }" class="nav-button w-button">
+                  حساب کاربری
+                </nuxt-link>
+              </template>
+            </div>
+
+            <div
+              class="menu-button w-nav-button"
+              aria-label="menu"
+              role="button"
+              tabindex="0"
+              aria-controls="w-nav-overlay-0"
+              aria-haspopup="menu"
+              aria-expanded="false"
+            >
+              <div class="menu-icon w-icon-nav-menu"></div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-bg"></div>
+        <div class="w-nav-overlay" data-wf-ignore="" id="w-nav-overlay-0"></div>
+      </div>
+    </div>
   </div>
 </template>
 

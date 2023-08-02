@@ -96,7 +96,12 @@ const store = useAuthStore();
 const { user } = storeToRefs(store);
 const visible_account = ref(false);
 const visible_manage_account = ref(false);
-const handleLogout = async () => {};
+const handleLogout = async () => {
+  try {
+    await store.logout();
+    navigateTo("/");
+  } catch (error) {}
+};
 
 const handleFilterModal = () => {};
 

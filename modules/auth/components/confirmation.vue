@@ -1,8 +1,12 @@
 <template>
   <div>
-    <h1 class="flex justify-start mb-6 text-typo text-xl">ورود</h1>
     <div class="w-full">
-      <base-form :model="form" ref="formRef" class="h-full space-y-6">
+      <base-form
+        @submit.prevent="handleSubmit"
+        :model="form"
+        ref="formRef"
+        class="h-full space-y-6"
+      >
         <div class="block mb-4">
           <base-form-item
             :model="form"
@@ -11,41 +15,43 @@
             :rules="[
               {
                 required: true,
-                message: ' شماره موبایل  الزامی می باشد',
+                message: ' ایمیل   الزامی می باشد',
               },
             ]"
-            label="عنوان"
+            label=""
             class="col-span-12"
           >
-            <base-input
+            <!-- <base-input
               v-bind="field"
               v-model="form.username"
-              placeholder="شماره موبایل"
-            ></base-input>
+              placeholder="آدرس ایمیل"
+            ></base-input> -->
+            <input
+              v-bind="field"
+              type="email"
+              class="text-field w-input"
+              maxlength="256"
+              name="Email"
+              data-name="Email"
+              placeholder="آدرس ایمیل"
+              v-model="form.username"
+            />
           </base-form-item>
         </div>
-        <span class="text-justify lg:text-xs text-gray-600">
-          با ورود به ،
-          <a class="cursor-pointer"><span class="text-link"> شرایط </span></a>
-          و
-
-          <a class="cursor-pointer"
-            ><span class=""> قوانین حریم ‌خصوصی </span></a
-          >
-
-          آن را می‌پذیرید.
-        </span>
 
         <div class="flex flex-col justify-between lg:items-center">
           <div class="w-full">
-            <base-button
+            <!-- <base-button
               class="w-full"
               @click="handleSubmit"
               :loading="loader"
               type="primary"
               block
               >ورود</base-button
-            >
+            > -->
+            <button type="submit" class="submit-button w-button block w-full">
+              ادامه
+            </button>
           </div>
         </div>
       </base-form>
@@ -80,16 +86,20 @@ watchEffect(() => {
 });
 
 const handleSubmit = async () => {
-  loader.value = true;
-  const formDate = {
-    phone: form.value.username,
-  };
+  formRef.value?.validate(async (valid: any): Promise<void> => {
+    if (valid) {
+      loader.value = true;
+      const formDate = {
+        username: form.value.username,
+      };
 
-  const data = await store.authenticate(formDate);
-  end.value = data.ttl * 1000;
-  otp.value = true;
-  emit("change", end.value);
-  loader.value = false;
+      const data = await store.authenticate(formDate);
+      end.value = data.ttl * 1000;
+      otp.value = true;
+      emit("change", end.value);
+      loader.value = false;
+    }
+  });
 };
 </script>
 

@@ -1,46 +1,51 @@
 <template>
-  <section class="py-20">
-    <div class="container">
-      <div class="flex flex-col items-center justify-center mb-20">
-        <h1 class="text-center text-gray-700 text-4xl font-semibold">
-          آخرین مقالات
-        </h1>
+  <div class="section">
+    <div class="section-content">
+      <div class="block-center">
+        <h2 data-w-id="ac1c39f6-3071-f098-aec3-9337033bdfe6" class="heading">
+          مقالات
+        </h2>
       </div>
-
-      <div class="grid grid-cols-12 gap-6">
-        <div
-          class="col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-4"
-          v-for="(article, index) in items"
-          :key="index"
-        >
-          <nuxt-link
-            :to="{
-              name: 'articles-show',
-              params: { id: article?.id, slug: article?.slug },
-            }"
+      <div class="collection-list-wrapper w-dyn-list">
+        <div role="list" class="collection-list w-dyn-items">
+          <div
+            role="listitem"
+            class="collection-item w-dyn-item"
+            v-for="(article, index) in items"
+            :key="index"
           >
-            <div class="article-module__card rounded-[32px] p-6">
-              <div>
-                <img
-                  :src="article?.media?.thumb"
-                  class="object-cover rounded-xl w-full"
-                  alt=""
-                />
-              </div>
-              <div class="mt-6">
-                <div class="my-4">
-                  <span class="article-module__tag">
-                    {{ article?.category?.title }}
-                  </span>
-                </div>
-                <h4 class="text-xl mt-4">{{ article?.title }}</h4>
-              </div>
+            <div data-w-id="Div Block 16" class="block-blog">
+              <nuxt-link
+                :to="{
+                  name: 'articles-show',
+                  params: { id: article?.id, slug: article?.slug },
+                }"
+                class="link-image-blog w-inline-block"
+                ><img
+                  :src="article?.media?.main"
+                  loading="lazy"
+                  alt="How to write your first android app: Useful Advice"
+                  class="image-blog"
+              /></nuxt-link>
+              <div class="category-blog">{{ article?.category?.title }}</div>
+              <nuxt-link
+                :to="{
+                  name: 'articles-show',
+                  params: { id: article?.id, slug: article?.slug },
+                }"
+                class="link-heading-blog w-inline-block"
+              >
+                <h5 data-w-id="Heading 6" class="heading-blog">
+                  {{ article?.title }}
+                </h5>
+              </nuxt-link>
+              <div class="date-blog">{{ article?.created_at }}</div>
             </div>
-          </nuxt-link>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">

@@ -193,18 +193,28 @@ const handleUpdateArticle = () => {
     if (valid) {
       loader.value = true;
       try {
-        const formData = {
-          id: article_id.value,
-          title: form.value.title,
-          category_id: form.value.category_id,
-          status: form.value.status,
-          content: form.value.content,
-          image: form.value.image?.base64,
-          description: form.value.description,
-        };
+        // const formData = {
+        //   id: article_id.value,
+        //   title: form.value.title,
+        //   category_id: form.value.category_id,
+        //   status: form.value.status,
+        //   content: form.value.content,
+        //   image: form.value.image?.base64,
+        //   description: form.value.description,
+        // };
+        const form_data = new FormData();
+        form_data.append("id", article_id.value);
+        form_data.append("title", form.value.title);
+        form_data.append("description", form.value.description);
+        form_data.append("content", form.value.content);
+        form_data.append("category_id", form.value.category_id);
+        form_data.append("status", form.value.status);
+        if (form.value.image.file) {
+          form_data.append("image", form.value.image?.file);
+        }
         const data = await useApiService.put(
           `management/articles/${article_id.value}`,
-          formData
+          form_data
         );
 
         if (data.success) {

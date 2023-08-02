@@ -1,117 +1,38 @@
 <template>
-  <div>
-    <section class="bg-white py-14">
-      <div class="container">
-        <h1 class="text-center text-gray-700 text-4xl font-semibold mb-36">
-          مدیریت کار انعطاف پذیر - از ابتدا تا انتها
-        </h1>
-
-        <div class="grid grid-cols-12 gap-4 lg:gap-y-20 lg:gap-x-20">
-          <div
-            class="col-span-12 md:col-span-6 lg:col-span-4"
-            v-for="(service, index) in items"
-            :key="index"
-          >
-            <div>
-              <div class="flex flex-col items-center">
-                <img
-                  :src="service?.media?.thumb"
-                  alt=""
-                  class="mb-10 w-[100px] h-[100px]"
-                />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  {{ service?.title }}
-                </h4>
-                <div class="text-center text-gray-700 leading-7 ellipsis-2">
-                  {{ service?.description }}
-                </div>
-              </div>
-            </div>
+  <div class="section">
+    <div data-w-id="Div Block" class="content">
+      <div class="block-center">
+        <h2 data-w-id="Heading 3" class="heading">
+          با تمام امکاناتی که نیاز دارید
+        </h2>
+        <p data-w-id="Paragraph 3" class="paragraph text-gray-300">
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده
+          ا و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است
+        </p>
+      </div>
+      <div class="w-layout-grid grid-feature">
+        <div
+          data-w-id="Div Block 3"
+          class="feature"
+          v-for="(feature, index) in items"
+          :key="index"
+        >
+          <div class="icon-feature-bg">
+            <img
+              :src="feature?.media?.main"
+              loading="eager"
+              alt=""
+              class="icon-feature"
+              width="35"
+            />
           </div>
-          <!-- <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/11.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/12.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/13.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/14.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-span-12 md:col-span-6 lg:col-span-4">
-            <div>
-              <div class="flex flex-col items-center">
-                <img src="@/assets/media/15.svg" alt="" class="mb-10" />
-
-                <h4 class="text-2xl font-semibold text-gray-800 mb-4">
-                  لورم ایپسوم متن ساختگی با تولید
-                </h4>
-                <div class="text-center text-gray-700 leading-7">
-                  لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و
-                  با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و
-                  مجله
-                </div>
-              </div>
-            </div>
-          </div> -->
+          <h5 class="heading-feature">{{ feature?.title }}</h5>
+          <p class="paragraph-feature text-gray-400">
+            {{ feature?.description }}
+          </p>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 

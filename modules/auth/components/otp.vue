@@ -1,25 +1,34 @@
 <template>
   <div>
-    <h1 class="flex justify-start mb-6 text-typo text-xl">
-      وورد با رمز یکبار مصرف
-    </h1>
     <div class="w-full">
-      <base-form ref="form" class="h-full space-y-6">
+      <base-form
+        @submit.prevent="handleSendCode"
+        ref="form"
+        class="h-full space-y-6"
+      >
         <div class="block mb-4">
           <div class="flex items-center justify-between mb-6">
-            <div class="text-typo-300 text-sm cursor-pointer">
+            <div class="text-gray-200 text-sm cursor-pointer">
               {{ username }}
             </div>
             <div
               @click="changePhone"
-              class="text-primary text-sm cursor-pointer lg:mr-0"
+              class="text-gray-300 text-sm cursor-pointer lg:mr-0"
             >
               ویرایش شماره موبایل
             </div>
           </div>
 
           <div class="flex items-center">
-            <base-otp :length="5" v-model="code"></base-otp>
+            <!-- <base-otp :length="5" v-model="code"></base-otp> -->
+            <input
+              type="number"
+              class="text-field w-input text-center"
+              maxlength="5"
+              name="Email"
+              placeholder="کد تایید"
+              v-model="code"
+            />
             <div mode="out-in" class="flex flex-col justify-center mr-6 w-56">
               <Countdown
                 v-if="!resend"
@@ -36,28 +45,25 @@
             </div>
           </div>
         </div>
-        <span class="text-justify lg:text-xs text-gray-600">
-          با ورود به ،
-          <a class="cursor-pointer"><span class="text-link"> شرایط </span></a>
-          و
-
-          <a class="cursor-pointer"
-            ><span class="text-link"> قوانین حریم ‌خصوصی </span></a
-          >
-
-          آن را می‌پذیرید.
-        </span>
 
         <div class="flex flex-col justify-between lg:items-center">
           <div class="w-full">
-            <base-button
+            <!-- <base-button
               class="w-full"
               @click="handleSendCode"
               :loading="loader"
               type="primary"
               block
               >ورود</base-button
+            > -->
+
+            <button
+              :loading="loader"
+              type="submit"
+              class="submit-button w-button block w-full"
             >
+              ورود
+            </button>
           </div>
         </div>
       </base-form>
@@ -126,7 +132,7 @@ const handleSendCode = async () => {
 const handleresendCode = async () => {
   loader.value = true;
   const form = {
-    phone: props.username,
+    username: props.username,
   };
   try {
     const { data } = await store.authenticate(form);

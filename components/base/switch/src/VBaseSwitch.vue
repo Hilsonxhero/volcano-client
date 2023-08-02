@@ -115,18 +115,6 @@ const { formItem } = useFormItem();
 const switchSize = useSize();
 const ns = useNamespace("switch");
 
-// useDeprecated(
-//   {
-//     from: '"value"',
-//     replacement: '"model-value" or "v-model"',
-//     scope: COMPONENT_NAME,
-//     version: "2.3.0",
-//     ref: "https://element-plus.org/en-US/component/switch.html#attributes",
-//     type: "Attribute",
-//   },
-//   computed(() => !!vm.vnode.props?.value)
-// );
-
 const { inputId } = useFormItemInputId(props, {
   formItemContext: formItem,
 });

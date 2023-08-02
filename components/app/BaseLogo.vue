@@ -1,10 +1,13 @@
 <template>
-  <div class="w-full">
-    <nuxt-link v-if="dark" :to="{ name: 'home' }" class="">
-      <img src="~/assets/media/logo-dark.svg" class="max-h-40px w-3/4" />
-    </nuxt-link>
-    <nuxt-link v-else :to="{ name: 'home' }" class="">
-      <img src="~/assets/media/logo-light.svg" class="max-h-40px w-3/4" />
+  <div class="">
+    <nuxt-link :to="{ name: 'home' }">
+      <img
+        :src="variables?.logo_light"
+        loading="eager"
+        alt=""
+        class="h-[26px] max-w-none"
+        :class="class"
+      />
     </nuxt-link>
   </div>
 </template>
@@ -15,7 +18,16 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  class: {
+    type: String,
+    default: "logo",
+  },
 });
+
+import { storeToRefs } from "pinia";
+import { useWebStore } from "@/modules/web/store";
+const webStore = useWebStore();
+const { variables } = storeToRefs(webStore);
 </script>
 
 <style scoped></style>

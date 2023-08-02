@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="default-layout">
     <BaseHeader />
     <main>
       <slot />
@@ -14,9 +14,9 @@ import BaseFooter from "@/components/app/BaseFooter.vue";
 
 useHead({
   bodyAttrs: {
-    class: "pt-24",
+    class: "pt-24 master-layout",
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
