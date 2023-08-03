@@ -174,7 +174,7 @@ const menus = ref([
   { title: "صفحه اصلی", route: "home" },
   { title: "درباره ما", route: "about" },
   { title: "ارتباط ما", route: "contact" },
-  { title: "مقالات", route: "contact" },
+  { title: "مقالات", route: "articles-index" },
 ]);
 const navRef = ref(null);
 

@@ -46,7 +46,7 @@
             <div data-w-id="Div Block 13" class="block-check">
               <div class="check">
                 <img
-                  src="@/assets/media/check blue.svg"
+                  src="~/assets/media/check.svg"
                   loading="eager"
                   alt=""
                   class="icon-check"
@@ -60,7 +60,7 @@
             >
               <div class="check">
                 <img
-                  src="@/assets/media/check blue.svg"
+                  src="~/assets/media/check.svg"
                   loading="eager"
                   alt=""
                   class="icon-check"
@@ -74,7 +74,7 @@
             >
               <div class="check">
                 <img
-                  src="@/assets/media/check blue.svg"
+                  src="~/assets/media/check.svg"
                   loading="eager"
                   alt=""
                   class="icon-check"

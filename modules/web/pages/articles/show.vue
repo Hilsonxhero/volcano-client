@@ -25,17 +25,19 @@
           <div class="w-3/5 mx-auto">
             <div class="flex items-center">
               <div>
-                <base-button size="small" type="warning">
+                <div class="category-blog hero">
                   {{ article?.category?.title }}
-                </base-button>
+                </div>
               </div>
               <div class="text-sm text-gray-400 mr-3">
                 {{ article?.created_at }}
               </div>
             </div>
-            <h2 class="text-xl lg:text-4xl font-semibold text-gray-700 my-8">
-              {{ article?.title }}
-            </h2>
+            <div class="my-6">
+              <h4 class="text-xl lg:text-4xl font-semibold text-gray-700">
+                {{ article?.title }}
+              </h4>
+            </div>
             <section>
               <div class="h-[200px] lg:h-[400px] w-full mx-auto">
                 <img
@@ -49,7 +51,7 @@
               <div class="">
                 <div class="mt-8">
                   <div
-                    class="mt-4 text-gray-500 text-justify leading-8 text-base"
+                    class="mt-4 text-gray-200 text-justify leading-8 text-base"
                     v-html="article.content"
                   ></div>
                 </div>

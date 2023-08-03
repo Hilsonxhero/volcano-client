@@ -1,6 +1,6 @@
 <template>
   <div class="section-footer">
-    <div class="content">
+    <div class="section-content">
       <div class="w-layout-grid grid-footer">
         <div
           id="w-node-da92ec24-0a93-58e4-1a73-58ed5b0e2fba-5b0e2fb7"
