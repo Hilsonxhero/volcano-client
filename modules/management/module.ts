@@ -195,6 +195,14 @@ export default defineNuxtModule({
                     path: '/management/features/edit/:id',
                     file: resolve(__dirname, './pages/features/edit.vue')
                 },
+
+                // about us 
+
+                {
+                    name: 'management-about-index',
+                    path: '/management/about/variables',
+                    file: resolve(__dirname, './pages/about/variables.vue')
+                },
             )
         })
     }

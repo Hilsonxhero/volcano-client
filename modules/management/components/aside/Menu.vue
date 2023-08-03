@@ -207,6 +207,12 @@ const pages = ref([
         svgIcon: "note-bulk",
       },
       {
+        heading: "درباره ما",
+        route: { name: "management-about-index" },
+        active: "about",
+        svgIcon: "info-circle",
+      },
+      {
         heading: "تنظیمات",
         route: { name: "management-setting-index" },
         active: "setting",
