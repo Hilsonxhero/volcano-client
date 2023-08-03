@@ -113,11 +113,11 @@
           </div>
           <div data-w-id="083b3595-12c0-3eb5-8a08-5d830155c0cb" class="nav">
             <nav role="navigation" class="nav-menu w-nav-menu">
-              <a
+              <nuxt-link
                 v-for="(item, index) in menus"
-                href="/features"
+                :to="{ name: item.route }"
                 class="nav-link w-nav-link"
-                >{{ item?.title }}</a
+                >{{ item?.title }}</nuxt-link
               >
             </nav>
           </div>
@@ -171,9 +171,10 @@ const store = useAuthStore();
 const { user, isLoggedIn } = storeToRefs(store);
 
 const menus = ref([
-  { title: "صفحه اصلی", to: "" },
-  { title: "درباره ما", to: "" },
-  { title: "مقالات", to: "" },
+  { title: "صفحه اصلی", route: "home" },
+  { title: "درباره ما", route: "about" },
+  { title: "ارتباط ما", route: "contact" },
+  { title: "مقالات", route: "contact" },
 ]);
 const navRef = ref(null);
 

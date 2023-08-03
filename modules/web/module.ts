@@ -51,6 +51,16 @@ export default defineNuxtModule({
                     path: '/articles/:id/:slug',
                     file: resolve(__dirname, './pages/articles/show.vue')
                 },
+                {
+                    name: 'about',
+                    path: '/about',
+                    file: resolve(__dirname, './pages/about/about.vue')
+                },
+                {
+                    name: 'contact',
+                    path: '/contact',
+                    file: resolve(__dirname, './pages/contact/contact.vue')
+                },
             )
         })
 

@@ -15,7 +15,7 @@ html {
   display: flex;
   margin: 0;
   min-height: 100%;
-  color: #333;
+  // color: #333;
   margin: 0;
   font-size: 14px;
   line-height: 20px;
@@ -5012,7 +5012,7 @@ html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-right: 20px;
+    margin-left: 20px;
     padding: 25px;
     display: flex;
     box-shadow: 0 25px 50px -10px rgba(3, 5, 15, 0.5);
@@ -5031,6 +5031,7 @@ html {
     color: #f4f6fd;
     font-size: 15px;
     line-height: 135%;
+    text-align: right;
   }
 
   .contact {

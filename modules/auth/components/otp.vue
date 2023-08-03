@@ -38,7 +38,7 @@
               <div
                 @click="handleresendCode"
                 v-else
-                class="inline-block text-xs cursor-pointer text-typo-light font-medium"
+                class="inline-block text-xs cursor-pointer text-typo-light font-medium text-gray-300"
               >
                 ارسال مجدد
               </div>
