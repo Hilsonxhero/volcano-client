@@ -162,6 +162,11 @@ const pages = ref([
         route: "portal-projects-users-index",
         svgIcon: "group",
       },
+      {
+        heading: "نقش ها ودسترسی ها",
+        route: "portal-projects-roles-index",
+        svgIcon: "security-user",
+      },
     ],
   },
 ]);

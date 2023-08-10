@@ -22,13 +22,11 @@ export default defineNuxtModule({
                     path: '/portal/projects',
                     file: resolve(__dirname, './pages/portal/projects/projects.vue')
                 },
-
                 {
                     name: 'portal-projects-show',
                     path: '/portal/projects/:id/:slug',
                     file: resolve(__dirname, './pages/portal/projects/show.vue')
                 },
-
                 {
                     name: 'portal-projects-pages-index',
                     path: '/portal/projects/:id/:slug/pages',
@@ -38,6 +36,21 @@ export default defineNuxtModule({
                     name: 'portal-projects-users-index',
                     path: '/portal/projects/:id/:slug/users',
                     file: resolve(__dirname, './pages/portal/projects/users/index.vue')
+                },
+                {
+                    name: 'portal-projects-roles-index',
+                    path: '/portal/projects/:id/:slug/roles',
+                    file: resolve(__dirname, './pages/portal/projects/roles/index.vue')
+                },
+                {
+                    name: 'portal-projects-roles-create',
+                    path: '/portal/projects/:id/:slug/roles/create',
+                    file: resolve(__dirname, './pages/portal/projects/roles/create.vue')
+                },
+                {
+                    name: 'portal-projects-roles-edit',
+                    path: '/portal/projects/:id/:slug/roles/edit/:role',
+                    file: resolve(__dirname, './pages/portal/projects/roles/edit.vue')
                 },
                 {
                     name: 'portal-invite-confirmation',

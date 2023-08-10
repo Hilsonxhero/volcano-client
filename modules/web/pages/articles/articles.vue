@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="single-page">
-      <div class="section-content">
+      <div class="">
         <div class="block-hero">
           <h1 data-w-id="Heading 2" class="heading-hero">
             <span class="text-accent"> مقالات </span>
@@ -10,51 +10,45 @@
       </div>
     </div>
     <div class="">
-      <div class="section-content">
-        <div class="collection-list-wrapper-large w-dyn-list">
+      <div class="collection-list-wrapper-large w-dyn-list">
+        <div role="list" class="grid grid-cols-12 gap-4" ref="articlesListRef">
           <div
-            role="list"
-            class="collection-list-large w-dyn-items"
-            ref="articlesListRef"
+            role="listitem"
+            class="col-span-6 lg:col-span-4"
+            v-for="(article, index) in articles"
+            :key="index"
           >
-            <div
-              role="listitem"
-              class="collection-item w-dyn-item"
-              v-for="(article, index) in articles"
-              :key="index"
-            >
-              <div class="block-blog">
-                <nuxt-link
-                  :to="{
-                    name: 'articles-show',
-                    params: { id: article?.id, slug: article?.slug },
-                  }"
-                  class="link-image-blog w-inline-block"
-                  ><img
-                    :src="article?.media?.main"
-                    loading="lazy"
-                    alt="How to write your first android app: Useful Advice"
-                    class="image-blog large"
-                /></nuxt-link>
-                <div class="category-blog">
-                  {{ article?.category?.title }}
-                </div>
-                <nuxt-link
-                  :to="{
-                    name: 'articles-show',
-                    params: { id: article?.id, slug: article?.slug },
-                  }"
-                  class="link-heading-blog w-inline-block"
-                  ><h3 class="heading-blog">
-                    {{ article?.title }}
-                  </h3></nuxt-link
-                >
-                <div class="date-blog">{{ article?.created_at }}</div>
+            <div class="block-blog">
+              <nuxt-link
+                :to="{
+                  name: 'articles-show',
+                  params: { id: article?.id, slug: article?.slug },
+                }"
+                class="link-image-blog w-inline-block"
+                ><img
+                  :src="article?.media?.main"
+                  loading="lazy"
+                  alt="How to write your first android app: Useful Advice"
+                  class="image-blog large"
+              /></nuxt-link>
+              <div class="category-blog">
+                {{ article?.category?.title }}
               </div>
+              <nuxt-link
+                :to="{
+                  name: 'articles-show',
+                  params: { id: article?.id, slug: article?.slug },
+                }"
+                class="link-heading-blog w-inline-block"
+                ><h3 class="heading-blog">
+                  {{ article?.title }}
+                </h3></nuxt-link
+              >
+              <div class="date-blog">{{ article?.created_at }}</div>
             </div>
-
-            <div ref="sentinel" style="height: 10px"></div>
           </div>
+
+          <div ref="sentinel" style="height: 10px"></div>
         </div>
       </div>
     </div>
