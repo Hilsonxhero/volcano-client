@@ -4,10 +4,7 @@
       <template #template>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <base-skeleton-item
-              class="h-[350px]"
-              variant="card"
-            ></base-skeleton-item>
+            <base-skeleton-item variant="card"></base-skeleton-item>
           </div>
         </div>
       </template>
@@ -15,16 +12,27 @@
         <section class="mb-6 bg-white shadow-lg p-4 rounded-2xl">
           <section>
             <div class="mb-3 flex justify-between flex-wrap items-center">
-              <div class="w-full lg:w-auto">دسته بندی زمان ها</div>
+              <div class="w-full lg:w-auto">
+                <base-input
+                  class="w-full lg:w-[250px]"
+                  v-model="search"
+                  placeholder="جستجوی  نقش کاربری"
+                >
+                  <template #prefix>
+                    <nuxt-icon name="search-status"></nuxt-icon>
+                  </template>
+                </base-input>
+              </div>
+
               <div class="w-full lg:w-auto mt-4 lg:mt-0">
                 <base-button
                   size="small"
                   type="primary"
                   class="w-full lg:w-auto"
-                  :to="{ name: 'portal-projects-time-categories-create' }"
+                  :to="{ name: 'portal-projects-roles-create' }"
                 >
                   <div class="flex items-center">
-                    <span class="ml-2">ایجاد دسته بندی زمان</span>
+                    <span class="ml-2">نقش جدید</span>
                     <nuxt-icon name="add"></nuxt-icon>
                   </div>
                 </base-button>
@@ -38,6 +46,7 @@
             :pager="pager"
             :search="search"
             :current-page="pager.current_page"
+            search-placeholder="جستجوی سطح دسترسی"
             :table-header="tableHeader"
             :enable-items-per-page-dropdown="false"
             :on-current-change="true"
@@ -59,32 +68,28 @@
                 {{ row?.title }}
               </div>
             </template>
-            <template v-slot:cell-is_default="{ row }">
-              <div class="">
-                <template v-if="row?.is_default">
-                  <base-button outlined type="success" size="small"
-                    >مقدار پیش فرض</base-button
-                  >
-                </template>
-                <template v-else>
-                  <base-button outlined type="gray" size="small"
-                    >مقدار عادی</base-button
-                  >
-                </template>
-              </div>
-            </template>
-            <template v-slot:cell-status="{ row }">
+            <template v-slot:cell-name="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
               >
-                {{ row?.status }}
+                {{ row?.name }}
+              </div>
+            </template>
+            <template v-slot:cell-parent_name="{ row }">
+              <div
+                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
+              >
+                <template v-if="row?.parent_name">
+                  {{ row?.parent_name }}
+                </template>
+                <template v-else> گروه اصلی </template>
               </div>
             </template>
 
-            <template v-slot:cell-actions="{ row, index }">
+            <template v-slot:cell-actions="{ row: role, index }">
               <div class="flex items-center">
                 <base-button
-                  @click="handleDelete(row, index)"
+                  @click="handleDeleteRole(role, index)"
                   size="small"
                   icon
                 >
@@ -92,10 +97,10 @@
                 </base-button>
                 <base-button
                   :to="{
-                    name: 'portal-projects-time-categories-edit',
+                    name: 'portal-projects-roles-edit',
                     params: {
-                      id: route.params?.id,
-                      category: row.id,
+                      id: project?.id,
+                      role: role.id,
                     },
                   }"
                   size="small"
@@ -126,6 +131,7 @@ definePageMeta({
 const loading = ref(true);
 const pager = ref({});
 const current_page = ref(1);
+const project_id = ref(null);
 const route = useRoute();
 const checkedData = ref([]);
 const search = ref("");
@@ -140,13 +146,13 @@ const tableHeader = ref([
     sortable: true,
   },
   {
-    name: "مقدار پیش فرض",
-    key: "is_default",
+    name: "نام",
+    key: "name",
     sortable: true,
   },
   {
-    name: "وضعیت",
-    key: "status",
+    name: "دسته گروه",
+    key: "parent_name",
     sortable: true,
   },
   {
@@ -159,38 +165,40 @@ const tableData = ref([]);
 watch(
   () => search.value,
   (val) => {
+    // fetchRoles();
     debouncedOnInputChange();
   }
 );
 
 const handleChangePage = (page) => {
   current_page.value = page;
-  fetchData();
+  fetchRoles();
 };
 
-const fetchData = async () => {
+const fetchRoles = async () => {
   let params = {
     page: current_page.value,
     q: search.value,
   };
+  // loading.value = true;
   try {
     const { data } = await useApiService.get(
-      `application/portal/projects/${route.params.id}/enumerations/time/categories`,
+      `application/portal/projects/${route.params.id}/roles`,
       {
         params: params,
       }
     );
     loading.value = false;
     pager.value = data.pager;
-    tableData.value = data.categories;
+    tableData.value = data.roles;
   } catch (error) {}
 };
 
-const debouncedOnInputChange = debounce(fetchData, 200);
+const debouncedOnInputChange = debounce(fetchRoles, 200);
 
-const handleDelete = (item: any, index: any) => {
+const handleDeleteRole = (role: any, index: any) => {
   BaseMessageBox.confirm(
-    `آیا از حذف  دسته بندی زمان  اطمینان دارید ؟!`,
+    `آیا از حذف  سطح دسترسی  اطمینان دارید ؟!`,
     "پیام تایید",
     {
       confirmButtonText: "تایید",
@@ -200,12 +208,12 @@ const handleDelete = (item: any, index: any) => {
   )
     .then(async () => {
       const data = await useApiService.remove(
-        `application/portal/projects/${route.params.id}/enumerations/time/categories/${item?.id}`
+        `application/portal/projects/${route.params.id}/roles/${role?.id}`
       );
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  دسته بندی زمان با موفقیت انجام شد!",
+          message: "حذف  سطح دسترسی با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,
@@ -217,7 +225,8 @@ const handleDelete = (item: any, index: any) => {
 };
 
 onMounted(() => {
-  fetchData();
+  fetchRoles();
+  project_id.value = route.params.id;
 });
 </script>
 
