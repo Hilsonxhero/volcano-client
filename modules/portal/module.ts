@@ -62,6 +62,21 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/:slug/enumerations',
                     file: resolve(__dirname, './pages/portal/projects/enumerations/index.vue')
                 },
+                {
+                    name: 'portal-projects-time-categories-index',
+                    path: '/portal/projects/:id/:slug/enumerations/time/categories',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/time/index.vue')
+                },
+                {
+                    name: 'portal-projects-time-categories-create',
+                    path: '/portal/projects/:id/:slug/enumerations/time/categories/create',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/time/create.vue')
+                },
+                {
+                    name: 'portal-projects-time-categories-edit',
+                    path: '/portal/projects/:id/:slug/enumerations/time/categories/edit/:category',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/time/edit.vue')
+                },
             )
         })
 
