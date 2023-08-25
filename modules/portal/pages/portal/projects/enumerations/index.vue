@@ -1,23 +1,24 @@
 <template>
   <div>
-    <TimeCategoryTable />
+    <section class="my-5">
+      <TimeCategoryTable />
+    </section>
+    <section class="my-5">
+      <Tracker />
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import TimeCategoryTable from "@/modules/portal/components/portal/projects/enumerations/time/TimeCategoryTable.vue";
+import Tracker from "@/modules/portal/components/portal/projects/enumerations/tracker/Tracker.vue";
 
 definePageMeta({
   layout: "project",
   middleware: ["auth"],
 });
-const project_id = ref(null);
-const project_slug = ref(null);
 const route = useRoute();
-onMounted(() => {
-  project_id.value = route.params.id;
-  project_slug.value = route.params.slug;
-});
+onMounted(() => {});
 </script>
 
 <style scoped></style>

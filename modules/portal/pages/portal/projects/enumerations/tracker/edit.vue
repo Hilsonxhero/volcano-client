@@ -63,11 +63,23 @@
 
             <base-form-item
               :model="form"
-              prop="is_default"
-              label="پیش فرض"
-              class="col-span-12 mt-8"
+              prop="description"
+              :rules="[
+                {
+                  required: true,
+                  message: '  توضیحات    مسئله  الزامی می باشد',
+                },
+              ]"
+              label="توضیحات    مسئله"
+              class="col-span-12 lg:col-span-12"
             >
-              <base-switch v-model="form.is_default" />
+              <base-input
+                rows="3"
+                type="textarea"
+                v-model="form.description"
+                placeholder="توضیحات    مسئله "
+              ></base-input>
+              <BaseValidationError :errors="validation_errros" field="form" />
             </base-form-item>
 
             <div class="flex flex-col justify-between lg:items-center mt-8">
@@ -119,7 +131,7 @@ const loading = ref(true);
 const form = ref({
   title: null,
   status: null,
-  is_default: null,
+  description: null,
 });
 const statuses = ref([
   { title: "فعال", key: "active" },
@@ -134,12 +146,12 @@ const handleUpdate = () => {
       try {
         const formData = {
           title: form.value.title,
-          is_default: form.value.is_default ? 1 : 0,
+          description: form.value.description,
           status: form.value.status,
           project_id: route.params.id,
         };
         const data = await useApiService.put(
-          `application/portal/projects/${route.params.id}/enumerations/time/categories/${route.params.category}`,
+          `application/portal/projects/${route.params.id}/enumerations/trackers/${route.params.tracker}`,
           formData
         );
         if (data.success) {
@@ -174,11 +186,11 @@ const handleUpdate = () => {
 const fetchData = async () => {
   try {
     const data = await useApiService.get(
-      `application/portal/projects/${route.params.id}/enumerations/time/categories/${route.params.category}`
+      `application/portal/projects/${route.params.id}/enumerations/trackers/${route.params.tracker}`
     );
     form.value.title = data.data.title;
     form.value.status = data.data.status;
-    form.value.is_default = data.data.is_default ? true : false;
+    form.value.description = data.data.description;
     loading.value = false;
   } catch (error) {}
 };

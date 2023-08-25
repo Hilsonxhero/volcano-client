@@ -24,32 +24,32 @@ export default defineNuxtModule({
                 },
                 {
                     name: 'portal-projects-show',
-                    path: '/portal/projects/:id/:slug',
+                    path: '/portal/projects/:id',
                     file: resolve(__dirname, './pages/portal/projects/show.vue')
                 },
                 {
                     name: 'portal-projects-pages-index',
-                    path: '/portal/projects/:id/:slug/pages',
+                    path: '/portal/projects/:id/pages',
                     file: resolve(__dirname, './pages/portal/projects/pages/index.vue')
                 },
                 {
                     name: 'portal-projects-users-index',
-                    path: '/portal/projects/:id/:slug/users',
+                    path: '/portal/projects/:id/users',
                     file: resolve(__dirname, './pages/portal/projects/users/index.vue')
                 },
                 {
                     name: 'portal-projects-roles-index',
-                    path: '/portal/projects/:id/:slug/roles',
+                    path: '/portal/projects/:id/roles',
                     file: resolve(__dirname, './pages/portal/projects/roles/index.vue')
                 },
                 {
                     name: 'portal-projects-roles-create',
-                    path: '/portal/projects/:id/:slug/roles/create',
+                    path: '/portal/projects/:id/roles/create',
                     file: resolve(__dirname, './pages/portal/projects/roles/create.vue')
                 },
                 {
                     name: 'portal-projects-roles-edit',
-                    path: '/portal/projects/:id/:slug/roles/edit/:role',
+                    path: '/portal/projects/:id/roles/edit/:role',
                     file: resolve(__dirname, './pages/portal/projects/roles/edit.vue')
                 },
                 {
@@ -59,23 +59,39 @@ export default defineNuxtModule({
                 },
                 {
                     name: 'portal-projects-enumerations-index',
-                    path: '/portal/projects/:id/:slug/enumerations',
+                    path: '/portal/projects/:id/enumerations',
                     file: resolve(__dirname, './pages/portal/projects/enumerations/index.vue')
                 },
                 {
                     name: 'portal-projects-time-categories-index',
-                    path: '/portal/projects/:id/:slug/enumerations/time/categories',
+                    path: '/portal/projects/:id/enumerations/time/categories',
                     file: resolve(__dirname, './pages/portal/projects/enumerations/time/index.vue')
                 },
                 {
                     name: 'portal-projects-time-categories-create',
-                    path: '/portal/projects/:id/:slug/enumerations/time/categories/create',
+                    path: '/portal/projects/:id/enumerations/time/categories/create',
                     file: resolve(__dirname, './pages/portal/projects/enumerations/time/create.vue')
                 },
                 {
                     name: 'portal-projects-time-categories-edit',
-                    path: '/portal/projects/:id/:slug/enumerations/time/categories/edit/:category',
+                    path: '/portal/projects/:id/enumerations/time/categories/edit/:category',
                     file: resolve(__dirname, './pages/portal/projects/enumerations/time/edit.vue')
+                },
+
+                {
+                    name: 'portal-projects-trackers-index',
+                    path: '/portal/projects/:id/enumerations/trackers',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/tracker/index.vue')
+                },
+                {
+                    name: 'portal-projects-trackers-create',
+                    path: '/portal/projects/:id/enumerations/trackers/create',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/tracker/create.vue')
+                },
+                {
+                    name: 'portal-projects-trackers-edit',
+                    path: '/portal/projects/:id/enumerations/trackers/edit/:tracker',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/tracker/edit.vue')
                 },
             )
         })

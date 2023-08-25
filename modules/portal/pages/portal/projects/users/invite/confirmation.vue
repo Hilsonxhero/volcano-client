@@ -79,7 +79,6 @@ const handleConfirmInvite = async () => {
         name: "portal-projects-pages-index",
         params: {
           id: invite.value.project?.id,
-          slug: invite.value.project?.slug,
         },
       });
     }

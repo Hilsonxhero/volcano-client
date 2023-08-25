@@ -150,7 +150,6 @@ const selectd_child_page: Ref<Object | null> = ref(null);
 const selected_head = ref(null);
 const page_path = ref(null);
 const selected_page_share = ref(null);
-const project_slug = ref(null);
 const { text, copy, copied, isSupported } = useClipboard({ page_path });
 
 const handleShowCreatePage = (page: any) => {
@@ -193,7 +192,7 @@ const handleSharePage = (page) => {
 const handleCopyPagePath = () => {
   copy(
     window.location.host +
-      `/software/projects/${project_id.value}/${project_slug.value}/pages/${selected_page_share.value.id}`
+      `/software/projects/${project_id.value}/pages/${selected_page_share.value.id}`
   );
 };
 
@@ -258,7 +257,6 @@ const fetchPages = async () => {
 
 onMounted(() => {
   project_id.value = route.params.id;
-  project_slug.value = route.params.slug;
 
   fetchPages();
 });

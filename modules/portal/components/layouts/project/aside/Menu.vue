@@ -20,7 +20,7 @@
                 active-class="active"
                 :to="{
                   name: menuItem.route,
-                  params: { id: $route.params.id, slug: $route.params.slug },
+                  params: { id: $route.params.id },
                 }"
               >
                 <span

@@ -12,16 +12,16 @@
         <section class="mb-6 bg-white shadow-lg p-4 rounded-2xl">
           <section>
             <div class="mb-3 flex justify-between flex-wrap items-center">
-              <div class="w-full lg:w-auto">دسته بندی زمان ها</div>
+              <div class="w-full lg:w-auto">نوع مسئله ها</div>
               <div class="w-full lg:w-auto mt-4 lg:mt-0">
                 <base-button
                   size="small"
                   type="primary"
                   class="w-full lg:w-auto"
-                  :to="{ name: 'portal-projects-time-categories-create' }"
+                  :to="{ name: 'portal-projects-trackers-create' }"
                 >
                   <div class="flex items-center">
-                    <span class="ml-2">ایجاد دسته بندی زمان</span>
+                    <span class="ml-2">ایجاد نوع مسئله</span>
                     <nuxt-icon name="add"></nuxt-icon>
                   </div>
                 </base-button>
@@ -56,20 +56,7 @@
                 {{ row?.title }}
               </div>
             </template>
-            <template v-slot:cell-is_default="{ row }">
-              <div class="">
-                <template v-if="row?.is_default">
-                  <base-button outlined type="success" size="small"
-                    >مقدار پیش فرض</base-button
-                  >
-                </template>
-                <template v-else>
-                  <base-button outlined type="gray" size="small"
-                    >مقدار عادی</base-button
-                  >
-                </template>
-              </div>
-            </template>
+
             <template v-slot:cell-status="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
@@ -89,10 +76,10 @@
                 </base-button>
                 <base-button
                   :to="{
-                    name: 'portal-projects-time-categories-edit',
+                    name: 'portal-projects-trackers-edit',
                     params: {
                       id: route.params?.id,
-                      category: row.id,
+                      tracker: row.id,
                     },
                   }"
                   size="small"
@@ -137,11 +124,6 @@ const tableHeader = ref([
     sortable: true,
   },
   {
-    name: "مقدار پیش فرض",
-    key: "is_default",
-    sortable: true,
-  },
-  {
     name: "وضعیت",
     key: "status",
     sortable: true,
@@ -172,14 +154,14 @@ const fetchData = async () => {
   };
   try {
     const { data } = await useApiService.get(
-      `application/portal/projects/${route.params.id}/enumerations/time/categories`,
+      `application/portal/projects/${route.params.id}/enumerations/trackers`,
       {
         params: params,
       }
     );
     loading.value = false;
     pager.value = data.pager;
-    tableData.value = data.categories;
+    tableData.value = data.trackers;
   } catch (error) {}
 };
 
@@ -187,7 +169,7 @@ const debouncedOnInputChange = debounce(fetchData, 200);
 
 const handleDelete = (item: any, index: any) => {
   BaseMessageBox.confirm(
-    `آیا از حذف  دسته بندی زمان  اطمینان دارید ؟!`,
+    `آیا از حذف    نوع مسئله  اطمینان دارید ؟!`,
     "پیام تایید",
     {
       confirmButtonText: "تایید",
@@ -197,12 +179,12 @@ const handleDelete = (item: any, index: any) => {
   )
     .then(async () => {
       const data = await useApiService.remove(
-        `application/portal/projects/${route.params.id}/enumerations/time/categories/${item?.id}`
+        `application/portal/projects/${route.params.id}/enumerations/trackers/${item?.id}`
       );
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  دسته بندی زمان با موفقیت انجام شد!",
+          message: "حذف نوع مسئله با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,

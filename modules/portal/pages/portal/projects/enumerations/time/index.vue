@@ -100,7 +100,6 @@
                     name: 'portal-projects-roles-edit',
                     params: {
                       id: project?.id,
-                      slug: project?.slug,
                       role: role.id,
                     },
                   }"
@@ -133,7 +132,6 @@ const loading = ref(true);
 const pager = ref({});
 const current_page = ref(1);
 const project_id = ref(null);
-const project_slug = ref(null);
 const route = useRoute();
 const checkedData = ref([]);
 const search = ref("");
@@ -229,7 +227,6 @@ const handleDeleteRole = (role: any, index: any) => {
 onMounted(() => {
   fetchRoles();
   project_id.value = route.params.id;
-  project_slug.value = route.params.slug;
 });
 </script>
 
