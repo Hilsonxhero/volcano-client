@@ -167,6 +167,11 @@ const pages = ref([
         route: "portal-projects-roles-index",
         svgIcon: "security-user",
       },
+      {
+        heading: "بخش های سفارشی",
+        route: "portal-projects-enumerations-index",
+        svgIcon: "category",
+      },
     ],
   },
 ]);

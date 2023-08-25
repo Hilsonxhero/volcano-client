@@ -57,7 +57,11 @@ export default defineNuxtModule({
                     path: '/portal/projects/invite/confirmation',
                     file: resolve(__dirname, './pages/portal/projects/users/invite/confirmation.vue')
                 },
-
+                {
+                    name: 'portal-projects-enumerations-index',
+                    path: '/portal/projects/:id/:slug/enumerations',
+                    file: resolve(__dirname, './pages/portal/projects/enumerations/index.vue')
+                },
             )
         })
 
