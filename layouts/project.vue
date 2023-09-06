@@ -7,7 +7,7 @@
 
       <div class="content flex flex-col flex-column-fluid">
         <div class="post flex flex-column-fluid">
-          <div class="container w-full mt-10">
+          <div class="container w-full mt-2">
             <slot />
           </div>
         </div>

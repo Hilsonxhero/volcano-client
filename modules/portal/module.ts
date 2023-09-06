@@ -108,6 +108,21 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/enumerations/issue/statuses/edit/:status',
                     file: resolve(__dirname, './pages/portal/projects/enumerations/issue-statuses/edit.vue')
                 },
+                {
+                    name: 'portal-projects-issues-index',
+                    path: '/portal/projects/:id/issues',
+                    file: resolve(__dirname, './pages/portal/projects/issues/index.vue')
+                },
+                {
+                    name: 'portal-projects-issues-create',
+                    path: '/portal/projects/:id/issues/create',
+                    file: resolve(__dirname, './pages/portal/projects/issues/create.vue')
+                },
+                {
+                    name: 'portal-projects-issues-show',
+                    path: '/portal/projects/:id/issues/:issue',
+                    file: resolve(__dirname, './pages/portal/projects/issues/show.vue')
+                },
             )
         })
 

@@ -172,6 +172,11 @@ const pages = ref([
         route: "portal-projects-enumerations-index",
         svgIcon: "category",
       },
+      {
+        heading: "مسئله ها",
+        route: "portal-projects-issues-index",
+        svgIcon: "clipboard-tick",
+      },
     ],
   },
 ]);

@@ -58,6 +58,7 @@
         class="relative block bg-white border-dashed border-2 border-gray-300 rounded-xl overflow-hidden"
       >
         <input
+          v-bind:multiple="multiple"
           ref="uploadRef"
           id="file-upload"
           @change="handleObjectURL"
@@ -122,6 +123,10 @@ const props = defineProps({
     type: [String, Array, Object],
     default: [],
   },
+  multiple: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(["fileChange", "update:modelValue", "delete"]);
@@ -133,6 +138,8 @@ const uploaded_file = ref<any>({});
 const media = ref<any>({});
 
 const handleObjectURL = async (event: any) => {
+  console.log("event.target.files", event.target.files);
+
   const file = event.target.files[0];
   uploaded_file.value.base64 = await useBase64(file);
   uploaded_file.value.media = file;
