@@ -6,7 +6,7 @@
     :aria-labelledby="isGroup ? labelId : undefined"
   >
     <div :class="ns.e('content')" :style="contentStyle">
-      <div class="mb-1">
+      <div class="mb-[6px]">
         <label class="" for="">{{ label }}</label>
       </div>
 

@@ -280,12 +280,14 @@
               />
             </base-form-item>
           </div>
-          <div class="bg-white shadow-xl rounded-xl p-4 mt-10 my-6">
+          <div
+            class="bg-white shadow-xl rounded-xl p-4 mt-10 my-6 grid grid-cols-12 gap-2"
+          >
             <base-form-item
               :model="form"
               prop="image"
               label=" یادداشت"
-              class=""
+              class="col-span-12 mt-6"
             >
               <div>
                 <TiptapEditor
@@ -295,8 +297,22 @@
                 />
               </div>
             </base-form-item>
+            <base-form-item
+              :model="form"
+              prop="attachments"
+              label="پیوست ها"
+              class="col-span-12 mt-6"
+            >
+              <base-upload
+                multiple
+                :max="5"
+                v-model="form.image"
+                :sources="form.attachments"
+                @delete="handleOnDeleteAttachment"
+              ></base-upload>
+            </base-form-item>
           </div>
-
+          <!-- 
           <div class="bg-white shadow-xl rounded-xl p-4 mt-10 mb-6">
             <base-form-item
               :model="form"
@@ -312,7 +328,7 @@
                 @delete="handleOnDeleteAttachment"
               ></base-upload>
             </base-form-item>
-          </div>
+          </div> -->
 
           <div class="col-span-12">
             <div class="flex flex-col justify-between lg:items-center mt-8">
@@ -440,7 +456,7 @@ const handleUpdate = () => {
         form_data.append("description", form.value.description);
         form_data.append("note", form.value.note);
         form_data.append("project_id", route.params.id);
-        form_data.append("parent_id", form.value.parent_id);
+        form_data.append("parent_id", form.value.parent_id ?? "");
         form_data.append("project_tracker_id", form.value.project_tracker_id);
         form_data.append(
           "project_issue_status_id",
@@ -451,14 +467,15 @@ const handleUpdate = () => {
         form_data.append("start_date", form.value.start_date);
         form_data.append("end_date", form.value.end_date);
         form_data.append("done_ratio", form.value.done_ratio);
-
-        let uploaded_media = form.value.image.filter((item, j) =>
-          item.hasOwnProperty("media")
-        );
-        console.log("uploaded_media", uploaded_media);
-
-        for (var i = 0; i < uploaded_media.length; i++) {
-          form_data.append(`attachments[${i}]`, uploaded_media[i].media);
+        if (form.value.image && form.value.image.length >= 1) {
+          let uploaded_media = form.value.image.filter((item, j) =>
+            item.hasOwnProperty("media")
+          );
+          if (uploaded_media.length >= 1) {
+            for (var i = 0; i < uploaded_media.length; i++) {
+              form_data.append(`attachments[${i}]`, uploaded_media[i].media);
+            }
+          }
         }
 
         // const formData = {
@@ -540,7 +557,7 @@ const fetchData = async () => {
     priorities.value = priorites_data.data;
     users.value = users_data.data;
     project_issues.value = issues_data.data;
-    project_issue.value = project_issue_data.data;
+    project_issue.value = project_issue_data.data.issue;
 
     form.value.title = project_issue.value.title;
     form.value.description = project_issue.value.description;
@@ -548,6 +565,7 @@ const fetchData = async () => {
     form.value.project_tracker_id = project_issue.value.tracker.id;
     form.value.project_priority_id = project_issue.value.project_priority;
     form.value.start_date = project_issue.value.start_date;
+    form.value.parent_id = project_issue.value.parent_id;
     form.value.end_date = project_issue.value.end_date;
     form.value.estimated_hours = project_issue.value.estimated_hours;
     form.value.done_ratio = project_issue.value.done_ratio;
