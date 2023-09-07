@@ -1,7 +1,7 @@
 <template>
   <div>
     <client-only placeholder="loading...">
-      <date-picker v-model="date" type="datetime"></date-picker>
+      <date-picker v-model="date" type="date"></date-picker>
     </client-only>
   </div>
 </template>
@@ -13,8 +13,10 @@ import { UPDATE_MODEL_EVENT } from "@/core/constants";
 const date = ref("");
 const emits = defineEmits([UPDATE_MODEL_EVENT]);
 watch(
-  () => date,
+  () => date.value,
   (val) => {
+    console.log("val", val);
+
     emits(UPDATE_MODEL_EVENT, val);
   }
 );

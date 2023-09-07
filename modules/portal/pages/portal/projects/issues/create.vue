@@ -4,13 +4,20 @@
       <template #template>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <base-skeleton-item variant="card"></base-skeleton-item>
+            <base-skeleton-item
+              variant="card"
+              class="h-[400px]"
+            ></base-skeleton-item>
+            <base-skeleton-item
+              variant="card"
+              class="h-[200px]"
+            ></base-skeleton-item>
           </div>
         </div>
       </template>
       <template #default>
         <base-form
-          @submit.prevent="handleCreateRole"
+          @submit.prevent="handleCreate"
           :model="form"
           ref="formRef"
           class="h-full"
@@ -43,12 +50,6 @@
             <base-form-item
               :model="form"
               prop="description"
-              :rules="[
-                {
-                  required: true,
-                  message: '   توضیحات الزامی می باشد',
-                },
-              ]"
               label="توضیحات"
               class="col-span-12"
             >
@@ -66,7 +67,7 @@
 
             <base-form-item
               :model="form"
-              prop="tracker"
+              prop="project_tracker_id"
               :rules="[
                 {
                   required: true,
@@ -77,9 +78,9 @@
               class="col-span-12 lg:col-span-4"
             >
               <base-select
-                v-model="form.tracker"
+                v-model="form.project_tracker_id"
                 filterable
-                placeholder="گروه سطح دسترسی"
+                placeholder="نوع مسئله "
                 value-key="id"
                 label="title"
                 :options="project_trackers"
@@ -87,13 +88,13 @@
               </base-select>
               <BaseValidationError
                 :errors="validation_errros"
-                field="tracker"
+                field="project_tracker_id"
               />
             </base-form-item>
 
             <base-form-item
               :model="form"
-              prop="issue_status"
+              prop="project_issue_statuse_id"
               :rules="[
                 {
                   required: true,
@@ -104,7 +105,7 @@
               class="col-span-12 lg:col-span-4"
             >
               <base-select
-                v-model="form.issue_status"
+                v-model="form.project_issue_statuse_id"
                 filterable
                 placeholder="وضعیت"
                 value-key="id"
@@ -114,13 +115,13 @@
               </base-select>
               <BaseValidationError
                 :errors="validation_errros"
-                field="issue_status"
+                field="project_issue_statuse_id"
               />
             </base-form-item>
 
             <base-form-item
               :model="form"
-              prop="priority"
+              prop="priority_id"
               :rules="[
                 {
                   required: true,
@@ -131,7 +132,7 @@
               class="col-span-12 lg:col-span-4"
             >
               <base-select
-                v-model="form.priority"
+                v-model="form.priority_id"
                 filterable
                 placeholder="اولویت"
                 value-key="id"
@@ -141,19 +142,13 @@
               </base-select>
               <BaseValidationError
                 :errors="validation_errros"
-                field="priority"
+                field="priority_id"
               />
             </base-form-item>
 
             <base-form-item
               :model="form"
               prop="start_date"
-              :rules="[
-                {
-                  required: true,
-                  message: ' تاریخ شروع مسئله  الزامی می باشد',
-                },
-              ]"
               label="  تاریخ شروع مسئله"
               class="col-span-12 lg:col-span-4"
             >
@@ -173,12 +168,6 @@
             <base-form-item
               :model="form"
               prop="end_date"
-              :rules="[
-                {
-                  required: true,
-                  message: ' تاریخ سررسید مسئله  الزامی می باشد',
-                },
-              ]"
               label="  تاریخ سررسید مسئله"
               class="col-span-12 lg:col-span-4"
             >
@@ -198,12 +187,6 @@
             <base-form-item
               :model="form"
               prop="estimated_hours"
-              :rules="[
-                {
-                  required: true,
-                  message: ' زمان برآورد شده   الزامی می باشد',
-                },
-              ]"
               label="  زمان برآورد شده "
               class="col-span-12 lg:col-span-4"
             >
@@ -234,8 +217,8 @@
                 filterable
                 placeholder="مسئول"
                 value-key="id"
-                label="title"
-                :options="priorities"
+                label="username"
+                :options="users"
               >
               </base-select>
               <BaseValidationError
@@ -260,9 +243,9 @@
                 v-model="form.done_ratio"
                 filterable
                 placeholder="انجام شده"
-                value-key="id"
+                value-key="value"
                 label="title"
-                :options="priorities"
+                :options="ratio_options"
               >
               </base-select>
               <BaseValidationError
@@ -273,28 +256,22 @@
 
             <base-form-item
               :model="form"
-              prop="done_ratio"
-              :rules="[
-                {
-                  required: true,
-                  message: '  مسئله پدر الزامی می باشد',
-                },
-              ]"
+              prop="parent_id"
               label=" مسئله پدر "
               class="col-span-12 lg:col-span-4"
             >
               <base-select
-                v-model="form.done_ratio"
+                v-model="form.parent_id"
                 filterable
                 placeholder=" مسئله پدر"
                 value-key="id"
                 label="title"
-                :options="priorities"
+                :options="project_issues"
               >
               </base-select>
               <BaseValidationError
                 :errors="validation_errros"
-                field="done_ratio"
+                field="parent_id"
               />
             </base-form-item>
           </div>
@@ -355,64 +332,43 @@ definePageMeta({
   layout: "project",
   middleware: ["auth"],
 });
-const loading = ref(false);
+const loading = ref(true);
 const loader = ref(false);
-const selectedPermissions = ref([]);
 const formRef: Ref<FormItemContext | null> = ref(null);
 const form = ref({
   title: null,
-  name: null,
+  description: null,
   parent_id: null,
+  project_issue_statuse: null,
+  project_tracker_id: null,
+  assigned_to: null,
+  priority: null,
+  note: null,
+  start_date: null,
+  end_date: null,
+  estimated_hours: null,
+  done_ratio: null,
 });
-const project_trackers = ref([
-  {
-    id: 1,
-    title: "قابلیت",
-  },
-  {
-    id: 2,
-    title: "مدیریت",
-  },
-]);
-const issue_statuses = ref([
-  {
-    id: 1,
-    title: "قابلیت",
-  },
-  {
-    id: 2,
-    title: "مدیریت",
-  },
-]);
-
-const priorities = ref([
-  {
-    id: 1,
-    title: "کم",
-  },
-  {
-    id: 2,
-    title: "معمولی",
-  },
-  {
-    id: 3,
-    title: "زیاد",
-  },
-  {
-    id: 4,
-    title: "فوری",
-  },
-  {
-    id: 5,
-    title: "بی درنگ",
-  },
-]);
-
+const project_trackers = ref([]);
+const issue_statuses = ref([]);
+const priorities = ref([]);
 const validation_errros = ref([]);
-const role_groups = ref([]);
-const permissions = ref([]);
+const project_issues = ref([]);
+const ratio_options = ref([
+  { title: "10", value: "10" },
+  { title: "20", value: "20" },
+  { title: "30", value: "30" },
+  { title: "40", value: "40" },
+  { title: "50", value: "50" },
+  { title: "60", value: "60" },
+  { title: "70", value: "70" },
+  { title: "80", value: "80" },
+  { title: "90", value: "90" },
+  { title: "100", value: "100" },
+]);
+const users = ref([]);
 const route = useRoute();
-const handleCreateRole = () => {
+const handleCreate = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
@@ -420,7 +376,6 @@ const handleCreateRole = () => {
         const formData = {
           title: form.value.title,
           name: form.value.name,
-          permissions: selectedPermissions.value,
         };
         const data = await useApiService.post(
           `application/portal/projects/${route.params.id}/roles`,
@@ -452,18 +407,40 @@ const handleCreateRole = () => {
   });
 };
 
-const fetchPermissions = async () => {
+const fetchData = async () => {
   try {
-    const data = await useApiService.get(
-      `application/portal/projects/${route.params.id}/permissions`
-    );
-    permissions.value = data.data;
+    const [
+      trackers_data,
+      statuses_data,
+      users_data,
+      issues_data,
+      priorites_data,
+    ] = await Promise.all([
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/enumerations/trackers/select/values`
+      ),
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/enumerations/issue/select/statuses`
+      ),
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/users/select/values`
+      ),
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/issues/select/values`
+      ),
+      useApiService.get(`application/portal/priorities/select`),
+    ]);
+    project_trackers.value = trackers_data.data;
+    issue_statuses.value = statuses_data.data;
+    priorities.value = priorites_data.data;
+    users.value = users_data.data;
+    project_issues.value = issues_data.data;
     loading.value = false;
   } catch (error) {}
 };
 
 onMounted(async () => {
-  await fetchPermissions();
+  await fetchData();
 });
 </script>
 

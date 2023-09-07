@@ -396,3 +396,9 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.uploader-cover {
+  background: rgba(0, 0, 0, 0.5);
+}
+.uploader-item {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+}

@@ -28,19 +28,23 @@
           </div>
         </section>
         <div class="grid grid-cols-12 gap-4">
-          <div class="col-span-4" v-for="(issue, index) in 3" :key="index">
+          <div
+            class="col-span-4"
+            v-for="(issue, index) in tableData"
+            :key="index"
+          >
             <section class="mb-6 bg-white shadow-lg p-4 rounded-2xl">
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center">
                   <div
                     class="bg-gray-200 rounded-[30px] py-2 px-6 text-gray-500 font-light flex justify-center items-center"
                   >
-                    قابلیت
+                    {{ issue?.tracker?.title }}
                   </div>
                   <div
                     class="border-gray-500 border rounded-[30px] py-2 px-6 text-gray-600 font-light flex justify-center items-center mr-2"
                   >
-                    454
+                    {{ issue?.id }}
                   </div>
                 </div>
                 <div>
@@ -58,11 +62,10 @@
                 </div>
               </div>
               <h5 class="text-gray-700 font-bold mb-2">
-                لورم ایپسوم متن ساختگی با
+                {{ issue?.title }}
               </h5>
               <p class="text-gray-400 text-xs">
-                لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-                استفاده از
+                {{ issue?.description }}
               </p>
 
               <div class="flex justify-end mt-2">
@@ -193,7 +196,7 @@ const handleDeleteIssue = (item: any, index: any) => {
 };
 
 onMounted(() => {
-  // fetchProjectIssues();
+  fetchProjectIssues();
   project_id.value = route.params.id;
 });
 </script>

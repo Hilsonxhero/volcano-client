@@ -188,17 +188,26 @@ const handleUpdateProject = () => {
     if (valid) {
       loader.value = true;
       try {
-        const formData = {
-          title: form.value.title,
-          link: form.value.link,
-          status: form.value.status,
-          parent: form.value.parent,
-          description: form.value.description,
-          image: form.value.image?.base64,
-        };
+        // const formData = {
+        //   title: form.value.title,
+        //   link: form.value.link,
+        //   status: form.value.status,
+        //   parent: form.value.parent,
+        //   description: form.value.description,
+        //   image: form.value.image?.base64,
+        // };
+        const form_data = new FormData();
+        form_data.append("title", form.value.title);
+        form_data.append("link", form.value.link);
+        form_data.append("status", form.value.status);
+        form_data.append("parent", form.value.parent ?? "");
+        form_data.append("description", form.value.description);
+        if (form.value.image?.file) {
+          form_data.append("image", form.value.image?.file);
+        }
         const data = await useApiService.put(
           `management/categories/${category_id.value}`,
-          formData
+          form_data
         );
 
         if (data.success) {
