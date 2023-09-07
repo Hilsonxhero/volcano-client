@@ -35,8 +35,6 @@ const fetchFeature = async () => {
     const data = await useApiService.get(
       `application/features/${feature_id.value}`
     );
-    console.log("data", data.data);
-
     feature.value = data.data;
   } catch (error) {}
 };

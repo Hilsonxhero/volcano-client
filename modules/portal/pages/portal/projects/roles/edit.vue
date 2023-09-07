@@ -189,11 +189,8 @@ const fetchRole = async () => {
     const data = await useApiService.get(
       `application/portal/projects/${route.params.id}/roles/${role_id.value}`
     );
-
     form.value.title = data.data.title;
     form.value.name = data.data.name;
-    console.log("data.data", data.data);
-
     selectedPermissions.value = data.data.permissions;
     loading.value = false;
   } catch (error) {}

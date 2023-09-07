@@ -69,16 +69,23 @@
               </p>
 
               <div class="flex justify-end mt-2">
-                <span
-                  class="bg-gray-200 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
+                <nuxt-link
+                  :to="{
+                    name: 'portal-projects-issues-show',
+                    params: { id: route.params.id, issue: issue.id },
+                  }"
                 >
-                  <span class="svg-icon svg-icon-2">
-                    <nuxt-icon
-                      name="arrow-left"
-                      class="w-6 h-6 text-gray-500"
-                    ></nuxt-icon>
+                  <span
+                    class="bg-gray-200 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
+                  >
+                    <span class="svg-icon svg-icon-2">
+                      <nuxt-icon
+                        name="arrow-left"
+                        class="w-6 h-6 text-gray-500"
+                      ></nuxt-icon>
+                    </span>
                   </span>
-                </span>
+                </nuxt-link>
               </div>
             </section>
           </div>

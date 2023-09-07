@@ -4,90 +4,317 @@
       <template #template>
         <div class="grid grid-cols-12 gap-4">
           <div class="col-span-12">
-            <base-skeleton-item variant="card"></base-skeleton-item>
+            <base-skeleton-item
+              variant="card"
+              class="h-[400px]"
+            ></base-skeleton-item>
+            <base-skeleton-item
+              variant="card"
+              class="h-[200px]"
+            ></base-skeleton-item>
           </div>
         </div>
       </template>
       <template #default>
-        <div>
-          <h2 class="text-2xl my-4 text-gray-600">ایجاد سطح دسترسی</h2>
-        </div>
-        <div class="bg-white shadow-xl rounded-xl p-4">
-          <base-form
-            @submit.prevent="handleCreateRole"
-            :model="form"
-            ref="formRef"
-            class="h-full grid grid-cols-12 gap-2"
+        <base-form
+          @submit.prevent="handleUpdate"
+          :model="form"
+          ref="formRef"
+          class="h-full"
+        >
+          <div>
+            <h2 class="text-2xl my-4 text-gray-600">ایجاد مسئله</h2>
+          </div>
+          <div
+            class="bg-white shadow-xl rounded-xl p-4 grid grid-cols-12 gap-2"
           >
-            <base-form-item
-              :model="form"
-              prop="name"
-              :rules="[
-                {
-                  required: true,
-                  message: '  نام سطح دسترسیی  الزامی می باشد',
-                },
-              ]"
-              label="نام سطح دسترسیی"
-              class="col-span-12 lg:col-span-6"
-            >
-              <base-input
-                v-model="form.name"
-                placeholder="نام سطح دسترسیی "
-              ></base-input>
-              <BaseValidationError :errors="validation_errros" field="name" />
-            </base-form-item>
-
             <base-form-item
               :model="form"
               prop="title"
               :rules="[
                 {
                   required: true,
-                  message: '   عنوان الزامی می باشد',
+                  message: ' عنوان مسئله  الزامی می باشد',
                 },
               ]"
-              label="عنوان"
-              class="col-span-12 lg:col-span-6"
+              label="  عنوان مسئله"
+              class="col-span-12"
             >
               <base-input
                 v-model="form.title"
-                placeholder="عنوان "
+                placeholder="  عنوان مسئله "
               ></base-input>
               <BaseValidationError :errors="validation_errros" field="title" />
             </base-form-item>
 
-            <div class="col-span-12">
-              <div class="grid grid-cols-12 gap-2 mt-8">
-                <div
-                  class="col-span-4"
-                  v-for="(permission, index) in permissions"
-                  :key="index"
-                >
-                  <div>
-                    <h2>{{ permission.title }}</h2>
-                  </div>
-                  <base-checkbox-group v-model="selectedPermissions">
-                    <base-checkbox
-                      v-for="(childPermission, j) in permission.children"
-                      :label="childPermission.id"
-                      >{{ childPermission.title }}</base-checkbox
-                    >
-                  </base-checkbox-group>
-                  <!-- <ul>
-                      <li
-                        v-for="(childPermission, j) in permission.children"
-                        :key="j"
-                      >
-                        <base-checkbox
-                          :label="childPermission.title"
-                        ></base-checkbox>
-                      </li>
-                    </ul> -->
-                </div>
-              </div>
-            </div>
+            <base-form-item
+              :model="form"
+              prop="description"
+              label="توضیحات"
+              class="col-span-12"
+            >
+              <base-input
+                input-class="h-[80px]"
+                type="textarea"
+                v-model="form.description"
+                placeholder="توضیحات "
+              ></base-input>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="description"
+              />
+            </base-form-item>
 
+            <base-form-item
+              :model="form"
+              prop="project_tracker_id"
+              :rules="[
+                {
+                  required: true,
+                  message: ' نوع مسئله  الزامی می باشد',
+                },
+              ]"
+              label="  نوع مسئله"
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-select
+                v-model="form.project_tracker_id"
+                filterable
+                placeholder="نوع مسئله "
+                value-key="id"
+                label="title"
+                :options="project_trackers"
+              >
+              </base-select>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="project_tracker_id"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="project_issue_status_id"
+              :rules="[
+                {
+                  required: true,
+                  message: ' وضعیت مسئله  الزامی می باشد',
+                },
+              ]"
+              label="  وضعیت مسئله"
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-select
+                v-model="form.project_issue_status_id"
+                filterable
+                placeholder="وضعیت"
+                value-key="id"
+                label="title"
+                :options="issue_statuses"
+              >
+              </base-select>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="project_issue_status_id"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="project_priority_id"
+              :rules="[
+                {
+                  required: true,
+                  message: ' اولویت مسئله  الزامی می باشد',
+                },
+              ]"
+              label="  اولویت مسئله"
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-select
+                v-model="form.project_priority_id"
+                filterable
+                placeholder="اولویت"
+                value-key="id"
+                label="title"
+                :options="priorities"
+              >
+              </base-select>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="project_priority_id"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="start_date"
+              label="  تاریخ شروع مسئله"
+              class="col-span-12 lg:col-span-4"
+            >
+              <client-only placeholder="loading...">
+                <date-picker
+                  v-model="form.start_date"
+                  type="datetime"
+                  :disable="checkStartDate"
+                ></date-picker>
+              </client-only>
+
+              <BaseValidationError
+                :errors="validation_errros"
+                field="start_date"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="end_date"
+              label="  تاریخ سررسید مسئله"
+              class="col-span-12 lg:col-span-4"
+            >
+              <client-only placeholder="loading...">
+                <date-picker
+                  v-model="form.end_date"
+                  type="datetime"
+                  :disable="checkEndDate"
+                  :disabled="!form.start_date"
+                ></date-picker>
+              </client-only>
+
+              <BaseValidationError
+                :errors="validation_errros"
+                field="end_date"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="estimated_hours"
+              label="  زمان برآورد شده "
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-input
+                v-model="form.estimated_hours"
+                placeholder="  زمان برآورد شده  "
+              ></base-input>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="estimated_hours"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="assigned_to"
+              :rules="[
+                {
+                  required: true,
+                  message: ' مسئول مسئله  الزامی می باشد',
+                },
+              ]"
+              label="  مسئول مسئله"
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-select
+                v-model="form.assigned_to"
+                filterable
+                placeholder="مسئول"
+                value-key="id"
+                label="username"
+                :options="users"
+              >
+              </base-select>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="assigned_to"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="done_ratio"
+              :rules="[
+                {
+                  required: true,
+                  message: ' انجام شده   الزامی می باشد',
+                },
+              ]"
+              label="  انجام شده "
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-select
+                v-model="form.done_ratio"
+                filterable
+                placeholder="انجام شده"
+                value-key="value"
+                label="title"
+                :options="ratio_options"
+              >
+              </base-select>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="done_ratio"
+              />
+            </base-form-item>
+
+            <base-form-item
+              :model="form"
+              prop="parent_id"
+              label=" مسئله پدر "
+              class="col-span-12 lg:col-span-4"
+            >
+              <base-select
+                v-model="form.parent_id"
+                filterable
+                placeholder=" مسئله پدر"
+                value-key="id"
+                label="title"
+                remote
+                :remote-method="handleSearchProjectissue"
+                :options="project_issues"
+              >
+              </base-select>
+              <BaseValidationError
+                :errors="validation_errros"
+                field="parent_id"
+              />
+            </base-form-item>
+          </div>
+          <div class="bg-white shadow-xl rounded-xl p-4 mt-10 my-6">
+            <base-form-item
+              :model="form"
+              prop="image"
+              label=" یادداشت"
+              class=""
+            >
+              <div>
+                <TiptapEditor
+                  v-model="form.note"
+                  :content="form.note"
+                  placeholder="یادداشت "
+                />
+              </div>
+            </base-form-item>
+          </div>
+
+          <div class="bg-white shadow-xl rounded-xl p-4 mt-10 mb-6">
+            <base-form-item
+              :model="form"
+              prop="attachments"
+              label="پیوست ها"
+              class="col-span-12"
+            >
+              <base-upload
+                multiple
+                :max="5"
+                v-model="form.image"
+                :sources="form.attachments"
+                @delete="handleOnDeleteAttachment"
+              ></base-upload>
+            </base-form-item>
+          </div>
+
+          <div class="col-span-12">
             <div class="flex flex-col justify-between lg:items-center mt-8">
               <div class="w-full flex items-center">
                 <base-button
@@ -107,8 +334,8 @@
                 </base-button>
               </div>
             </div>
-          </base-form>
-        </div>
+          </div>
+        </base-form>
       </template>
     </base-skeleton>
   </div>
@@ -124,77 +351,215 @@ import {
 import { FormItemContext } from "~/core/tokens";
 import BaseMessage from "@/components/base/message";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
-import { BaseCheckbox, BaseCheckboxGroup } from "@/components/base/checkbox";
+import DatePicker from "@/components/common/DatePicker.clinet.vue";
+import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 
 definePageMeta({
   layout: "project",
   middleware: ["auth"],
 });
-const loading = ref(false);
+const loading = ref(true);
 const loader = ref(false);
-const selectedPermissions = ref([]);
 const formRef: Ref<FormItemContext | null> = ref(null);
 const form = ref({
   title: null,
-  name: null,
-  parent_id: null,
+  description: null,
+  parent_id: "",
+  project_issue_status_id: null,
+  project_tracker_id: null,
+  assigned_to: null,
+  project_priority_id: null,
+  note: null,
+  start_date: null,
+  end_date: null,
+  estimated_hours: null,
+  done_ratio: null,
+  attachments: [],
 });
+const project_trackers = ref([]);
+const issue_statuses = ref([]);
+const priorities = ref([]);
 const validation_errros = ref([]);
-const role_groups = ref([]);
-const permissions = ref([]);
+const project_issues = ref([]);
+const ratio_options = ref([
+  { title: "10", value: "10" },
+  { title: "20", value: "20" },
+  { title: "30", value: "30" },
+  { title: "40", value: "40" },
+  { title: "50", value: "50" },
+  { title: "60", value: "60" },
+  { title: "70", value: "70" },
+  { title: "80", value: "80" },
+  { title: "90", value: "90" },
+  { title: "100", value: "100" },
+]);
+const users = ref([]);
 const route = useRoute();
-const handleCreateRole = () => {
+const project_issue = ref({});
+
+const checkEndDate = (formatted: any, dateMoment: any, checkingFor: any) => {
+  return formatted <= form.value.start_date;
+};
+const checkStartDate = (formatted: any, dateMoment: any, checkingFor: any) => {
+  return formatted >= form.value.end_date;
+};
+const handleOnDeleteAttachment = async (id: any) => {
+  try {
+    const data = await useApiService.post(
+      `application/portal/projects/${route.params.id}/issues/attachments/${id}/delete`
+    );
+  } catch (error) {}
+};
+
+const handleSearchProjectissue = async (query: any) => {
+  if (query !== "") {
+    let params = {
+      q: query,
+    };
+    try {
+      const data = await useApiService.get(
+        `application/portal/projects/${route.params.id}/issues/select/values`,
+        {
+          params: params,
+        }
+      );
+      loading.value = false;
+      project_issues.value = data.data;
+    } catch (error) {}
+  } else {
+    project_issues.value = [];
+  }
+};
+const handleUpdate = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;
       try {
-        const formData = {
-          title: form.value.title,
-          name: form.value.name,
-          permissions: selectedPermissions.value,
-        };
-        const data = await useApiService.post(
-          `application/portal/projects/${route.params.id}/roles`,
-          formData
+        const form_data = new FormData();
+        form_data.append("title", form.value.title);
+        form_data.append("description", form.value.description);
+        form_data.append("note", form.value.note);
+        form_data.append("project_id", route.params.id);
+        form_data.append("parent_id", form.value.parent_id);
+        form_data.append("project_tracker_id", form.value.project_tracker_id);
+        form_data.append(
+          "project_issue_status_id",
+          form.value.project_issue_status_id
+        );
+        form_data.append("assigned_to_id", form.value.assigned_to);
+        form_data.append("project_priority_id", form.value.project_priority_id);
+        form_data.append("start_date", form.value.start_date);
+        form_data.append("end_date", form.value.end_date);
+        form_data.append("done_ratio", form.value.done_ratio);
+
+        let uploaded_media = form.value.image.filter((item, j) =>
+          item.hasOwnProperty("media")
+        );
+        console.log("uploaded_media", uploaded_media);
+
+        for (var i = 0; i < uploaded_media.length; i++) {
+          form_data.append(`attachments[${i}]`, uploaded_media[i].media);
+        }
+
+        // const formData = {
+        //   title: form.value.title,
+        //   description: form.value.description,
+        //   note: form.value.note,
+        //   project_id: route.params.id,
+        //   parent_id: form.value.parent_id,
+        //   project_tracker_id: form.value.project_tracker_id,
+        //   project_issue_status_id: form.value.project_issue_status_id,
+        //   assigned_to_id: form.value.assigned_to,
+        //   project_priority_id: form.value.project_priority_id,
+        //   start_date: form.value.start_date,
+        //   end_date: form.value.end_date,
+        //   done_ratio: form.value.done_ratio,
+        // };
+        const data = await useApiService.patch(
+          `application/portal/projects/${route.params.id}/issues/${route.params.issue}`,
+          form_data
         );
         if (data.success) {
           BaseMessage({
-            message: "ایجاد سطح دسترسی با موفقیت انجام شد!",
+            message: "ویرایش  مسئله با موفقیت انجام شد!",
             type: "success",
             duration: 4000,
             center: true,
             offset: 20,
           });
           form.value.title = null;
-          form.value.name = null;
+          form.value.description = null;
           form.value.parent_id = null;
           formRef.value.resetFields();
-          navigateTo({ name: "portal-projects-roles-index" });
+          navigateTo({ name: "portal-projects-issues-index" });
         } else {
         }
 
         loader.value = false;
       } catch ({ response }) {
         loader.value = false;
-        validation_errros.value = response._data.data;
+        console.log("response", response);
+
+        // validation_errros.value = response._data.data;
       }
     } else {
     }
   });
 };
 
-const fetchPermissions = async () => {
+const fetchData = async () => {
   try {
-    const data = await useApiService.get(
-      `application/portal/projects/${route.params.id}/permissions`
-    );
-    permissions.value = data.data;
+    const [
+      trackers_data,
+      statuses_data,
+      users_data,
+      issues_data,
+      priorites_data,
+      project_issue_data,
+    ] = await Promise.all([
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/enumerations/trackers/select/values`
+      ),
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/enumerations/issue/select/statuses`
+      ),
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/users/select/values`
+      ),
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/issues/select/values`
+      ),
+      useApiService.get(`application/portal/priorities/select`),
+
+      useApiService.get(
+        `application/portal/projects/${route.params.id}/issues/${route.params.issue}`
+      ),
+    ]);
+    project_trackers.value = trackers_data.data;
+    issue_statuses.value = statuses_data.data;
+    priorities.value = priorites_data.data;
+    users.value = users_data.data;
+    project_issues.value = issues_data.data;
+    project_issue.value = project_issue_data.data;
+
+    form.value.title = project_issue.value.title;
+    form.value.description = project_issue.value.description;
+    form.value.project_issue_status_id = project_issue.value.issue_status.id;
+    form.value.project_tracker_id = project_issue.value.tracker.id;
+    form.value.project_priority_id = project_issue.value.project_priority;
+    form.value.start_date = project_issue.value.start_date;
+    form.value.end_date = project_issue.value.end_date;
+    form.value.estimated_hours = project_issue.value.estimated_hours;
+    form.value.done_ratio = project_issue.value.done_ratio;
+    form.value.assigned_to = project_issue.value.assigned?.id;
+    form.value.note = project_issue.value.note;
+    form.value.attachments = project_issue.value.attachments;
     loading.value = false;
   } catch (error) {}
 };
 
 onMounted(async () => {
-  await fetchPermissions();
+  await fetchData();
 });
 </script>
 

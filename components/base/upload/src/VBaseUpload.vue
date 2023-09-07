@@ -141,10 +141,10 @@ const handleObjectURL = async (event: any) => {
 };
 
 const handleDeleteFile = (file, index) => {
-  console.log("delete");
-
   files.value.splice(index, 1);
-  // emit("delete", file.id);
+  if (file.hasOwnProperty("id")) {
+    emit("delete", file.id);
+  }
 };
 const clear = () => {
   uploaded_file.value = {};
@@ -183,7 +183,14 @@ watch(
 
 onMounted(() => {
   if (props.sources) {
-    if (isString(props.sources)) files.value.push({ preview: props.sources });
+    if (isString(props.sources)) {
+      files.value.push({ preview: props.sources });
+    } else {
+      for (let index = 0; index < props.sources.length; index++) {
+        const element = props.sources[index];
+        files.value.push({ preview: element.path, id: element.id });
+      }
+    }
   }
 });
 </script>

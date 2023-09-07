@@ -94,7 +94,7 @@
 
             <base-form-item
               :model="form"
-              prop="project_issue_statuse_id"
+              prop="project_issue_status_id"
               :rules="[
                 {
                   required: true,
@@ -105,7 +105,7 @@
               class="col-span-12 lg:col-span-4"
             >
               <base-select
-                v-model="form.project_issue_statuse_id"
+                v-model="form.project_issue_status_id"
                 filterable
                 placeholder="وضعیت"
                 value-key="id"
@@ -115,7 +115,7 @@
               </base-select>
               <BaseValidationError
                 :errors="validation_errros"
-                field="project_issue_statuse_id"
+                field="project_issue_status_id"
               />
             </base-form-item>
 
@@ -156,6 +156,7 @@
                 <date-picker
                   v-model="form.start_date"
                   type="datetime"
+                  :disable="checkStartDate"
                 ></date-picker>
               </client-only>
 
@@ -175,6 +176,8 @@
                 <date-picker
                   v-model="form.end_date"
                   type="datetime"
+                  :disable="checkEndDate"
+                  :disabled="!form.start_date"
                 ></date-picker>
               </client-only>
 
@@ -275,6 +278,18 @@
               />
             </base-form-item>
           </div>
+          <div class="bg-white shadow-xl rounded-xl p-4 mt-10 my-6">
+            <base-form-item
+              :model="form"
+              prop="image"
+              label=" یادداشت"
+              class=""
+            >
+              <div>
+                <TiptapEditor v-model="form.note" placeholder="یادداشت " />
+              </div>
+            </base-form-item>
+          </div>
 
           <div class="bg-white shadow-xl rounded-xl p-4 mt-10 mb-6">
             <base-form-item
@@ -327,6 +342,7 @@ import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import { BaseCheckbox, BaseCheckboxGroup } from "@/components/base/checkbox";
 // import DatePicker from "vue3-persian-datetime-picker";
 import DatePicker from "@/components/common/DatePicker.clinet.vue";
+import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 
 definePageMeta({
   layout: "project",
@@ -339,10 +355,10 @@ const form = ref({
   title: null,
   description: null,
   parent_id: null,
-  project_issue_statuse: null,
+  project_issue_status_id: null,
   project_tracker_id: null,
   assigned_to: null,
-  priority: null,
+  priority_id: null,
   note: null,
   start_date: null,
   end_date: null,
@@ -368,6 +384,12 @@ const ratio_options = ref([
 ]);
 const users = ref([]);
 const route = useRoute();
+const checkEndDate = (formatted: any, dateMoment: any, checkingFor: any) => {
+  return formatted <= form.value.start_date;
+};
+const checkStartDate = (formatted: any, dateMoment: any, checkingFor: any) => {
+  return formatted >= form.value.end_date;
+};
 const handleCreate = () => {
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
@@ -375,25 +397,35 @@ const handleCreate = () => {
       try {
         const formData = {
           title: form.value.title,
-          name: form.value.name,
+          description: form.value.description,
+          note: form.value.note,
+          project_id: route.params.id,
+          parent_id: form.value.parent_id,
+          project_tracker_id: form.value.project_tracker_id,
+          project_issue_status_id: form.value.project_issue_status_id,
+          assigned_to_id: form.value.assigned_to,
+          priority_id: form.value.priority_id,
+          start_date: form.value.start_date,
+          end_date: form.value.end_date,
+          done_ratio: form.value.done_ratio,
         };
         const data = await useApiService.post(
-          `application/portal/projects/${route.params.id}/roles`,
+          `application/portal/projects/${route.params.id}/issues`,
           formData
         );
         if (data.success) {
           BaseMessage({
-            message: "ایجاد سطح دسترسی با موفقیت انجام شد!",
+            message: "ایجاد  مسئله با موفقیت انجام شد!",
             type: "success",
             duration: 4000,
             center: true,
             offset: 20,
           });
           form.value.title = null;
-          form.value.name = null;
+          form.value.description = null;
           form.value.parent_id = null;
           formRef.value.resetFields();
-          navigateTo({ name: "portal-projects-roles-index" });
+          navigateTo({ name: "portal-projects-issues-index" });
         } else {
         }
 
