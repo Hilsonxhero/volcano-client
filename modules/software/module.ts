@@ -13,12 +13,12 @@ export default defineNuxtModule({
             pages.push(
                 {
                     name: 'software-projects-pages-index',
-                    path: '/software/projects/:id/:slug/pages',
+                    path: '/software/projects/:id/pages',
                     file: resolve(__dirname, './pages/software/projects/pages/index.vue')
                 },
                 {
                     name: 'software-projects-pages-show',
-                    path: '/software/projects/:id/:slug/pages/:page',
+                    path: '/software/projects/:id/pages/:page',
                     file: resolve(__dirname, './pages/software/projects/pages/show.vue')
                 },
             )

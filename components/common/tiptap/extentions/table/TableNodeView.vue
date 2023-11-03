@@ -24,13 +24,5 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-  <node-view-wrapper as="table" class="">
-    <!-- <node-view-content> </node-view-content> -->
-    <tippy :interactive="true">
-      <table class="test" v-bind="node.attrs"></table>
-      <template #content>
-        <div>wwwwwwwww</div>
-      </template>
-    </tippy>
-  </node-view-wrapper>
+  <node-view-wrapper as="table" class=""> </node-view-wrapper>
 </template>

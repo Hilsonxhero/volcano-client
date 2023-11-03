@@ -51,16 +51,31 @@
                   </div> -->
                 </div>
                 <div>
-                  <span
-                    class="bg-gray-100 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
-                  >
-                    <span class="svg-icon svg-icon-2">
-                      <nuxt-icon
-                        name="more-out"
-                        class="w-6 h-6 text-gray-500"
-                      ></nuxt-icon>
+                  <base-dropdown placement="left-start">
+                    <span
+                      class="bg-gray-100 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
+                    >
+                      <span class="svg-icon svg-icon-2">
+                        <nuxt-icon
+                          name="more-out"
+                          class="w-6 h-6 text-gray-500"
+                        ></nuxt-icon>
+                      </span>
                     </span>
-                  </span>
+
+                    <template #content>
+                      <ul></ul>
+                      <div>
+                        <div
+                          @click="handleDeleteIssue(issue, index)"
+                          class="text-gray-700 cursor-pointer rounded-[12px] px-3 py-2 hover:bg-gray-100"
+                        >
+                          <span> حذف مسئله</span>
+                        </div>
+                      </div>
+                    </template>
+                  </base-dropdown>
+
                   <!-- <nuxt-icon name="more" class="w-6 h-6"></nuxt-icon> -->
                 </div>
               </div>
@@ -86,7 +101,7 @@
                 </base-button>
 
                 <base-button class="ml-1" plain size="small" type="default">
-                  {{ issue?.id }}
+                  {{ issue?.id }} #
                 </base-button>
               </div>
 
@@ -197,15 +212,11 @@ const fetchProjectIssues = async () => {
 const debouncedOnInputChange = debounce(fetchProjectIssues, 200);
 
 const handleDeleteIssue = (item: any, index: any) => {
-  BaseMessageBox.confirm(
-    `آیا از حذف  سطح دسترسی  اطمینان دارید ؟!`,
-    "پیام تایید",
-    {
-      confirmButtonText: "تایید",
-      cancelButtonText: "لغو",
-      type: "warning",
-    }
-  )
+  BaseMessageBox.confirm(`آیا از حذف   مسئله  اطمینان دارید ؟!`, "پیام تایید", {
+    confirmButtonText: "تایید",
+    cancelButtonText: "لغو",
+    type: "warning",
+  })
     .then(async () => {
       const data = await useApiService.remove(
         `application/portal/projects/${route.params.id}/issues/${item?.id}`
@@ -213,7 +224,7 @@ const handleDeleteIssue = (item: any, index: any) => {
       if (data.success) {
         tableData.value.splice(index, 1);
         BaseMessage({
-          message: "حذف  سطح دسترسی با موفقیت انجام شد!",
+          message: "حذف   مسئله با موفقیت انجام شد!",
           type: "success",
           duration: 4000,
           center: true,

@@ -6,18 +6,18 @@ import 'tippy.js/animations/shift-toward-subtle.css'
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(VueTippy, {
         arrow: true,
-        directive: 'tippy', // => v-tippy
-        component: 'tippy', // => <tippy/>
-        componentSingleton: 'tippy-singleton', // => <tippy-singleton/>,
+        directive: 'tippy',
+        component: 'tippy',
+        componentSingleton: 'tippy-singleton',
         defaultProps: {
             theme: 'light',
-            placement: 'top',
+
             allowHTML: true,
             trigger: 'click',
-            delay: 100,
+            delay: 50,
             animation: 'shift-toward-subtle',
             appendTo: () => document.querySelector('body')
-        }, // => Global default options * see all props
+        },
     })
 
 })

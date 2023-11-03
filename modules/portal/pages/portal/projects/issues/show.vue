@@ -23,7 +23,7 @@
           class="h-full"
         >
           <div>
-            <h2 class="text-2xl my-4 text-gray-600">ایجاد مسئله</h2>
+            <h2 class="text-2xl my-4 text-gray-600">ویرایش مسئله</h2>
           </div>
           <div
             class="bg-white shadow-xl rounded-xl p-4 grid grid-cols-12 gap-2"
@@ -312,24 +312,10 @@
               ></base-upload>
             </base-form-item>
           </div>
-          <!-- 
-          <div class="bg-white shadow-xl rounded-xl p-4 mt-10 mb-6">
-            <base-form-item
-              :model="form"
-              prop="attachments"
-              label="پیوست ها"
-              class="col-span-12"
-            >
-              <base-upload
-                multiple
-                :max="5"
-                v-model="form.image"
-                :sources="form.attachments"
-                @delete="handleOnDeleteAttachment"
-              ></base-upload>
-            </base-form-item>
-          </div> -->
-
+          <div>
+            <h2 class="text-2xl text-gray-600 mt-8">مسئله های فرزند</h2>
+          </div>
+          <IssueChildren />
           <div class="col-span-12">
             <div class="flex flex-col justify-between lg:items-center mt-8">
               <div class="w-full flex items-center">
@@ -340,7 +326,7 @@
                   type="primary"
                   block
                 >
-                  ایجاد
+                  ویرایش
                 </base-button>
                 <base-button
                   :to="{ name: 'management-roles-index' }"
@@ -369,6 +355,7 @@ import BaseMessage from "@/components/base/message";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import DatePicker from "@/components/common/DatePicker.clinet.vue";
 import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
+import IssueChildren from "@/modules/portal/components/portal/projects/issues/Children.vue";
 
 definePageMeta({
   layout: "project",
@@ -515,8 +502,6 @@ const handleUpdate = () => {
         loader.value = false;
       } catch ({ response }) {
         loader.value = false;
-        console.log("response", response);
-
         // validation_errros.value = response._data.data;
       }
     } else {
@@ -557,7 +542,7 @@ const fetchData = async () => {
     priorities.value = priorites_data.data;
     users.value = users_data.data;
     project_issues.value = issues_data.data;
-    project_issue.value = project_issue_data.data.issue;
+    project_issue.value = project_issue_data.data;
 
     form.value.title = project_issue.value.title;
     form.value.description = project_issue.value.description;

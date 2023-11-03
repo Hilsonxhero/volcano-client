@@ -23,6 +23,7 @@
               <div class="items-center flex justify-center">
                 <template v-if="files.length >= 1">
                   <div
+                    @click.prevent="handleAttachmentViewer(uploaded_file, j)"
                     class="relative h-[110px] w-[120px] mt-2 ml-2 rounded-md overflow-hidden uploader-item"
                     v-for="(uploaded_file, j) in files"
                     :key="j"
@@ -73,11 +74,16 @@
       >
     </div>
   </div>
+  <AttachmentViewer
+    v-model="visible_attachment_viewer"
+    :attachment="selected_attachment"
+  />
 </template>
 
 <script lang="ts" setup>
 //@ts-nocheck
 import { isString } from "@/utils";
+import AttachmentViewer from "@/components/common/attachment-viewer/AttachmentViewer.vue";
 const props = defineProps({
   max: {
     type: Number,
@@ -95,7 +101,8 @@ const props = defineProps({
     default: false,
   },
 });
-
+const visible_attachment_viewer = ref(false);
+const selected_attachment = ref({});
 const emit = defineEmits(["fileChange", "update:modelValue", "delete"]);
 
 const uploadRef = ref(null);
@@ -148,6 +155,11 @@ const handleDeleteFile = (file, index) => {
 };
 const clear = () => {
   uploaded_file.value = {};
+};
+
+const handleAttachmentViewer = (row, index) => {
+  selected_attachment.value = row;
+  visible_attachment_viewer.value = true;
 };
 
 defineExpose({ clear });

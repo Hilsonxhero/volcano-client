@@ -79,7 +79,6 @@ const isCurrentCellActive = ref<Record<string, boolean>>({});
 
 const calculateActiveSateOfCurrentCell = () => {
   const { from, to } = props.editor.state.selection;
-
   const nodeFrom = props.getPos();
   const nodeTo = nodeFrom + props.node.nodeSize;
 
@@ -97,14 +96,15 @@ onMounted(() => {
     <NodeViewContent as="span" />
     <template v-if="isCurrentCellActive || selected">
       <tippy
-        placement="left-start"
+        placement="right-start"
         :interactive="true"
         animation="shift-toward-subtle"
-        class="trigger-button"
+        class="trigger-button z-50"
       >
-        <label tabIndex="0" class="m-[0.2rem] cursor-pointer">
+        <button type="button" :tabIndex="0" class="ml-1 mb-1">
           <nuxt-icon name="arrow-square-down" class=""></nuxt-icon>
-        </label>
+        </button>
+
         <template #content>
           <section class="image-actions-container flex flex-col space-y-3">
             <button
@@ -115,7 +115,6 @@ onMounted(() => {
               <div @click="() => action.action(editor)" class="text-right">
                 <div>{{ action.name }}</div>
               </div>
-              <!-- <nuxt-icon name="align-center"></nuxt-icon> -->
             </button>
           </section>
         </template>

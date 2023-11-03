@@ -95,7 +95,12 @@
       </template>
     </menu-bar>
 
-    <editor-content v-bind="$attrs" class="editor__content" :editor="editor" />
+    <editor-content
+      id="wwww"
+      v-bind="$attrs"
+      class="editor__content"
+      :editor="editor"
+    />
 
     <base-dialog
       @close="show != show"

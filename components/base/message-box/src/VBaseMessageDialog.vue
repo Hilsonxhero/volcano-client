@@ -103,6 +103,7 @@
             :loading="cancelButtonLoading"
             :class="[cancelButtonClass]"
             @click="handleAction('cancel')"
+            :size="btnSize"
             @keydown.prevent.enter="handleAction('cancel')"
           >
             {{ cancelButtonText || "el.messagebox.cancel" }}
