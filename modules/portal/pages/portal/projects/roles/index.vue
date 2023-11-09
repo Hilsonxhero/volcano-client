@@ -126,7 +126,7 @@ import { debounce } from "lodash-unified";
 
 definePageMeta({
   layout: "project",
-  middleware: ["auth"],
+  middleware: ["auth", "permission"],
 });
 const loading = ref(true);
 const pager = ref({});

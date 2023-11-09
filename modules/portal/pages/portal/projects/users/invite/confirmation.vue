@@ -52,6 +52,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from "@/modules/auth/store";
+
 definePageMeta({
   layout: "invite",
   middleware: ["auth"],
@@ -63,7 +65,7 @@ const route = useRoute();
 const loader = ref(false);
 const loading = ref(false);
 const decline_loader = ref(false);
-
+const store = useAuthStore();
 const handleConfirmInvite = async () => {
   try {
     loader.value = true;
@@ -75,11 +77,13 @@ const handleConfirmInvite = async () => {
       formData
     );
     if (data.success) {
+      await store.verify();
+
       navigateTo({
-        name: "portal-projects-pages-index",
-        params: {
-          id: invite.value.project?.id,
-        },
+        name: "portal-projects-index",
+        // params: {
+        //   id: invite.value.project?.id,
+        // },
       });
     }
 

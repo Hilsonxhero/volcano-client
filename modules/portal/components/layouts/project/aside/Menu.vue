@@ -13,7 +13,9 @@
         </div>
 
         <template v-for="(menuItem, j) in item.pages" :key="j">
-          <template v-if="menuItem.heading">
+          <template
+            v-if="menuItem.heading && hasPermission(menuItem.permissions)"
+          >
             <div class="menu-item">
               <router-link
                 class="menu-link"
@@ -141,7 +143,10 @@ const portalStore = usePortalStore();
 const router = useRouter();
 const store = useAuthStore();
 const route = useRoute();
+import { storeToRefs } from "pinia";
+
 const scrollElRef = ref<null | HTMLElement>(null);
+const { user } = storeToRefs(store);
 
 const pages = ref([
   {
@@ -156,26 +161,37 @@ const pages = ref([
         heading: "صفحات",
         route: "portal-projects-pages-index",
         svgIcon: "note-bulk",
+        permissions: ["portal_pages_management_index"],
       },
       {
         heading: "کاربران",
         route: "portal-projects-users-index",
         svgIcon: "group",
+        permissions: ["portal_users_management_index"],
       },
       {
         heading: "نقش ها ودسترسی ها",
         route: "portal-projects-roles-index",
         svgIcon: "security-user",
+        permissions: ["portal_users_management_index"],
       },
       {
         heading: "بخش های سفارشی",
         route: "portal-projects-enumerations-index",
         svgIcon: "category",
+        permissions: ["portal_enumerations_management_index"],
       },
       {
         heading: "مسئله ها",
         route: "portal-projects-issues-index",
         svgIcon: "clipboard-tick",
+        permissions: ["portal_issue_management_index"],
+      },
+      {
+        heading: "تنظیمات",
+        route: "portal-projects-setting-variables",
+        svgIcon: "setting-bulk",
+        permissions: ["portal_project_management_index"],
       },
     ],
   },
@@ -193,6 +209,22 @@ const handleLogout = async () => {
     router.push("/");
   } catch (error) {}
 };
+
+const hasPermission = (permissions) => {
+  if (!permissions || permissions == null) {
+    return true;
+  }
+  return user.value?.role?.permission_names.some((permission) =>
+    permissions.includes(permission)
+  );
+};
+
+// app.config.globalProperties.$hasRole = function (user, roles) {
+//   if (!roles || roles == null) {
+//     return true;
+//   }
+//   return user && user.role && roles.includes(user.role);
+// };
 
 const hasActiveChildren = (match) => {
   return route.path.indexOf(match) !== -1;

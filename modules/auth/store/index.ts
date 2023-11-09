@@ -33,6 +33,19 @@ export const useAuthStore = defineStore("auth", () => {
             }
     };
 
+    const verify = async () => {
+        try {
+            const { data } = await useApiService.get(`application/user/init`);
+            user.value = data?.user;
+            isLoggedIn.value = data?.is_logged_in;
+            checked.value = true;
+            return data
+        } catch (error) {
+            return error;
+        }
+    };
+
+
     const login = async (form) => {
         try {
             checked.value = false;
@@ -75,6 +88,7 @@ export const useAuthStore = defineStore("auth", () => {
         login,
         authenticate,
         logout,
-        loggedIn
+        loggedIn,
+        verify
     };
 });

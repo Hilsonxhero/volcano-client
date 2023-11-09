@@ -123,6 +123,11 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/issues/:issue',
                     file: resolve(__dirname, './pages/portal/projects/issues/show.vue')
                 },
+                {
+                    name: 'portal-projects-setting-variables',
+                    path: '/portal/projects/:id/setting/variables',
+                    file: resolve(__dirname, './pages/portal/projects/setting/variables.vue')
+                },
             )
         })
 

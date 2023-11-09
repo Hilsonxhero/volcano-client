@@ -26,43 +26,19 @@
                 ></base-input>
               </base-form-item>
             </div>
+
             <div class="col-span-12 lg:col-span-12">
               <base-form-item
-                prop="role_group"
-                :rules="[
-                  {
-                    required: true,
-                    message: 'گروه سطح دسترسی الزامی می باشد',
-                  },
-                ]"
-                label="سطح دسترسی"
-              >
-                <base-select
-                  v-model="form.role_group"
-                  filterable
-                  placeholder="گروه سطح دسترسی"
-                  value-key="id"
-                  label="title"
-                  :options="role_groups"
-                  @change="handleChangeRoleGroup"
-                >
-                </base-select>
-              </base-form-item>
-            </div>
-            <div class="col-span-12 lg:col-span-12">
-              <base-form-item
-                disabled
                 prop="role"
                 :rules="[
                   {
                     required: true,
-                    message: 'گروه سطح دسترسی الزامی می باشد',
+                    message: ' سطح دسترسی الزامی می باشد',
                   },
                 ]"
                 label="سطح دسترسی"
               >
                 <base-select
-                  disabled
                   v-model="form.role"
                   filterable
                   placeholder=" سطح دسترسی"
@@ -184,8 +160,11 @@ const handleInviteUser = () => {
 
 const fetchRoles = async () => {
   try {
-    const data = await useApiService.get("application/portal/roles");
-    role_groups.value = data.data;
+    const data = await useApiService.get(
+      `application/portal/projects/${route.params.id}/roles/select/values`
+    );
+    // role_groups.value = data.data;
+    roles.value = data.data.roles;
   } catch (error) {}
 };
 
