@@ -121,7 +121,7 @@
 
             <base-form-item
               :model="form"
-              prop="priority_id"
+              prop="project_priority_id"
               :rules="[
                 {
                   required: true,
@@ -132,7 +132,7 @@
               class="col-span-12 lg:col-span-4"
             >
               <base-select
-                v-model="form.priority_id"
+                v-model="form.project_priority_id"
                 filterable
                 placeholder="اولویت"
                 value-key="id"
@@ -142,7 +142,7 @@
               </base-select>
               <BaseValidationError
                 :errors="validation_errros"
-                field="priority_id"
+                field="project_priority_id"
               />
             </base-form-item>
 
@@ -358,7 +358,7 @@ const form = ref({
   project_issue_status_id: null,
   project_tracker_id: null,
   assigned_to: null,
-  priority_id: null,
+  project_priority_id: null,
   note: null,
   start_date: null,
   end_date: null,
@@ -404,7 +404,7 @@ const handleCreate = () => {
           project_tracker_id: form.value.project_tracker_id,
           project_issue_status_id: form.value.project_issue_status_id,
           assigned_to_id: form.value.assigned_to,
-          priority_id: form.value.priority_id,
+          project_priority_id: form.value.project_priority_id,
           start_date: form.value.start_date,
           end_date: form.value.end_date,
           done_ratio: form.value.done_ratio,

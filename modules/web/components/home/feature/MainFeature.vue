@@ -18,8 +18,8 @@
             data-w-id="0f307113-468a-062c-b37f-1608e3066085"
             href="/features"
             class="button w-button"
-            >More Features</a
-          >
+            >ویژگی های بیشتر
+          </a>
         </div>
         <div id="w-node-div-block-6-9d7aed1c" class="app-screen---a">
           <div class="w-layout-grid grid-app-screen---a">

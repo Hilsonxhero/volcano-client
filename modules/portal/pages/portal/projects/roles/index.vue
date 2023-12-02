@@ -68,13 +68,7 @@
                 {{ row?.title }}
               </div>
             </template>
-            <template v-slot:cell-name="{ row }">
-              <div
-                class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
-              >
-                {{ row?.name }}
-              </div>
-            </template>
+
             <template v-slot:cell-parent_name="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
@@ -145,11 +139,7 @@ const tableHeader = ref([
     key: "title",
     sortable: true,
   },
-  {
-    name: "نام",
-    key: "name",
-    sortable: true,
-  },
+
   {
     name: "دسته گروه",
     key: "parent_name",

@@ -36,7 +36,7 @@
             v-for="(issue, index) in tableData"
             :key="index"
           >
-            <section class="mb-6 bg-white shadow-lg p-4 rounded-2xl">
+            <section class="mb-6 bg-white card-module p-4 rounded-2xl">
               <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center">
                   <div

@@ -31,8 +31,8 @@
             params: { id: project?.id },
           }"
         >
-          <div
-            class="bg-white shadow-lg rounded-2xl p-4 text-base hover:shadow-sm transition ease-in-out"
+          <!-- <div
+            class="bg-white shadow-lg rounded-2xl p-4 text-base transition ease-in-out"
           >
             <div class="flex items-center justify-between">
               <div>{{ project?.title }}</div>
@@ -66,7 +66,8 @@
             <div class="text-gray-500 mt-3 text-xs">
               ایجاد شده در {{ project?.create_at }}
             </div>
-          </div>
+          </div> -->
+          <ProjectCard :project="project" />
         </nuxt-link>
       </div>
     </div>
@@ -94,6 +95,7 @@
 </template>
 
 <script setup lang="ts">
+import ProjectCard from "@/modules/portal/components/project/ProjectCard.vue";
 import CreateProjectDialog from "@/modules/portal/components/portal/projects/CreateProjectDialog.vue";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import BaseMessage from "@/components/base/message";

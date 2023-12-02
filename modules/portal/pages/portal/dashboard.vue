@@ -41,7 +41,7 @@
                   params: { id: project?.id },
                 }"
               >
-                <div
+                <!-- <div
                   class="bg-white shadow-lg rounded-2xl p-4 text-base hover:shadow-sm transition ease-in-out"
                 >
                   <div class="flex items-center justify-between">
@@ -77,7 +77,8 @@
                   <div class="text-gray-500 mt-3 text-xs">
                     ایجاد شده در {{ project?.create_at }}
                   </div>
-                </div>
+                </div> -->
+                <ProjectCard :project="project" />
               </nuxt-link>
             </div>
           </div>
@@ -89,7 +90,7 @@
 
 <script setup lang="ts">
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
-
+import ProjectCard from "@/modules/portal/components/project/ProjectCard.vue";
 definePageMeta({
   layout: "portal",
   middleware: ["auth"],

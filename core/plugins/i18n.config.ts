@@ -1,12 +1,12 @@
 import en from "@/locales/en.json"
-
+import fa from "@/locales/fa.json"
 const locales = {
-    en
+    fa
 }
 
 export default defineI18nConfig(() => ({
-    defaultLocale: 'en',
+    defaultLocale: 'fa',
     legacy: false,
-    locale: 'en',
+    locale: 'fa',
     messages: locales
 }))

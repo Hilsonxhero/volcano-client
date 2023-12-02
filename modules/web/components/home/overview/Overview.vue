@@ -85,13 +85,12 @@
             </p>
           </div>
         </div>
-        <a
-          data-w-id="eaf3ca25-4a9b-efa9-341b-8e26bf9b8a1f"
-          href="/sign-up"
+        <router-link
+          :to="{ name: 'portal-projects-index' }"
           class="button w-button"
         >
           شروع کنیم!
-        </a>
+        </router-link>
       </div>
     </div>
   </div>

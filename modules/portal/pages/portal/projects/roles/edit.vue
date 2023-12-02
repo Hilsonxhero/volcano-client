@@ -21,25 +21,6 @@
           >
             <base-form-item
               :model="form"
-              prop="name"
-              :rules="[
-                {
-                  required: true,
-                  message: '  نام سطح دسترسیی  الزامی می باشد',
-                },
-              ]"
-              label="نام سطح دسترسیی"
-              class="col-span-12 lg:col-span-6"
-            >
-              <base-input
-                v-model="form.name"
-                placeholder="نام سطح دسترسیی "
-              ></base-input>
-              <BaseValidationError :errors="validation_errros" field="name" />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
               prop="title"
               :rules="[
                 {
@@ -48,7 +29,7 @@
                 },
               ]"
               label="عنوان"
-              class="col-span-12 lg:col-span-6"
+              class="col-span-12 lg:col-span-12"
             >
               <base-input
                 v-model="form.title"
@@ -65,13 +46,15 @@
                   :key="index"
                 >
                   <div>
-                    <h2>{{ permission.title }}</h2>
+                    <h2>{{ $t(`permissions.${permission?.name}`) }}</h2>
                   </div>
                   <base-checkbox-group v-model="selectedPermissions">
                     <base-checkbox
                       v-for="(childPermission, j) in permission.children"
                       :label="childPermission.id"
-                      >{{ childPermission.title }}</base-checkbox
+                      >{{
+                        $t(`permissions.${childPermission?.name}`)
+                      }}</base-checkbox
                     >
                   </base-checkbox-group>
                 </div>

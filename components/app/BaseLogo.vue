@@ -2,7 +2,7 @@
   <div class="">
     <nuxt-link :to="{ name: 'home' }">
       <img
-        :src="variables?.logo_light"
+        :src="dark ? variables?.logo_dark : variables?.logo_light"
         loading="eager"
         alt=""
         class="h-[26px] max-w-none"

@@ -9,7 +9,7 @@
         </div>
       </template>
       <template #default>
-        <section class="mb-6 bg-white shadow-lg p-4 rounded-2xl">
+        <section class="mb-6 p-4 rounded-lg card-module">
           <section>
             <div class="mb-3 flex justify-between flex-wrap items-center">
               <div class="w-full lg:w-auto">

@@ -22,11 +22,24 @@
           ref="formRef"
           class="h-full"
         >
-          <div>
+          <div class="flex justify-between items-center">
             <h2 class="text-2xl my-4 text-gray-600">ویرایش مسئله</h2>
+            <div>
+              <base-button
+                @click="handleShowTimeDialog"
+                size="small"
+                type="primary"
+                class="w-full lg:w-auto"
+              >
+                <div class="flex items-center">
+                  <span class="ml-2"> ثبت زمان</span>
+                  <nuxt-icon name="timer"></nuxt-icon>
+                </div>
+              </base-button>
+            </div>
           </div>
           <div
-            class="bg-white shadow-xl rounded-xl p-4 grid grid-cols-12 gap-2"
+            class="bg-white card-module rounded-xl p-4 grid grid-cols-12 gap-2"
           >
             <base-form-item
               :model="form"
@@ -281,7 +294,7 @@
             </base-form-item>
           </div>
           <div
-            class="bg-white shadow-xl rounded-xl p-4 mt-10 my-6 grid grid-cols-12 gap-2"
+            class="bg-white card-module rounded-xl p-4 mt-10 my-6 grid grid-cols-12 gap-2"
           >
             <base-form-item
               :model="form"
@@ -340,6 +353,11 @@
         </base-form>
       </template>
     </base-skeleton>
+
+    <CreateIssueTimeDialog
+      v-model="visible_time_dialog"
+      :issue="project_issue_id"
+    />
   </div>
 </template>
 
@@ -356,14 +374,17 @@ import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import DatePicker from "@/components/common/DatePicker.clinet.vue";
 import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 import IssueChildren from "@/modules/portal/components/portal/projects/issues/Children.vue";
+import CreateIssueTimeDialog from "@/modules/portal/components/portal/projects/issues/time/CreateIssueTimeDialog.vue";
 
 definePageMeta({
   layout: "project",
   middleware: ["auth"],
 });
+const project_issue_id = ref(null);
 const loading = ref(true);
 const loader = ref(false);
 const formRef: Ref<FormItemContext | null> = ref(null);
+const visible_time_dialog = ref(false);
 const form = ref({
   title: null,
   description: null,
@@ -400,6 +421,9 @@ const users = ref([]);
 const route = useRoute();
 const project_issue = ref({});
 
+const handleShowTimeDialog = () => {
+  visible_time_dialog.value = true;
+};
 const checkEndDate = (formatted: any, dateMoment: any, checkingFor: any) => {
   return formatted <= form.value.start_date;
 };
@@ -413,7 +437,6 @@ const handleOnDeleteAttachment = async (id: any) => {
     );
   } catch (error) {}
 };
-
 const handleSearchProjectissue = async (query: any) => {
   if (query !== "") {
     let params = {
@@ -464,21 +487,6 @@ const handleUpdate = () => {
             }
           }
         }
-
-        // const formData = {
-        //   title: form.value.title,
-        //   description: form.value.description,
-        //   note: form.value.note,
-        //   project_id: route.params.id,
-        //   parent_id: form.value.parent_id,
-        //   project_tracker_id: form.value.project_tracker_id,
-        //   project_issue_status_id: form.value.project_issue_status_id,
-        //   assigned_to_id: form.value.assigned_to,
-        //   project_priority_id: form.value.project_priority_id,
-        //   start_date: form.value.start_date,
-        //   end_date: form.value.end_date,
-        //   done_ratio: form.value.done_ratio,
-        // };
         const data = await useApiService.patch(
           `application/portal/projects/${route.params.id}/issues/${route.params.issue}`,
           form_data
@@ -508,7 +516,6 @@ const handleUpdate = () => {
     }
   });
 };
-
 const fetchData = async () => {
   try {
     const [
@@ -543,7 +550,6 @@ const fetchData = async () => {
     users.value = users_data.data;
     project_issues.value = issues_data.data;
     project_issue.value = project_issue_data.data;
-
     form.value.title = project_issue.value.title;
     form.value.description = project_issue.value.description;
     form.value.project_issue_status_id = project_issue.value.issue_status.id;
@@ -562,7 +568,24 @@ const fetchData = async () => {
 };
 
 onMounted(async () => {
+  project_issue_id.value = route.params.issue;
   await fetchData();
+
+  // const today = new Date();
+  // const persianOptions = {
+  //   year: "numeric",
+  //   month: "2-digit",
+  //   day: "2-digit",
+  //   calendar: "persian",
+  // };
+  // const persianDate = new Intl.DateTimeFormat(
+  //   "fa-IR-u-ca-persian",
+  //   persianOptions
+  // ).format(today);
+  // const englishDigits = persianDate.replace(/[۰-۹]/g, (digit) =>
+  //   String.fromCharCode(digit.charCodeAt(0) - 1728)
+  // );
+  // console.log(englishDigits);
 });
 </script>
 

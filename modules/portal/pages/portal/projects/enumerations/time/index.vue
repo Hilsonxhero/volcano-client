@@ -60,7 +60,6 @@
                 <base-checkbox v-model="checkedData"></base-checkbox>
               </div>
             </template>
-
             <template v-slot:cell-title="{ row }">
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
@@ -85,7 +84,6 @@
                 <template v-else> گروه اصلی </template>
               </div>
             </template>
-
             <template v-slot:cell-actions="{ row: role, index }">
               <div class="flex items-center">
                 <base-button

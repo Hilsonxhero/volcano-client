@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class="mb-6 bg-white shadow-lg p-4 rounded-2xl">
+    <section class="mb-6 bg-white card-module p-4 rounded-2xl">
       <BaseDataTable
         :total="pager.total"
         :rows-per-page="pager.per_page"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="section">
+    <!-- <div class="section">
       <div class="section-content">
         <div
           data-w-id="d0dc812c-ec2f-fd6d-6ad9-77361725f73b"
@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

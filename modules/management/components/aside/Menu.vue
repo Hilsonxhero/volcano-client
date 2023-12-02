@@ -147,7 +147,7 @@ const pages = ref([
     pages: [
       {
         heading: "داشبورد",
-        route: { name: "portal-dashboard" },
+        route: { name: "management-dashboard" },
         active: "dashboard",
         svgIcon: "home-bulk",
       },
