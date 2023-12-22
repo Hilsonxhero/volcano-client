@@ -17,6 +17,7 @@
               <date-picker
                 v-model="issue_time.spent_on"
                 type="datetime"
+                format="jYYYY/jMM/jDD"
               ></date-picker>
             </client-only>
 
@@ -119,19 +120,20 @@ import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import DatePicker from "@/components/common/DatePicker.clinet.vue";
 import { UPDATE_MODEL_EVENT } from "@/core/constants";
 import BaseMessage from "@/components/base/message";
+import { emit } from "process";
 const loader = ref(false);
 const props = defineProps({
   issue: {},
   modelValue: {},
 });
-const emits = defineEmits(["update:visible", UPDATE_MODEL_EVENT]);
+const emits = defineEmits([UPDATE_MODEL_EVENT, "create"]);
 const route = useRoute();
 const project_time_categories = ref([]);
 const visible_time_dialog = ref(false);
 const issue_time = ref({
   project_time_category_id: null,
   description: null,
-  spent_on: "1402/09/12",
+  spent_on: null,
   hours: null,
 });
 const formRef = ref(null);
@@ -166,6 +168,7 @@ const handleSubmitTime = () => {
           issue_time.value.spent_on = null;
           issue_time.value.project_time_category_id = null;
           formRef.value.resetFields();
+          emits("create", data);
         } else {
         }
 
@@ -201,6 +204,22 @@ const fetchData = async () => {
 
 onMounted(() => {
   fetchData();
+  const today = new Date();
+  const persianOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    calendar: "persian",
+  };
+  const persianDate = new Intl.DateTimeFormat(
+    "fa-IR-u-ca-persian",
+    persianOptions
+  ).format(today);
+  const englishDigits = persianDate.replace(/[۰-۹]/g, (digit) =>
+    String.fromCharCode(digit.charCodeAt(0) - 1728)
+  );
+
+  issue_time.value.spent_on = englishDigits;
 });
 </script>
 

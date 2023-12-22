@@ -124,9 +124,20 @@ export default defineNuxtModule({
                     file: resolve(__dirname, './pages/portal/projects/issues/show.vue')
                 },
                 {
+                    name: 'portal-projects-issues-edit',
+                    path: '/portal/projects/:id/issues/edit/:issue',
+                    file: resolve(__dirname, './pages/portal/projects/issues/edit.vue')
+                },
+                {
                     name: 'portal-projects-setting-variables',
                     path: '/portal/projects/:id/setting/variables',
                     file: resolve(__dirname, './pages/portal/projects/setting/variables.vue')
+                },
+
+                {
+                    name: 'portal-projects-issue-times-index',
+                    path: '/portal/projects/:id/issue/times',
+                    file: resolve(__dirname, './pages/portal/projects/issues/times/index.vue')
                 },
             )
         })

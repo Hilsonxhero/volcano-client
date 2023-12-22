@@ -188,6 +188,12 @@ const pages = ref([
         permissions: ["portal_issue_management_index"],
       },
       {
+        heading: "زمان ها",
+        route: "portal-projects-issue-times-index",
+        svgIcon: "project-time",
+        permissions: ["portal_issue_management_index"],
+      },
+      {
         heading: "تنظیمات",
         route: "portal-projects-setting-variables",
         svgIcon: "setting-bulk",

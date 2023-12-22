@@ -6,6 +6,7 @@
         v-bind:disabled="disabled"
         v-model="date"
         :type="type"
+        :format="format"
       ></date-picker>
     </client-only>
   </div>
@@ -19,6 +20,7 @@ const props = defineProps({
   disable: {},
   disabled: {},
   type: {},
+  format: {},
 });
 
 const date = ref("");

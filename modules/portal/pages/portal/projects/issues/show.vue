@@ -16,341 +16,123 @@
         </div>
       </template>
       <template #default>
-        <base-form
-          @submit.prevent="handleUpdate"
-          :model="form"
-          ref="formRef"
-          class="h-full"
-        >
-          <div class="flex justify-between items-center">
-            <h2 class="text-2xl my-4 text-gray-600">ویرایش مسئله</h2>
-            <div>
-              <base-button
-                @click="handleShowTimeDialog"
-                size="small"
-                type="primary"
-                class="w-full lg:w-auto"
+        <div class="flex justify-between items-center">
+          <h2 class="text-2xl my-4 text-gray-600"></h2>
+          <div class="flex items-center">
+            <base-button
+              :to="{
+                name: 'portal-projects-issues-edit',
+                params: { id: route.params.id, issue: form.id },
+              }"
+              size="small"
+              type="primary"
+              class="w-full lg:w-auto"
+            >
+              <div class="flex items-center">
+                <span class="ml-2"> ویرایش</span>
+                <nuxt-icon name="magicpen"></nuxt-icon>
+              </div>
+            </base-button>
+            <base-button
+              @click="handleShowTimeDialog"
+              size="small"
+              type="primary"
+              class="w-full lg:w-auto mr-2"
+            >
+              <div class="flex items-center">
+                <span class="ml-2"> ثبت زمان</span>
+                <nuxt-icon name="timer"></nuxt-icon>
+              </div>
+            </base-button>
+          </div>
+        </div>
+        <div class="bg-white card-module rounded-xl p-4 mt-5">
+          <div class="w-full">
+            <div class="flex items-center mb-4 w-full">
+              <div class="bg-gray-200 rounded-[14px] px-3 py-2">
+                {{ form?.tracker?.title }}
+              </div>
+
+              <div class="bg-gray-200 rounded-[14px] px-2 py-2 mr-2">
+                {{ form?.issue_status?.title }}
+              </div>
+            </div>
+            <div
+              class="bg-gray-100 rounded-[14px] p-3 font-extrabold border-r-2 border-teal-400 mb-3"
+            >
+              {{ form?.title }}
+            </div>
+
+            <div class="grid grid-cols-12 gap-2 mb-4">
+              <div
+                class="col-span-12 lg:col-span-6 bg-gray-200 rounded-[14px] px-3 py-2"
               >
                 <div class="flex items-center">
-                  <span class="ml-2"> ثبت زمان</span>
-                  <nuxt-icon name="timer"></nuxt-icon>
+                  <nuxt-icon name="calendar"></nuxt-icon>
+                  <span class="mr-2"> زمان آغاز : {{ form?.start_date }}</span>
                 </div>
-              </base-button>
+              </div>
+              <div
+                class="col-span-12 lg:col-span-6 bg-gray-200 rounded-[14px] px-3 py-2"
+              >
+                <div class="flex items-center">
+                  <nuxt-icon name="project-time"></nuxt-icon>
+                  <span class="mr-2">
+                    زمان صرف شده : {{ form?.total_hours }}</span
+                  >
+                </div>
+              </div>
+              <div
+                class="col-span-12 lg:col-span-6 bg-gray-200 rounded-[14px] px-3 py-2"
+              >
+                <div class="flex items-center">
+                  <nuxt-icon name="user-bulk"></nuxt-icon>
+                  <span class="mr-2">
+                    مسئول : {{ form?.assigned?.username }}</span
+                  >
+                </div>
+              </div>
+              <div
+                class="col-span-12 lg:col-span-6 bg-gray-200 rounded-[14px] px-3 py-2"
+              >
+                <div>
+                  <div class="flex items-center">
+                    <div>{{ form?.done_ratio }}%</div>
+                    <div class="bg-gray-100 rounded-[10px] p-1 m-1 w-full mr-2">
+                      <div
+                        class="bg-green-400 rounded-[10px] p-1 w-7"
+                        :style="{ width: form?.done_ratio + '%' }"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          <div
-            class="bg-white card-module rounded-xl p-4 grid grid-cols-12 gap-2"
-          >
-            <base-form-item
-              :model="form"
-              prop="title"
-              :rules="[
-                {
-                  required: true,
-                  message: ' عنوان مسئله  الزامی می باشد',
-                },
-              ]"
-              label="  عنوان مسئله"
-              class="col-span-12"
-            >
-              <base-input
-                v-model="form.title"
-                placeholder="  عنوان مسئله "
-              ></base-input>
-              <BaseValidationError :errors="validation_errros" field="title" />
-            </base-form-item>
+        </div>
 
-            <base-form-item
-              :model="form"
-              prop="description"
-              label="توضیحات"
-              class="col-span-12"
-            >
-              <base-input
-                input-class="h-[80px]"
-                type="textarea"
-                v-model="form.description"
-                placeholder="توضیحات "
-              ></base-input>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="description"
-              />
-            </base-form-item>
+        <div class="bg-white card-module rounded-xl p-4 mt-5"></div>
 
-            <base-form-item
-              :model="form"
-              prop="project_tracker_id"
-              :rules="[
-                {
-                  required: true,
-                  message: ' نوع مسئله  الزامی می باشد',
-                },
-              ]"
-              label="  نوع مسئله"
-              class="col-span-12 lg:col-span-4"
+        <div class="mt-10">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg text-gray-600">مسئله های فرزند</h2>
+            <base-button
+              size="small"
+              type="primary"
+              class="w-full lg:w-auto"
+              :to="{
+                name: 'portal-projects-issues-create',
+                params: { id: route.params.id },
+              }"
             >
-              <base-select
-                v-model="form.project_tracker_id"
-                filterable
-                placeholder="نوع مسئله "
-                value-key="id"
-                label="title"
-                :options="project_trackers"
-              >
-              </base-select>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="project_tracker_id"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="project_issue_status_id"
-              :rules="[
-                {
-                  required: true,
-                  message: ' وضعیت مسئله  الزامی می باشد',
-                },
-              ]"
-              label="  وضعیت مسئله"
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-select
-                v-model="form.project_issue_status_id"
-                filterable
-                placeholder="وضعیت"
-                value-key="id"
-                label="title"
-                :options="issue_statuses"
-              >
-              </base-select>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="project_issue_status_id"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="project_priority_id"
-              :rules="[
-                {
-                  required: true,
-                  message: ' اولویت مسئله  الزامی می باشد',
-                },
-              ]"
-              label="  اولویت مسئله"
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-select
-                v-model="form.project_priority_id"
-                filterable
-                placeholder="اولویت"
-                value-key="id"
-                label="title"
-                :options="priorities"
-              >
-              </base-select>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="project_priority_id"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="start_date"
-              label="  تاریخ شروع مسئله"
-              class="col-span-12 lg:col-span-4"
-            >
-              <client-only placeholder="loading...">
-                <date-picker
-                  v-model="form.start_date"
-                  type="datetime"
-                  :disable="checkStartDate"
-                ></date-picker>
-              </client-only>
-
-              <BaseValidationError
-                :errors="validation_errros"
-                field="start_date"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="end_date"
-              label="  تاریخ سررسید مسئله"
-              class="col-span-12 lg:col-span-4"
-            >
-              <client-only placeholder="loading...">
-                <date-picker
-                  v-model="form.end_date"
-                  type="datetime"
-                  :disable="checkEndDate"
-                  :disabled="!form.start_date"
-                ></date-picker>
-              </client-only>
-
-              <BaseValidationError
-                :errors="validation_errros"
-                field="end_date"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="estimated_hours"
-              label="  زمان برآورد شده "
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-input
-                v-model="form.estimated_hours"
-                placeholder="  زمان برآورد شده  "
-              ></base-input>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="estimated_hours"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="assigned_to"
-              :rules="[
-                {
-                  required: true,
-                  message: ' مسئول مسئله  الزامی می باشد',
-                },
-              ]"
-              label="  مسئول مسئله"
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-select
-                v-model="form.assigned_to"
-                filterable
-                placeholder="مسئول"
-                value-key="id"
-                label="username"
-                :options="users"
-              >
-              </base-select>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="assigned_to"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="done_ratio"
-              :rules="[
-                {
-                  required: true,
-                  message: ' انجام شده   الزامی می باشد',
-                },
-              ]"
-              label="  انجام شده "
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-select
-                v-model="form.done_ratio"
-                filterable
-                placeholder="انجام شده"
-                value-key="value"
-                label="title"
-                :options="ratio_options"
-              >
-              </base-select>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="done_ratio"
-              />
-            </base-form-item>
-
-            <base-form-item
-              :model="form"
-              prop="parent_id"
-              label=" مسئله پدر "
-              class="col-span-12 lg:col-span-4"
-            >
-              <base-select
-                v-model="form.parent_id"
-                filterable
-                placeholder=" مسئله پدر"
-                value-key="id"
-                label="title"
-                remote
-                :remote-method="handleSearchProjectissue"
-                :options="project_issues"
-              >
-              </base-select>
-              <BaseValidationError
-                :errors="validation_errros"
-                field="parent_id"
-              />
-            </base-form-item>
-          </div>
-          <div
-            class="bg-white card-module rounded-xl p-4 mt-10 my-6 grid grid-cols-12 gap-2"
-          >
-            <base-form-item
-              :model="form"
-              prop="image"
-              label=" یادداشت"
-              class="col-span-12 mt-6"
-            >
-              <div>
-                <TiptapEditor
-                  v-model="form.note"
-                  :content="form.note"
-                  placeholder="یادداشت "
-                />
+              <div class="flex items-center">
+                <span class="ml-2"> ایجاد مسئله</span>
+                <nuxt-icon name="add"></nuxt-icon>
               </div>
-            </base-form-item>
-            <base-form-item
-              :model="form"
-              prop="attachments"
-              label="پیوست ها"
-              class="col-span-12 mt-6"
-            >
-              <base-upload
-                multiple
-                :max="5"
-                v-model="form.image"
-                :sources="form.attachments"
-                @delete="handleOnDeleteAttachment"
-              ></base-upload>
-            </base-form-item>
-          </div>
-          <div>
-            <h2 class="text-2xl text-gray-600 mt-8">مسئله های فرزند</h2>
+            </base-button>
           </div>
           <IssueChildren />
-          <div class="col-span-12">
-            <div class="flex flex-col justify-between lg:items-center mt-8">
-              <div class="w-full flex items-center">
-                <base-button
-                  nativeType="submit"
-                  class="w-full"
-                  :loading="loader"
-                  type="primary"
-                  block
-                >
-                  ویرایش
-                </base-button>
-                <base-button
-                  :to="{ name: 'management-roles-index' }"
-                  class="w-full mr-2"
-                >
-                  لغو
-                </base-button>
-              </div>
-            </div>
-          </div>
-        </base-form>
+        </div>
       </template>
     </base-skeleton>
 
@@ -493,7 +275,7 @@ const handleUpdate = () => {
         );
         if (data.success) {
           BaseMessage({
-            message: "ویرایش  مسئله با موفقیت انجام شد!",
+            message: "مشاهده  مسئله با موفقیت انجام شد!",
             type: "success",
             duration: 4000,
             center: true,
@@ -544,25 +326,27 @@ const fetchData = async () => {
         `application/portal/projects/${route.params.id}/issues/${route.params.issue}`
       ),
     ]);
-    project_trackers.value = trackers_data.data;
-    issue_statuses.value = statuses_data.data;
-    priorities.value = priorites_data.data;
-    users.value = users_data.data;
-    project_issues.value = issues_data.data;
-    project_issue.value = project_issue_data.data;
-    form.value.title = project_issue.value.title;
-    form.value.description = project_issue.value.description;
-    form.value.project_issue_status_id = project_issue.value.issue_status.id;
-    form.value.project_tracker_id = project_issue.value.tracker.id;
-    form.value.project_priority_id = project_issue.value.project_priority;
-    form.value.start_date = project_issue.value.start_date;
-    form.value.parent_id = project_issue.value.parent_id;
-    form.value.end_date = project_issue.value.end_date;
-    form.value.estimated_hours = project_issue.value.estimated_hours;
-    form.value.done_ratio = project_issue.value.done_ratio;
-    form.value.assigned_to = project_issue.value.assigned?.id;
-    form.value.note = project_issue.value.note;
-    form.value.attachments = project_issue.value.attachments;
+    // project_trackers.value = trackers_data.data;
+    // issue_statuses.value = statuses_data.data;
+    // priorities.value = priorites_data.data;
+    // users.value = users_data.data;
+    // project_issues.value = issues_data.data;
+    // project_issue.value = project_issue_data.data;
+    // form.value.title = project_issue.value.title;
+    // form.value.description = project_issue.value.description;
+    // form.value.project_issue_status_id = project_issue.value.issue_status.id;
+    // form.value.project_tracker_id = project_issue.value.tracker.id;
+    // form.value.project_priority_id = project_issue.value.project_priority;
+    // form.value.start_date = project_issue.value.start_date;
+    // form.value.parent_id = project_issue.value.parent_id;
+    // form.value.end_date = project_issue.value.end_date;
+    // form.value.estimated_hours = project_issue.value.estimated_hours;
+    // form.value.done_ratio = project_issue.value.done_ratio;
+    // form.value.assigned_to = project_issue.value.assigned?.id;
+    // form.value.note = project_issue.value.note;
+    // form.value.attachments = project_issue.value.attachments;
+
+    form.value = project_issue_data.data;
     loading.value = false;
   } catch (error) {}
 };
@@ -570,22 +354,6 @@ const fetchData = async () => {
 onMounted(async () => {
   project_issue_id.value = route.params.issue;
   await fetchData();
-
-  // const today = new Date();
-  // const persianOptions = {
-  //   year: "numeric",
-  //   month: "2-digit",
-  //   day: "2-digit",
-  //   calendar: "persian",
-  // };
-  // const persianDate = new Intl.DateTimeFormat(
-  //   "fa-IR-u-ca-persian",
-  //   persianOptions
-  // ).format(today);
-  // const englishDigits = persianDate.replace(/[۰-۹]/g, (digit) =>
-  //   String.fromCharCode(digit.charCodeAt(0) - 1728)
-  // );
-  // console.log(englishDigits);
 });
 </script>
 
