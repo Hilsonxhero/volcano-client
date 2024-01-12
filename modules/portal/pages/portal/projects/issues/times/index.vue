@@ -12,12 +12,24 @@
         <section>
           <div class="mb-3 flex justify-between items-center">
             <h1 class="text-2xl text-gray-600">زمان های ثبت شده</h1>
-            <div>
+            <div class="flex items-center">
+              <base-button size="small" type="warning" class="">
+                <router-link
+                  :to="{
+                    name: 'portal-projects-times-report',
+                    params: { id: $route.params.id },
+                  }"
+                  class="flex items-center"
+                >
+                  <span class="ml-2"> گزارش</span>
+                  <nuxt-icon name="report"></nuxt-icon>
+                </router-link>
+              </base-button>
               <base-button
                 @click="handleShowInviteMember"
                 size="small"
                 type="primary"
-                class=""
+                class="mr-2"
               >
                 <div class="flex items-center">
                   <span class="ml-2"> ثبت زمان</span>

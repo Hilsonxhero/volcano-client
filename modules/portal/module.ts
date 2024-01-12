@@ -139,6 +139,11 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/issue/times',
                     file: resolve(__dirname, './pages/portal/projects/issues/times/index.vue')
                 },
+                {
+                    name: 'portal-projects-times-report',
+                    path: '/portal/projects/:id/time/report',
+                    file: resolve(__dirname, './pages/portal/projects/issues/times/report.vue')
+                },
             )
         })
 

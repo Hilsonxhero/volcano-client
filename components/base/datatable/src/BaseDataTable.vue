@@ -15,6 +15,7 @@
           >
             <template v-for="(cell, i) in tableHeader" :key="i">
               <th
+                class="whitespace-nowrap"
                 @click="
                   sort(
                     cell.sortingField ? cell.sortingField : cell.key,
@@ -24,7 +25,7 @@
                 :class="[
                   cell.name && 'min-w-125px',
                   cell.sortable !== false && 'sorting',
-                  tableHeader.length - 1 === i && 'text-end',
+                  tableHeader.length - 1 === i && '',
                   currentSort ===
                     `${cell.sortingField ? cell.sortingField : cell.key}desc` &&
                     'sorting_desc',
@@ -57,7 +58,7 @@
             <template v-for="(item, index) in getItems" :key="index">
               <tr class="odd">
                 <template v-for="(cell, i) in tableHeader" :key="i">
-                  <td :class="{ 'text-end': tableHeader.length - 1 === i }">
+                  <td :class="{ '': tableHeader.length - 1 === i }">
                     <slot :name="`cell-${cell.key}`" :row="item" :index="index">
                       {{ item[prop] }}
                     </slot>
