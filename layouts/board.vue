@@ -1,8 +1,8 @@
 <template>
-  <div class="page flex flex-row flex-column-fluid">
+  <div class="page flex flex-row flex-column-fluid board-page">
     <!-- <BaseAside></BaseAside> -->
 
-    <div class="flex flex-col flex-row-fluid wrapper">
+    <div class="flex flex-col flex-row-fluid wrapper pr-0">
       <BaseHeader title="pageTitle" @show-nav="handleShowNav"></BaseHeader>
 
       <div class="content flex flex-col flex-column-fluid">
