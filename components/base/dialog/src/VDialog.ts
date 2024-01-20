@@ -22,11 +22,11 @@ export const dialogProps = buildProps({
   },
   closeOnClickModal: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   closeOnPressEscape: {
     type: Boolean,
-    default: true,
+    default: false,
   },
   lockScroll: {
     type: Boolean,

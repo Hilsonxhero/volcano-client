@@ -48,6 +48,7 @@
     "sass-loader": "^13.2.2",
     "type-fest": "^3.8.0",
     "vue-tippy": "^6.2.0",
-    "vue3-persian-datetime-picker": "^1.2.2"
+    "vue3-persian-datetime-picker": "^1.2.2",
+    "vuedraggable": "^4.1.0"
   }
 }
