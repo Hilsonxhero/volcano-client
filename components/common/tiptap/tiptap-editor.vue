@@ -98,7 +98,7 @@
     <editor-content
       id="wwww"
       v-bind="$attrs"
-      class="editor__content"
+      class="editor__content min-h-[100px]"
       :editor="editor"
     />
 

@@ -1,30 +1,24 @@
 <template>
   <div class="board-canvas">
-    <BoardLists :items="lists" />
+    <BoardLists :items="board_lists" />
   </div>
 </template>
 
 <script setup lang="ts">
 import BoardLists from "@/modules/portal/components/portal/projects/board/list/BoardLists.vue";
+import { useBoardStore } from "@/modules/portal/store/board";
+import { storeToRefs } from "pinia";
 
 definePageMeta({
   layout: "board",
   middleware: ["auth"],
 });
-
+const store = useBoardStore();
 const route = useRoute();
-const lists = ref([]);
+const { board_lists } = storeToRefs(store);
 
 const fetchData = async () => {
-  // loading.value = true;
-  try {
-    const { data } = await useApiService.get(
-      `application/portal/projects/board/${route.params.board}/lists`
-    );
-    // loading.value = false;
-
-    lists.value = data;
-  } catch (error) {}
+  const data = await store.fetchBoardLists(route.params.board);
 };
 
 onMounted(() => {

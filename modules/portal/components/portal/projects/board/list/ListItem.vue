@@ -37,7 +37,6 @@
         class="mb-4 cards-list list-group"
         v-model="item.cards"
         item-key="id"
-        :sort="true"
         group="elements"
         :multi-drag="true"
         @change="onChange"
@@ -46,7 +45,7 @@
           <div
             class="list-group-item bg-white px-3 py-2 mb-2 handle flex items-center rounded-xl"
           >
-            <div>لورم ایپسوم متن ساختگی با تولید</div>
+            <div>{{ element?.title }}</div>
           </div>
         </template>
       </draggable>
@@ -77,6 +76,8 @@ const props = defineProps({
     type: Object,
   },
 });
+
+const emits = defineEmits(["open"]);
 const visible_create_card = ref(false);
 
 const onChange = (val) => {
@@ -91,7 +92,8 @@ const onChange = (val) => {
 };
 
 const showCreateCard = () => {
-  visible_create_card.value = true;
+  // visible_create_card.value = true;
+  emits("open", props.item?.id);
 };
 const handleDeleteList = (row, index) => {};
 </script>

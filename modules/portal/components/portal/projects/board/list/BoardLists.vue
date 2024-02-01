@@ -5,6 +5,7 @@
         v-for="(list_item, index) in items"
         :key="index"
         :item="list_item"
+        @open="showCreateCardDialog"
       />
       <li class="w-[272px] cursor-pointer" @click="handleShowCreateList">
         <div class="px-4 py-2 rounded-xl border-2 font-light flex items-center">
@@ -26,8 +27,9 @@
       v-model="visible_create_list"
     />
     <CreateCardDialog
-      @create="handleOnCreateList"
-      v-model="visible_create_list"
+      :list="selected_list"
+      @create="handleOnCreateCard"
+      v-model="visible_create_card"
     />
   </div>
 </template>
@@ -36,18 +38,30 @@
 import ListItem from "@/modules/portal/components/portal/projects/board/list/ListItem.vue";
 import CreateListDialog from "@/modules/portal/components/portal/projects/board/list/CreateListDialog.vue";
 import CreateCardDialog from "@/modules/portal/components/portal/projects/board/list/CreateCardDialog.vue";
+import { useBoardStore } from "@/modules/portal/store/board";
+import { storeToRefs } from "pinia";
 
 const props = defineProps({
   items: {
     type: Array,
   },
 });
+const store = useBoardStore();
+const { board_lists } = storeToRefs(store);
 const route = useRoute();
 const visible_create_list = ref(false);
+const visible_create_card = ref(false);
+const selected_list = ref(null);
 const handleOnCreateList = () => {};
-
+const handleOnCreateCard = (row) => {
+  store.updateBoardList({ id: row.board_list_id, card: row });
+};
 const handleShowCreateList = () => {
   visible_create_list.value = true;
+};
+const showCreateCardDialog = (id) => {
+  selected_list.value = id;
+  visible_create_card.value = true;
 };
 </script>
 
