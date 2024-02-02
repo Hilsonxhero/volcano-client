@@ -28,20 +28,38 @@ export const useBoardStore = defineStore("board", () => {
 
     const updateBoardList = async (payload) => {
         try {
+            const selected_list = board_lists.value.findIndex((item, i) => item.id == payload.id)
+            const selected_card = board_lists.value[selected_list].cards.findIndex((card, j) => card.id == payload.row.id)
+            board_lists.value[selected_list].cards[selected_card] = payload.row
+        } catch (error) {
+            return error;
+        }
+    };
+
+    const addCard = async (payload) => {
+        try {
             const selected_item = board_lists.value.findIndex((item, i) => item.id == payload.id)
             board_lists.value[selected_item].cards.push(payload.card)
         } catch (error) {
             return error;
         }
     };
-
+    const addList = async (payload) => {
+        try {
+            board_lists.value.push(payload)
+        } catch (error) {
+            return error;
+        }
+    };
 
     return {
         boards,
         board_lists,
         fetchBoardLists,
         fetchBoards,
-        updateBoardList
+        updateBoardList,
+        addCard,
+        addList
     };
 });
 

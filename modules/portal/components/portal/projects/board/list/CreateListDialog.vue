@@ -107,7 +107,7 @@ const handleCreateList = () => {
           });
           form.value.title = null;
           formRef.value.resetFields();
-          emits("create", true);
+          emits("create", data.data);
           handleOnClose();
         }
 

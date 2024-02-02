@@ -43,15 +43,18 @@
       >
         <template #item="{ element, index }">
           <div
+            @click="handleShowCard(element)"
             class="list-group-item bg-white px-3 py-2 mb-2 handle flex items-center rounded-xl"
           >
-            <div>{{ element?.title }}</div>
+            <div class="overflow-hidden text-ellipsis whitespace-nowrap">
+              {{ element?.title }}
+            </div>
           </div>
         </template>
       </draggable>
       <div
         @click="showCreateCard"
-        class="py-1 bg-white px-2 rounded-xl font-light flex items-center mt-3"
+        class="py-2 bg-white px-2 rounded-xl font-light flex items-center mt-3"
       >
         <div>
           <span
@@ -77,8 +80,8 @@ const props = defineProps({
   },
 });
 
-const emits = defineEmits(["open"]);
-const visible_create_card = ref(false);
+const emits = defineEmits(["open", "show"]);
+const visible_card_detail = ref(false);
 
 const onChange = (val) => {
   var element_id = null;
@@ -96,6 +99,10 @@ const showCreateCard = () => {
   emits("open", props.item?.id);
 };
 const handleDeleteList = (row, index) => {};
+const handleShowCard = (row) => {
+  // visible_card_detail.value = true;
+  emits("show", row);
+};
 </script>
 
 <style scoped></style>

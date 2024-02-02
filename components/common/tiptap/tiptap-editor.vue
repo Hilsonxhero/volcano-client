@@ -98,7 +98,7 @@
     <editor-content
       id="wwww"
       v-bind="$attrs"
-      class="editor__content min-h-[100px]"
+      class="editor__content min-h-[100px] max-h-[170px]"
       :editor="editor"
     />
 
@@ -259,7 +259,7 @@ onUnmounted(() => {
 watch(
   () => props.content,
   (val, prevVal) => {
-    editor.value.commands.setContent(val);
+    // editor.value.commands.setContent(val);
   }
 );
 </script>

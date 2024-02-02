@@ -17,7 +17,7 @@
       margin: auto;
       width: 380px;
       border-radius: 1.25rem;
-      max-height: 80vh;
+      max-height: 98vh;
     }
   }
 
@@ -36,7 +36,7 @@
     position: relative;
     height: 100%;
     height: fit-content;
-    max-height: calc(80vh - 150px);
+    max-height: calc(98vh - 150px);
     flex-grow: 1;
   }
   &__title {

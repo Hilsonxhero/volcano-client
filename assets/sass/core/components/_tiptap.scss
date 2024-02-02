@@ -137,8 +137,10 @@
 
 /* Basic editor styles */
 .ProseMirror {
+  padding-bottom: 1rem;
   > * + * {
-    margin-top: 0.75em;
+    // margin-top: 0.75em;
+    margin: 1rem 0 !important;
   }
 
   p.is-editor-empty {
