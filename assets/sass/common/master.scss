@@ -396,6 +396,12 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.ellipsis-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .uploader-cover {
   background: rgba(0, 0, 0, 0.5);
 }

@@ -8,8 +8,11 @@
         @open="showCreateCardDialog"
         @show="handleOnShowCardDetail"
       />
-      <li class="w-[272px] cursor-pointer" @click="handleShowCreateList">
-        <div class="px-4 py-2 rounded-xl border-2 font-light flex items-center">
+      <li class="w-[272px]">
+        <div
+          class="px-4 py-2 rounded-xl border-2 font-light flex items-center cursor-pointer"
+          @click="handleShowCreateList"
+        >
           <div>
             <span
               class="bg-gray-100 cursor-pointer rounded-lg flex justify-center items-center min-w-[2rem] h-[2rem]"

@@ -51,7 +51,18 @@ export const useBoardStore = defineStore("board", () => {
             return error;
         }
     };
-
+    const deleteList = async (payload) => {
+        const selected_list_index = board_lists.value.findIndex((item, i) => item.id == payload.id)
+        try {
+            const data = await useApiService.remove(
+                `application/portal/projects/board/${payload.board}/lists/${payload.id}`
+            );
+            board_lists.value.splice(selected_list_index, 1)
+            return data
+        } catch (error) {
+            return error;
+        }
+    };
     return {
         boards,
         board_lists,
@@ -59,7 +70,8 @@ export const useBoardStore = defineStore("board", () => {
         fetchBoards,
         updateBoardList,
         addCard,
-        addList
+        addList,
+        deleteList
     };
 });
 

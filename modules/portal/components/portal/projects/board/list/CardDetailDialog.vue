@@ -6,6 +6,9 @@
       title="مشاهده یادداشت"
       custom-class="lg:w-[60%] lg:h-[96vh]"
     >
+      <div class="my-3 px-4">
+        <div class="bg-gray-100 px-2 py-3 rounded-xl">ww</div>
+      </div>
       <div class="mt-3">
         <base-form
           @submit.prevent="handleUpdate"
