@@ -91,15 +91,38 @@ const route = useRoute();
 const emits = defineEmits(["open", "show"]);
 const visible_card_detail = ref(false);
 
-const onChange = (val) => {
+const onChange = async (val) => {
   var element_id = null;
   if (val.removed != undefined) {
     element_id = val.removed.element.id;
   } else if (val.added != undefined) {
     element_id = val.added.element.id;
+    const form_data = {
+      board_list_id: props.item?.id,
+      id: element_id,
+      newIndex: val.added.newIndex,
+    };
+    const data = await useApiService.post(
+      "application/portal/projects/board/card/position",
+      form_data
+    );
   } else if (val.moved != undefined) {
     element_id = val.moved.element.id;
+    const form_data = {
+      board_list_id: props.item?.id,
+      id: element_id,
+      newIndex: val.moved.newIndex,
+    };
+    const data = await useApiService.post(
+      "application/portal/projects/board/card/position",
+      form_data
+    );
   }
+  console.log("element_id", element_id);
+
+  console.log("val", val);
+
+  console.log("item", props.item);
 };
 
 const showCreateCard = () => {
@@ -119,7 +142,7 @@ const handleDeleteList = (row, index) => {
     .then(async () => {
       const data = await store.deleteList({
         board: route.params.board,
-        id: row.id,
+        list: props.item.id,
       });
 
       if (data.success) {

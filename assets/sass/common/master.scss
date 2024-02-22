@@ -1001,10 +1001,15 @@
   display: flex;
   flex-direction: row;
   list-style: none;
-  padding: 0 6px;
+  // padding: 0 6px;
+
+  &__toolbar {
+    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  }
 
   li {
-    padding: 0 6px;
+    // padding: 0 6px;
+    padding-left: 6px;
     align-self: flex-start;
     flex-shrink: 0;
     display: block;

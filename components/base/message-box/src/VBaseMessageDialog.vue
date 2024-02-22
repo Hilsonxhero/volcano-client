@@ -28,7 +28,7 @@
             <!-- <el-icon v-if="iconComponent && center" :class="[ns.e('status'), typeClass]">
                                 <component :is="iconComponent" />
                             </el-icon> -->
-            <span class="">{{ title }}</span>
+            <span class="text-base">{{ title }}</span>
             <base-button
               icon
               type="text"
@@ -64,7 +64,7 @@
                                     </component>
                                     <component :is="showInput ? 'label' : 'p'" v-else
                                         :for="showInput ? inputId : undefined" v-html="message" /> -->
-                <div class="text-right">{{ message }}</div>
+                <div class="text-right text-base">{{ message }}</div>
               </slot>
             </div>
           </div>
@@ -87,10 +87,9 @@
             class="ml-3"
             v-show="showConfirmButton"
             ref="confirmRef"
-            type="primary"
+            type="success"
             :class="[confirmButtonClasses]"
             :disabled="confirmButtonDisabled"
-            :size="btnSize"
             @click="handleAction('confirm')"
             @keydown.prevent.enter="handleAction('confirm')"
           >
@@ -103,7 +102,6 @@
             :loading="cancelButtonLoading"
             :class="[cancelButtonClass]"
             @click="handleAction('cancel')"
-            :size="btnSize"
             @keydown.prevent.enter="handleAction('cancel')"
           >
             {{ cancelButtonText || "el.messagebox.cancel" }}

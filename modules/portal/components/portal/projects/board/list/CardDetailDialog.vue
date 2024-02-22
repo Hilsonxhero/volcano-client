@@ -6,8 +6,16 @@
       title="مشاهده یادداشت"
       custom-class="lg:w-[60%] lg:h-[96vh]"
     >
-      <div class="my-3 px-4">
-        <div class="bg-gray-100 px-2 py-3 rounded-xl">ww</div>
+      <div class="mt-3 mb-6 px-4">
+        <div class="border px-2 py-2 rounded-xl flex justify-end">
+          <div>
+            <base-button @click="handleDelete" type="danger" size="small">
+              <div class="flex items-center">
+                <nuxt-icon class="w-5 h-5" name="trash"></nuxt-icon>
+              </div>
+            </base-button>
+          </div>
+        </div>
       </div>
       <div class="mt-3">
         <base-form
@@ -107,6 +115,8 @@ import { FormItemContext } from "~/core/tokens";
 import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 import { useBoardStore } from "@/modules/portal/store/board";
 import { storeToRefs } from "pinia";
+import { BaseMessageBox } from "@/components/base/message-box";
+
 const store = useBoardStore();
 const emits = defineEmits([UPDATE_MODEL_EVENT, "create"]);
 
@@ -201,6 +211,32 @@ const handleUpdate = () => {
 
 const handleOnClose = () => {
   emits(UPDATE_MODEL_EVENT, false);
+};
+
+const handleDelete = () => {
+  BaseMessageBox.confirm(`آیا از حذف   اطمینان دارید ؟!`, " تایید حذف ", {
+    confirmButtonText: "تایید",
+    cancelButtonText: "لغو",
+    type: "warning",
+  })
+    .then(async () => {
+      const data = await store.deleteCard({
+        list: props.card.board_list_id,
+        card: props.card.id,
+      });
+
+      if (data.success) {
+        visible.value = false;
+        BaseMessage({
+          message: "حذف    با موفقیت انجام شد!",
+          type: "success",
+          duration: 4000,
+          center: true,
+          offset: 20,
+        });
+      }
+    })
+    .catch(() => {});
 };
 
 onMounted(() => {});
