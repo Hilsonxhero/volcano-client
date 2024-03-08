@@ -85,7 +85,7 @@
                 <nuxt-link
                   :to="{
                     name: 'portal-projects-boards-show',
-                    params: { id: route.params.id, board: board.id },
+                    params: { id: route.params.id, board: board.short_link },
                   }"
                 >
                   <span

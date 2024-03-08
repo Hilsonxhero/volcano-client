@@ -96,6 +96,17 @@ export const useBoardStore = defineStore("board", () => {
             return error;
         }
     };
+
+    const updateBoard = async (payload) => {
+        try {
+            board.value = payload
+            return board.value
+        } catch (error) {
+            return error;
+        }
+    };
+
+
     return {
         boards,
         board_lists,
@@ -108,7 +119,8 @@ export const useBoardStore = defineStore("board", () => {
         deleteCard,
         fetchBoard,
         board,
-        updateBoardMembers
+        updateBoardMembers,
+        updateBoard
     };
 });
 
