@@ -3,7 +3,7 @@
     <div
       class="px-4 py-3 rounded-xl bg-gray-100 border font-light mb-2 flex flex-col max-h-full board-module__item--box"
     >
-      <div class="w-full flex justify-between items-center mb-3">
+      <div class="w-full flex justify-between items-center mb-3 font-semibold">
         <div>{{ item?.title }}</div>
         <div>
           <base-dropdown placement="left-start">
@@ -19,13 +19,18 @@
             </span>
 
             <template #content>
-              <ul></ul>
               <div>
                 <div
                   @click="handleDeleteList(item, index)"
                   class="text-gray-700 cursor-pointer rounded-[12px] px-3 py-2 hover:bg-gray-100"
                 >
                   <span> حذف لیست</span>
+                </div>
+                <div
+                  @click="handleShowEditListDialog(item, index)"
+                  class="text-gray-700 cursor-pointer rounded-[12px] px-3 py-2 hover:bg-gray-100"
+                >
+                  <span>ویرایش</span>
                 </div>
               </div>
             </template>
@@ -88,8 +93,9 @@ const props = defineProps({
 });
 const route = useRoute();
 
-const emits = defineEmits(["open", "show"]);
+const emits = defineEmits(["open", "show", "config"]);
 const visible_card_detail = ref(false);
+const visible_actions = ref(false);
 
 const onChange = async (val) => {
   var element_id = null;
@@ -158,8 +164,11 @@ const handleDeleteList = (row, index) => {
     .catch(() => {});
 };
 const handleShowCard = (row) => {
-  // visible_card_detail.value = true;
   emits("show", row);
+};
+const handleShowEditListDialog = (row, index) => {
+  emits("config", row);
+  visible_actions.value = false;
 };
 </script>
 

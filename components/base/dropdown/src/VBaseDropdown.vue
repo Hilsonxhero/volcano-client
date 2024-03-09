@@ -1,6 +1,11 @@
 <template>
   <div>
-    <tippy @show="handleOnShow" :interactive="true" :placement="placement">
+    <tippy
+      @show="handleOnShow"
+      :interactive="true"
+      :placement="placement"
+      zIndex="50"
+    >
       <slot />
       <template #content>
         <div class="bg-white rounded-[16px]">
@@ -25,6 +30,7 @@ const props = defineProps({
   class: {
     type: String,
   },
+  modelValue: {},
 });
 
 const handleOnShow = (instance: any) => {

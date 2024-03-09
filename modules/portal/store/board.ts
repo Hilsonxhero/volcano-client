@@ -106,6 +106,16 @@ export const useBoardStore = defineStore("board", () => {
         }
     };
 
+    const updateList = async (payload) => {
+        try {
+            const selected_list = board_lists.value.findIndex((item, i) => item.id == payload.id)
+            board_lists.value[selected_list] = payload
+            return true
+        } catch (error) {
+            return error;
+        }
+    };
+
 
     return {
         boards,
@@ -120,7 +130,8 @@ export const useBoardStore = defineStore("board", () => {
         fetchBoard,
         board,
         updateBoardMembers,
-        updateBoard
+        updateBoard,
+        updateList
     };
 });
 
