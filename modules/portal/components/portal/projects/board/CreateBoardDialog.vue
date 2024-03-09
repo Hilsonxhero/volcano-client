@@ -7,7 +7,9 @@
       v-model="visible"
     >
       <div class="grid grid-cols-12 gap-4 py-14">
-        <div class="col-span-6 flex flex-col items-center justify-center px-6">
+        <div
+          class="col-span-12 lg:col-span-6 flex flex-col items-center justify-center px-6"
+        >
           <div class="w-full">
             <base-form :model="form" ref="formRef" class="h-full space-y-6">
               <base-form-item
@@ -64,7 +66,9 @@
             </base-form>
           </div>
         </div>
-        <div class="col-span-6 flex flex-col items-center justify-center">
+        <div
+          class="col-span-12 lg:col-span-6 hidden lg:flex flex-col items-center justify-center"
+        >
           <div class="w-3/4 mx-auto">
             <img src="@/assets/media/28.svg" alt="" />
           </div>

@@ -18,7 +18,7 @@
               @click="handleShowCreateBoard"
               size="small"
               type="primary"
-              class="w-full lg:w-auto"
+              class=""
             >
               <div class="flex items-center">
                 <span class="ml-2"> ایجاد تابلو</span>
@@ -29,7 +29,7 @@
         </section>
         <div class="grid grid-cols-12 gap-4">
           <div
-            class="col-span-4"
+            class="col-span-12 md:col-span-6 lg:col-span-4"
             v-for="(board, index) in tableData"
             :key="index"
           >

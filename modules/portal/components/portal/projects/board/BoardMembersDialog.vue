@@ -7,7 +7,7 @@
       v-model="visible"
     >
       <div class="grid grid-cols-12 gap-4">
-        <div class="col-span-7 flex flex-col px-6">
+        <div class="col-span-12 lg:col-span-7 flex flex-col lg:px-6">
           <div class="w-full">
             <base-form :model="form" ref="formRef" class="h-full space-y-6">
               <base-form-item
@@ -45,12 +45,12 @@
             </base-form>
           </div>
         </div>
-        <div class="col-span-5">
+        <div class="col-span-12 lg:col-span-5">
           <div
-            class="flex flex-col space-y-2 mx-2 max-h-[200px] overflow-y-auto"
+            class="flex flex-col space-y-2 lg:mx-2 max-h-[200px] overflow-y-auto"
           >
             <div
-              class="flex items-center bg-gray-100 rounded-xl p-2"
+              class="flex items-center bg-gray-100 rounded-xl py-4 px-3"
               v-for="(member, i) in board?.members"
               :key="i"
             >
