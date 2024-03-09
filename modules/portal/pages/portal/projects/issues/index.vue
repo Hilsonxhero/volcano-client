@@ -30,103 +30,108 @@
             </base-button>
           </div>
         </section>
-        <div class="grid grid-cols-12 gap-4">
-          <div
-            class="col-span-4"
-            v-for="(issue, index) in tableData"
-            :key="index"
-          >
-            <section class="mb-6 bg-white card-module p-4 rounded-2xl">
-              <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center">
-                  <div
-                    class="bg-gray-100 rounded-[30px] py-2 px-6 text-gray-500 font-light flex justify-center items-center"
-                  >
-                    {{ issue?.tracker?.title }}
-                  </div>
-                  <!-- <div
+        <template v-if="tableData.length == 0">
+          <NoData icon="clipboard-tick"> هنوز مسئله ای نساخته اید! </NoData>
+        </template>
+        <template v-else>
+          <div class="grid grid-cols-12 gap-4">
+            <div
+              class="col-span-4"
+              v-for="(issue, index) in tableData"
+              :key="index"
+            >
+              <section class="mb-6 bg-white card-module p-4 rounded-2xl">
+                <div class="flex items-center justify-between mb-4">
+                  <div class="flex items-center">
+                    <div
+                      class="bg-gray-100 rounded-[30px] py-2 px-6 text-gray-500 font-light flex justify-center items-center"
+                    >
+                      {{ issue?.tracker?.title }}
+                    </div>
+                    <!-- <div
                     class="border-gray-500 border rounded-[30px] py-2 px-6 text-gray-600 font-light flex justify-center items-center mr-2"
                   >
                     {{ issue?.id }}
                   </div> -->
+                  </div>
+                  <div>
+                    <base-dropdown placement="left-start">
+                      <span
+                        class="bg-gray-100 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
+                      >
+                        <span class="svg-icon svg-icon-2">
+                          <nuxt-icon
+                            name="more-out"
+                            class="w-6 h-6 text-gray-500"
+                          ></nuxt-icon>
+                        </span>
+                      </span>
+
+                      <template #content>
+                        <ul></ul>
+                        <div>
+                          <div
+                            @click="handleDeleteIssue(issue, index)"
+                            class="text-gray-700 cursor-pointer rounded-[12px] px-3 py-2 hover:bg-gray-100"
+                          >
+                            <span> حذف مسئله</span>
+                          </div>
+                        </div>
+                      </template>
+                    </base-dropdown>
+
+                    <!-- <nuxt-icon name="more" class="w-6 h-6"></nuxt-icon> -->
+                  </div>
                 </div>
-                <div>
-                  <base-dropdown placement="left-start">
+                <h5 class="text-gray-700 font-bold mb-3 text-xl">
+                  <nuxt-link
+                    :to="{
+                      name: 'portal-projects-issues-show',
+                      params: { id: route.params.id, issue: issue.id },
+                    }"
+                  >
+                    {{ issue?.title }}
+                  </nuxt-link>
+                </h5>
+                <!-- <p class="text-gray-400 text-xs">
+                {{ issue?.description }}
+              </p> -->
+                <div class="flex items-center">
+                  <base-button class="ml-1" plain size="small" type="primary">
+                    {{ issue?.issue_status?.title }}
+                  </base-button>
+                  <base-button class="ml-1" plain size="small" type="warning">
+                    {{ issue?.project_priority?.title }}
+                  </base-button>
+
+                  <base-button class="ml-1" plain size="small" type="default">
+                    {{ issue?.id }} #
+                  </base-button>
+                </div>
+
+                <div class="flex justify-end mt-2">
+                  <nuxt-link
+                    :to="{
+                      name: 'portal-projects-issues-show',
+                      params: { id: route.params.id, issue: issue.id },
+                    }"
+                  >
                     <span
                       class="bg-gray-100 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
                     >
                       <span class="svg-icon svg-icon-2">
                         <nuxt-icon
-                          name="more-out"
+                          name="arrow-left"
                           class="w-6 h-6 text-gray-500"
                         ></nuxt-icon>
                       </span>
                     </span>
-
-                    <template #content>
-                      <ul></ul>
-                      <div>
-                        <div
-                          @click="handleDeleteIssue(issue, index)"
-                          class="text-gray-700 cursor-pointer rounded-[12px] px-3 py-2 hover:bg-gray-100"
-                        >
-                          <span> حذف مسئله</span>
-                        </div>
-                      </div>
-                    </template>
-                  </base-dropdown>
-
-                  <!-- <nuxt-icon name="more" class="w-6 h-6"></nuxt-icon> -->
+                  </nuxt-link>
                 </div>
-              </div>
-              <h5 class="text-gray-700 font-bold mb-3 text-xl">
-                <nuxt-link
-                  :to="{
-                    name: 'portal-projects-issues-show',
-                    params: { id: route.params.id, issue: issue.id },
-                  }"
-                >
-                  {{ issue?.title }}
-                </nuxt-link>
-              </h5>
-              <!-- <p class="text-gray-400 text-xs">
-                {{ issue?.description }}
-              </p> -->
-              <div class="flex items-center">
-                <base-button class="ml-1" plain size="small" type="primary">
-                  {{ issue?.issue_status?.title }}
-                </base-button>
-                <base-button class="ml-1" plain size="small" type="warning">
-                  {{ issue?.project_priority?.title }}
-                </base-button>
-
-                <base-button class="ml-1" plain size="small" type="default">
-                  {{ issue?.id }} #
-                </base-button>
-              </div>
-
-              <div class="flex justify-end mt-2">
-                <nuxt-link
-                  :to="{
-                    name: 'portal-projects-issues-show',
-                    params: { id: route.params.id, issue: issue.id },
-                  }"
-                >
-                  <span
-                    class="bg-gray-100 cursor-pointer rounded-2xl flex justify-center items-center min-w-[2.6rem] h-[2.6rem] ml-2"
-                  >
-                    <span class="svg-icon svg-icon-2">
-                      <nuxt-icon
-                        name="arrow-left"
-                        class="w-6 h-6 text-gray-500"
-                      ></nuxt-icon>
-                    </span>
-                  </span>
-                </nuxt-link>
-              </div>
-            </section>
+              </section>
+            </div>
           </div>
-        </div>
+        </template>
       </template>
     </base-skeleton>
   </div>
@@ -138,6 +143,7 @@ import { BaseMessageBox } from "@/components/base/message-box";
 import { BaseDataTable } from "@/components/base/datatable";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import { debounce } from "lodash-unified";
+import NoData from "@/modules/portal/components/common/NoData.vue";
 
 definePageMeta({
   layout: "project",

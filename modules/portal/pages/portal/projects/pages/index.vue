@@ -1,68 +1,87 @@
 <template>
   <div>
-    <div class="mb-3 flex justify-between items-center">
-      <h1 class="text-2xl text-gray-600">صفحه ها</h1>
-      <div>
-        <base-button
-          size="small"
-          @click="handleShowCreatePageHead()"
-          type="primary"
-          class=""
-        >
-          <div class="flex items-center">
-            <span class="ml-2">ساخت عنوان صفحه</span>
-            <nuxt-icon name="add"></nuxt-icon>
+    <base-skeleton class="mt-3" animated :loading="loading">
+      <template #template>
+        <div class="grid grid-cols-12 gap-4">
+          <div class="col-span-12">
+            <base-skeleton-item variant="card"></base-skeleton-item>
           </div>
-        </base-button>
-      </div>
-    </div>
+        </div>
+      </template>
+      <template #default>
+        <div class="mb-3 flex justify-between items-center">
+          <h1 class="text-2xl text-gray-600">صفحه ها</h1>
+          <div>
+            <base-button
+              size="small"
+              @click="handleShowCreatePageHead()"
+              type="primary"
+              class=""
+            >
+              <div class="flex items-center">
+                <span class="ml-2">ساخت عنوان صفحه</span>
+                <nuxt-icon name="add"></nuxt-icon>
+              </div>
+            </base-button>
+          </div>
+        </div>
 
-    <div class="mt-4">
-      <base-collapse accordion class="product-reviews__collapse">
-        <base-collapse-item
-          class="bg-white shadow-lg rounded-2xl py-2 px-3 mb-2"
-          v-for="(head, index) in pages"
-          :data-index="index + 1"
-          :title="head.title"
-          :name="index + 1"
-        >
-          <template #actions>
-            <BaseButton icon @click.stop="handleShowCreatePage(head)">
-              <nuxt-icon class="w-6 h-6" name="add"></nuxt-icon>
-            </BaseButton>
-            <BaseButton @click.stop="handleShowUpdatePageHead(head)" icon>
-              <nuxt-icon class="w-6 h-6" name="magicpen"></nuxt-icon>
-            </BaseButton>
-            <BaseButton @click.stop="handleDeleteHeadPage(head, index)" icon>
-              <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
-            </BaseButton>
-          </template>
-          <div
-            v-for="(page, i) in head.children"
-            :index="i"
-            class="bg-white border border-gray-300 rounded-2xl p-2 flex justify-between items-center mb-2"
-          >
-            <div>
-              <div class="text-gray-700">{{ page.title }}</div>
-            </div>
-            <div class="flex items-center">
-              <BaseButton icon @click="handleShowUpdatePage(page)">
-                <nuxt-icon name="magicpen"></nuxt-icon>
-              </BaseButton>
-              <BaseButton @click="handleSharePage(page)" icon>
-                <nuxt-icon name="share"></nuxt-icon>
-              </BaseButton>
-              <BaseButton
-                icon
-                @click="handleDeletePage(head.children, page, i)"
+        <template v-if="pages.length == 0">
+          <NoData icon="note-bulk"> هنوز صفحه ای نساخته اید! </NoData>
+        </template>
+        <template v-else>
+          <div class="mt-4">
+            <base-collapse accordion class="product-reviews__collapse">
+              <base-collapse-item
+                class="bg-white shadow-lg rounded-2xl py-2 px-3 mb-2"
+                v-for="(head, index) in pages"
+                :data-index="index + 1"
+                :title="head.title"
+                :name="index + 1"
               >
-                <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
-              </BaseButton>
-            </div>
+                <template #actions>
+                  <BaseButton icon @click.stop="handleShowCreatePage(head)">
+                    <nuxt-icon class="w-6 h-6" name="add"></nuxt-icon>
+                  </BaseButton>
+                  <BaseButton @click.stop="handleShowUpdatePageHead(head)" icon>
+                    <nuxt-icon class="w-6 h-6" name="magicpen"></nuxt-icon>
+                  </BaseButton>
+                  <BaseButton
+                    @click.stop="handleDeleteHeadPage(head, index)"
+                    icon
+                  >
+                    <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
+                  </BaseButton>
+                </template>
+                <div
+                  v-for="(page, i) in head.children"
+                  :index="i"
+                  class="bg-white border border-gray-300 rounded-2xl p-2 flex justify-between items-center mb-2"
+                >
+                  <div>
+                    <div class="text-gray-700">{{ page.title }}</div>
+                  </div>
+                  <div class="flex items-center">
+                    <BaseButton icon @click="handleShowUpdatePage(page)">
+                      <nuxt-icon name="magicpen"></nuxt-icon>
+                    </BaseButton>
+                    <BaseButton @click="handleSharePage(page)" icon>
+                      <nuxt-icon name="share"></nuxt-icon>
+                    </BaseButton>
+                    <BaseButton
+                      icon
+                      @click="handleDeletePage(head.children, page, i)"
+                    >
+                      <nuxt-icon class="w-6 h-6" name="trash"></nuxt-icon>
+                    </BaseButton>
+                  </div>
+                </div>
+              </base-collapse-item>
+            </base-collapse>
           </div>
-        </base-collapse-item>
-      </base-collapse>
-    </div>
+        </template>
+      </template>
+    </base-skeleton>
 
     <PageDialog
       :page="selectd_child_page"
@@ -134,6 +153,8 @@ import PageHeadDialog from "@/modules/portal/components/pages/PageHeadDialog.vue
 import { BaseMessageBox } from "@/components/base/message-box";
 import BaseMessage from "@/components/base/message";
 import { useClipboard } from "@vueuse/core";
+import NoData from "@/modules/portal/components/common/NoData.vue";
+import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 
 definePageMeta({
   layout: "project",
@@ -151,7 +172,7 @@ const selected_head = ref(null);
 const page_path = ref(null);
 const selected_page_share = ref(null);
 const { text, copy, copied, isSupported } = useClipboard({ page_path });
-
+const loading = ref(true);
 const handleShowCreatePage = (page: any) => {
   selectd_page.value = page;
   visible_create_page.value = true;
@@ -253,6 +274,7 @@ const fetchPages = async () => {
     `application/portal/projects/${project_id.value}/pages`
   );
   pages.value = data;
+  loading.value = false;
 };
 
 onMounted(() => {
