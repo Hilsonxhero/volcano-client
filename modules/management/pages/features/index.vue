@@ -71,7 +71,7 @@
 
             <template v-slot:cell-status="{ row }">
               <base-button outlined type="success" size="small">{{
-                row?.status
+                $t(row?.status)
               }}</base-button>
             </template>
 

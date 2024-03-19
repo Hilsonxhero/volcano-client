@@ -363,7 +363,7 @@ const form = ref({
   start_date: null,
   end_date: null,
   estimated_hours: null,
-  done_ratio: null,
+  done_ratio: "0",
 });
 const project_trackers = ref([]);
 const issue_statuses = ref([]);
@@ -371,6 +371,7 @@ const priorities = ref([]);
 const validation_errros = ref([]);
 const project_issues = ref([]);
 const ratio_options = ref([
+  { title: "0", value: "0" },
   { title: "10", value: "10" },
   { title: "20", value: "20" },
   { title: "30", value: "30" },
@@ -391,6 +392,8 @@ const checkStartDate = (formatted: any, dateMoment: any, checkingFor: any) => {
   return formatted >= form.value.end_date;
 };
 const handleCreate = () => {
+  console.log("aaaa", form.value.assigned_to);
+
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;

@@ -61,7 +61,7 @@
               <div
                 class="text-ellipsis overflow-hidden whitespace-nowrap min-w-[130px]"
               >
-                {{ row?.status }}
+                {{ $t(row?.status) }}
               </div>
             </template>
 

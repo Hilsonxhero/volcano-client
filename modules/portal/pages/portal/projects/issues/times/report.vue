@@ -81,28 +81,15 @@ definePageMeta({
   middleware: ["auth"],
 });
 // @ts-nocheck
-
 const index = ref(null);
 const checkedData = ref([]);
-
-const tableHeader = ref([
-  //   {
-  //     key: "checkbox",
-  //     sortable: false,
-  //   },
-  //   {
-  //     name: "کاربر",
-  //     key: "user",
-  //     sortable: false,
-  //   },
-]);
+const tableHeader = ref([]);
 const loading = ref(true);
 const tableData = ref([]);
 const route = useRoute();
 const project_id = ref(null);
 const pager = ref({});
 const current_page = ref(1);
-
 const intervals = ref([
   { title: "سال", id: "year" },
   { title: "ماه", id: "month" },
@@ -111,12 +98,10 @@ const intervals = ref([
 ]);
 const interval_labels = ref([]);
 const filter_types = ref([{ title: "کاربر", id: "user" }]);
-
 const form = ref({
   interval: "month",
   search_type: "user",
 });
-
 const fetchData = async () => {
   try {
     const form_data = {
@@ -127,6 +112,8 @@ const fetchData = async () => {
       `application/portal/projects/${route.params.id}/issue/entries/time/report`,
       form_data
     );
+    tableHeader.value = [];
+    tableData.value = [];
     tableHeader.value.push({
       name: "کاربر",
       key: "user",
@@ -135,12 +122,9 @@ const fetchData = async () => {
 
     loading.value = false;
     // pager.value = data.pager;
-    console.log("data.data", data.labels);
     interval_labels.value = data.labels;
 
     data.labels.forEach((label, index) => {
-      console.log("index", index);
-      console.log("label", label);
       tableHeader.value.push({
         name: label,
         key: label,
@@ -163,12 +147,16 @@ const fetchData = async () => {
       value.values.forEach((aa, bb) => {
         tableData.value[j][aa.label] = aa.value;
       });
-      console.log("value", value);
     });
-    console.log("tableData", tableData.value);
   } catch (error) {}
 };
 
+watch(
+  () => form.value.interval,
+  (val) => {
+    fetchData();
+  }
+);
 onMounted(() => {
   fetchData();
   project_id.value = route.params.id;

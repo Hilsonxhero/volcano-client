@@ -12,6 +12,7 @@
         <section>
           <div class="mb-3 flex justify-between items-center">
             <h1 class="text-2xl text-gray-600">عضو های پروژه</h1>
+
             <div>
               <base-button
                 @click="handleShowInviteMember"
@@ -63,7 +64,7 @@
 
             <template v-slot:cell-status="{ row }">
               <base-button outlined type="success" size="small">{{
-                row?.status
+                $t(row?.status)
               }}</base-button>
             </template>
 
@@ -103,6 +104,7 @@ definePageMeta({
 const visible_invite_user = ref(false);
 const index = ref(null);
 const checkedData = ref([]);
+
 const tableHeader = ref([
   {
     key: "checkbox",
