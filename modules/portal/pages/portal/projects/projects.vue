@@ -27,7 +27,7 @@
       >
         <nuxt-link
           :to="{
-            name: 'portal-projects-pages-index',
+            name: 'portal-projects-dashboard',
             params: { id: project?.id },
           }"
         >

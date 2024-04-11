@@ -159,6 +159,12 @@ export default defineNuxtModule({
                     path: '/portal/projects/board/confirmation',
                     file: resolve(__dirname, './pages/portal/projects/boards/confirmation.vue')
                 },
+
+                {
+                    name: 'portal-projects-dashboard',
+                    path: '/portal/projects/:id/dashboard',
+                    file: resolve(__dirname, './pages/portal/projects/dashboard/dashboard.vue')
+                },
             )
         })
 

@@ -140,10 +140,12 @@ import { useAuthStore } from "@/modules/auth/store";
 import { usePortalStore } from "@/modules/portal/store/portal";
 
 const portalStore = usePortalStore();
+
 const router = useRouter();
 const store = useAuthStore();
 const route = useRoute();
 import { storeToRefs } from "pinia";
+const { project } = storeToRefs(portalStore);
 
 const scrollElRef = ref<null | HTMLElement>(null);
 const { user } = storeToRefs(store);
@@ -152,10 +154,16 @@ const pages = ref([
   {
     pages: [
       {
+        heading: "داشبورد",
+        route: "portal-projects-dashboard",
+        svgIcon: "chart",
+        // permissions: ["portal_boards_management_index"],
+      },
+      {
         heading: "تابلو ها",
         route: "portal-projects-boards-index",
         svgIcon: "board",
-        // permissions: ["portal_boards_management_index"],
+        permissions: ["portal_boards_management_index"],
       },
       {
         heading: "صفحات",
@@ -217,6 +225,9 @@ const handleLogout = async () => {
 };
 
 const hasPermission = (permissions) => {
+  if (project?.user_id == user.id) {
+    return true;
+  }
   if (!permissions || permissions == null) {
     return true;
   }

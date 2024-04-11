@@ -111,28 +111,28 @@
           </div>
         </div>
 
-        <div class="bg-white card-module rounded-xl p-4 mt-5"></div>
-
-        <div class="mt-10">
-          <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg text-gray-600">مسئله های فرزند</h2>
-            <base-button
-              size="small"
-              type="primary"
-              class="w-full lg:w-auto"
-              :to="{
-                name: 'portal-projects-issues-create',
-                params: { id: route.params.id },
-              }"
-            >
-              <div class="flex items-center">
-                <span class="ml-2"> ایجاد مسئله</span>
-                <nuxt-icon name="add"></nuxt-icon>
-              </div>
-            </base-button>
+        <template v-if="user.id == form?.assigned?.id">
+          <div class="mt-10">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-lg text-gray-600">مسئله های فرزند</h2>
+              <base-button
+                size="small"
+                type="primary"
+                class="w-full lg:w-auto"
+                :to="{
+                  name: 'portal-projects-issues-create',
+                  params: { id: route.params.id },
+                }"
+              >
+                <div class="flex items-center">
+                  <span class="ml-2"> ایجاد مسئله</span>
+                  <nuxt-icon name="add"></nuxt-icon>
+                </div>
+              </base-button>
+            </div>
+            <IssueChildren />
           </div>
-          <IssueChildren />
-        </div>
+        </template>
       </template>
     </base-skeleton>
 
@@ -157,11 +157,15 @@ import DatePicker from "@/components/common/DatePicker.clinet.vue";
 import TiptapEditor from "@/components/common/tiptap/tiptap-editor.vue";
 import IssueChildren from "@/modules/portal/components/portal/projects/issues/Children.vue";
 import CreateIssueTimeDialog from "@/modules/portal/components/portal/projects/issues/time/CreateIssueTimeDialog.vue";
+import { useAuthStore } from "@/modules/auth/store";
+import { storeToRefs } from "pinia";
 
 definePageMeta({
   layout: "project",
   middleware: ["auth"],
 });
+const store = useAuthStore();
+const { user, isLoggedIn } = storeToRefs(store);
 const project_issue_id = ref(null);
 const loading = ref(true);
 const loader = ref(false);

@@ -32,15 +32,15 @@
               :rules="[
                 {
                   required: true,
-                  message: ' عنوان مسئله  الزامی می باشد',
+                  message: ' عنوان   الزامی می باشد',
                 },
               ]"
-              label="  عنوان مسئله"
+              label="  عنوان "
               class="col-span-12"
             >
               <base-input
                 v-model="form.title"
-                placeholder="  عنوان مسئله "
+                placeholder="  عنوان  "
               ></base-input>
               <BaseValidationError :errors="validation_errros" field="title" />
             </base-form-item>
