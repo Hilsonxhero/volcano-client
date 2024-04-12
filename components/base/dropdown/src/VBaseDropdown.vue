@@ -1,11 +1,6 @@
 <template>
   <div>
-    <tippy
-      @show="handleOnShow"
-      :interactive="true"
-      :placement="placement"
-      zIndex="50"
-    >
+    <tippy @show="handleOnShow" :interactive="true" :placement="placement">
       <slot />
       <template #content>
         <div class="bg-white rounded-[16px]">

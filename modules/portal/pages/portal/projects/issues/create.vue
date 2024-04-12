@@ -392,8 +392,6 @@ const checkStartDate = (formatted: any, dateMoment: any, checkingFor: any) => {
   return formatted >= form.value.end_date;
 };
 const handleCreate = () => {
-  console.log("aaaa", form.value.assigned_to);
-
   formRef.value?.validate(async (valid: any): Promise<void> => {
     if (valid) {
       loader.value = true;

@@ -10,24 +10,44 @@
       </template>
       <template #default>
         <section>
-          <div class="flex justify-between items-center mb-4">
+          <div
+            class="flex-col lg:flex-row flex justify-between items-center mb-4 flex-wrap"
+          >
             <div>
-              <h5 class="text-xl text-gray-700">مسئله ها</h5>
+              <h5 class="text-xl text-gray-700 w-full flex-shrink-0 flex-grow">
+                مسئله ها
+              </h5>
             </div>
-            <base-button
-              size="small"
-              type="primary"
-              class="w-full lg:w-auto"
-              :to="{
-                name: 'portal-projects-issues-create',
-                params: { id: route.params.id },
-              }"
-            >
-              <div class="flex items-center">
-                <span class="ml-2"> ایجاد مسئله</span>
-                <nuxt-icon name="add"></nuxt-icon>
-              </div>
-            </base-button>
+            <div class="flex items-center flex-wrap flex-shrink-0">
+              <ClientOnly>
+                <base-button
+                  size="small"
+                  type="warning"
+                  class="w-full lg:w-auto ml-2 mt-2 lg:mt-0"
+                  @click="handleShowFilterDialog"
+                >
+                  <div class="flex items-center">
+                    <span class="ml-2">فیلتر </span>
+                    <nuxt-icon name="filter-square"></nuxt-icon>
+                  </div>
+                </base-button>
+              </ClientOnly>
+
+              <base-button
+                size="small"
+                type="primary"
+                class="w-full lg:w-auto mt-2 lg:mt-0"
+                :to="{
+                  name: 'portal-projects-issues-create',
+                  params: { id: route.params.id },
+                }"
+              >
+                <div class="flex items-center">
+                  <span class="ml-2"> ایجاد مسئله</span>
+                  <nuxt-icon name="add"></nuxt-icon>
+                </div>
+              </base-button>
+            </div>
           </div>
         </section>
         <template v-if="tableData.length == 0">
@@ -36,7 +56,7 @@
         <template v-else>
           <div class="grid grid-cols-12 gap-4">
             <div
-              class="col-span-4"
+              class="col-span-12 lg:col-span-4"
               v-for="(issue, index) in tableData"
               :key="index"
             >
@@ -134,6 +154,10 @@
         </template>
       </template>
     </base-skeleton>
+    <FilterIssueDialog
+      @store="handleOnFilter"
+      v-model="visible_filter_dialog"
+    />
   </div>
 </template>
 
@@ -144,6 +168,7 @@ import { BaseDataTable } from "@/components/base/datatable";
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import { debounce } from "lodash-unified";
 import NoData from "@/modules/portal/components/common/NoData.vue";
+import FilterIssueDialog from "@/modules/portal/components/portal/projects/issues/FilterIssueDialog.vue";
 
 definePageMeta({
   layout: "project",
@@ -154,53 +179,25 @@ const pager = ref({});
 const current_page = ref(1);
 const project_id = ref(null);
 const route = useRoute();
-const checkedData = ref([]);
 const search = ref("");
-const tableHeader = ref([
-  {
-    key: "checkbox",
-    sortable: false,
-  },
-  {
-    name: "عنوان",
-    key: "title",
-    sortable: true,
-  },
-  {
-    name: "نام",
-    key: "name",
-    sortable: true,
-  },
-  {
-    name: "دسته گروه",
-    key: "parent_name",
-    sortable: true,
-  },
-  {
-    name: "عملیات",
-    key: "actions",
-  },
-]);
+const visible_filter_dialog = ref(false);
 const tableData = ref([]);
 
 watch(
   () => search.value,
   (val) => {
-    // fetchProjectIssues();
     debouncedOnInputChange();
   }
 );
 
-const handleChangePage = (page) => {
-  current_page.value = page;
-  fetchProjectIssues();
-};
-
-const fetchProjectIssues = async () => {
-  let params = {
+const fetchProjectIssues = async (query_params = null) => {
+  var params = {
     page: current_page.value,
     q: search.value,
   };
+  if (query_params !== null) {
+    params = { ...params, ...query_params };
+  }
   // loading.value = true;
   try {
     const { data } = await useApiService.get(
@@ -239,6 +236,15 @@ const handleDeleteIssue = (item: any, index: any) => {
       }
     })
     .catch(() => {});
+};
+
+const handleOnFilter = (data) => {
+  loading.value = true;
+  fetchProjectIssues(data);
+};
+
+const handleShowFilterDialog = () => {
+  visible_filter_dialog.value = true;
 };
 
 onMounted(() => {
