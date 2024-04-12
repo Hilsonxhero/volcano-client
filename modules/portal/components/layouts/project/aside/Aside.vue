@@ -41,8 +41,6 @@
         </div>
 
         <div class="aside-footer flex-column-auto pt-5 pb-7 px-5"></div>
-        <!-- <hx-overlay :active="show"></hx-overlay> -->
-        <!--end::Footer-->
       </div>
     </template>
   </base-skeleton>
@@ -61,7 +59,7 @@ import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 const portalStore = usePortalStore();
 const store = useAuthStore();
 const { user } = storeToRefs(store);
-const { project } = storeToRefs(portalStore);
+const { project, portal_project_id } = storeToRefs(portalStore);
 const route = useRoute();
 const asideRef = ref(null);
 const project_id = ref(null);
@@ -81,7 +79,7 @@ const handleFetchProject = async () => {
 
 onMounted(() => {
   const paramId = useState("routeParamId");
-  project_id.value = paramId.value;
+  project_id.value = portal_project_id.value ?? paramId.value;
   handleFetchProject();
 });
 </script>

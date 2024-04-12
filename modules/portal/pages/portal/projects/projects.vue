@@ -23,52 +23,10 @@
     >
       <div
         class="col-span-12 md:col-span-4 xl:col-span-4"
+        @click="handleOpenProjectPortal(project)"
         v-for="(project, index) in projects"
       >
-        <nuxt-link
-          :to="{
-            name: 'portal-projects-dashboard',
-            params: { id: project?.id },
-          }"
-        >
-          <!-- <div
-            class="bg-white shadow-lg rounded-2xl p-4 text-base transition ease-in-out"
-          >
-            <div class="flex items-center justify-between">
-              <div>{{ project?.title }}</div>
-              <div>
-                <BaseButton size="small" type="success">
-                  {{ project?.status }}</BaseButton
-                >
-              </div>
-            </div>
-
-            <div>
-              <p class="text-gray-500 text-xs my-3 leading-6">
-                {{ project?.description }}
-              </p>
-            </div>
-
-            <ul class="avatar-group flex items-center mb-0 mt-3 mr-2">
-              <li
-                v-for="(member, index) in project.members"
-                :key="index"
-                class="avatar w-[2rem] h-[2rem] -mr-[0.8rem] relative avatar-sm"
-              >
-                <img
-                  class="avatar-img rounded-[50%] w-full h-full object-cover border border-gray-300"
-                  src="~/assets/media/faces/blank.png"
-                  alt="avatar"
-                />
-              </li>
-            </ul>
-
-            <div class="text-gray-500 mt-3 text-xs">
-              ایجاد شده در {{ project?.create_at }}
-            </div>
-          </div> -->
-          <ProjectCard :project="project" />
-        </nuxt-link>
+        <ProjectCard :project="project" />
       </div>
     </div>
 
@@ -100,6 +58,8 @@ import CreateProjectDialog from "@/modules/portal/components/portal/projects/Cre
 import { BaseSkeleton, BaseSkeletonItem } from "@/components/base/skeleton";
 import BaseMessage from "@/components/base/message";
 import { useInfiniteScroll } from "@vueuse/core";
+import { usePortalStore } from "@/modules/portal/store/portal";
+
 definePageMeta({
   layout: "portal",
   middleware: ["auth"],
@@ -112,6 +72,17 @@ const visible_create_project = ref(false);
 const pager = ref({
   current_page: 0,
 });
+
+const store = usePortalStore();
+
+const handleOpenProjectPortal = async (project) => {
+  await store.setProjectId(project?.id);
+  navigateTo({
+    name: "portal-projects-dashboard",
+    params: { id: project?.id },
+  });
+};
+
 const handleShowCreateProject = () => {
   visible_create_project.value = true;
 };

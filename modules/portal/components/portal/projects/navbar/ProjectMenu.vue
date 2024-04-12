@@ -143,7 +143,7 @@ const handleFetchProject = async () => {
 onMounted(() => {
   const paramId = useState("routeParamId");
   project_id.value = paramId.value;
-  handleFetchProject();
+  // handleFetchProject();
 });
 </script>
 

@@ -225,13 +225,17 @@ const handleLogout = async () => {
 };
 
 const hasPermission = (permissions) => {
-  if (project?.user_id == user.id) {
+  var has_role = project?.value.members.find(
+    (member, index) => member?.user_id == user?.value.id
+  );
+
+  if (project?.value.user_id == user?.value.id) {
     return true;
   }
   if (!permissions || permissions == null) {
     return true;
   }
-  return user.value?.role?.permission_names.some((permission) =>
+  return has_role?.role?.permission_names.some((permission) =>
     permissions.includes(permission)
   );
 };

@@ -13,6 +13,7 @@
         "portal_project_management_update" :"ویرایش پروژه",
         "portal_project_management_delete" :"حذف پروژه",
         "portal_issue_management" :"مدیریت مسئله ها",
+        "portal_issue_management_owner" :"مدیریت  مسئله ها",
         "portal_issue_management_index" :"نمایش لیست مسئله ها",
         "portal_issue_management_show" :"نمایش مسئله",
         "portal_issue_management_store" :"ایجاد مسئله",
@@ -53,6 +54,13 @@
         "portal_enumerations_management_show" :"نمایش مشخصات بخش سفارشی",
         "portal_enumerations_management_store" :"ایجاد بخش سفارشی",
         "portal_enumerations_management_update" :"ویرایش بخش های سفارشی",
-        "portal_enumerations_management_delete" :"حذف بخش سفارش"
+        "portal_enumerations_management_delete" :"حذف بخش سفارش",
+
+        "portal_boards_management" :"مدیریت تابلوها",
+        "portal_boards_management_index" :"نمایش لیست تابلوها",
+        "portal_boards_management_show" :"نمایش تابلو",
+        "portal_boards_management_store" :"ایجاد تابلو",
+        "portal_boards_management_update" :"ویرایش تابلو",
+        "portal_boards_management_delete" :"حذف تابلو"
     }
 }

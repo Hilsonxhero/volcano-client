@@ -1,5 +1,7 @@
 <template>
-  <div class="card-module rounded-2xl p-4 text-base transition ease-in-out">
+  <div
+    class="card-module rounded-2xl p-4 text-base transition ease-in-out cursor-pointer"
+  >
     <div class="flex items-center justify-between">
       <div>{{ project?.title }}</div>
       <div>

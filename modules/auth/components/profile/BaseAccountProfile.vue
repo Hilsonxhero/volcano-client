@@ -2,7 +2,7 @@
   <div>
     <div v-if="store.isLoggedIn" @click="showAccountDialog()">
       <base-avatar fit="cover" shape="circle">
-        <img :src="user.media.avatar" class="" />
+        <img :src="user?.media.avatar" class="" />
       </base-avatar>
     </div>
     <base-dialog
@@ -19,7 +19,7 @@
           >
             <img
               class="w-full h-full object-cover border-gray-300 overflow-hidden"
-              :src="user.media.avatar"
+              :src="user?.media.avatar"
               alt="avatar"
             />
           </div>

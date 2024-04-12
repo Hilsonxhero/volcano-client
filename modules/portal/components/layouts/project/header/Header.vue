@@ -30,16 +30,9 @@
         <div class="flex lg:hidden">
           <ProjectMenu />
         </div>
-
-        <!--end::Aside mobile toggle-->
       </div>
 
       <div class="flex items-center">
-        <!-- <div class="ml-4">
-          <base-button icon type="text" size="small">
-            <nuxt-icon name="menu-bulk" class="w-5 h-5"></nuxt-icon>
-          </base-button>
-        </div> -->
         <div class="hidden lg:flex">
           <ProjectMenu />
         </div>
