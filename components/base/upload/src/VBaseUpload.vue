@@ -20,7 +20,7 @@
             class="flex items-center justify-center h-full text-center mx-auto"
           >
             <div class="p-1 space-y-4 flex lg:t-col">
-              <div class="items-center flex justify-center">
+              <div class="items-center flex justify-center flex-wrap">
                 <template v-if="files.length >= 1">
                   <div
                     @click.prevent="handleAttachmentViewer(uploaded_file, j)"
@@ -28,13 +28,34 @@
                     v-for="(uploaded_file, j) in files"
                     :key="j"
                   >
-                    <img
-                      v-if="uploaded_file?.preview"
-                      :src="uploaded_file?.preview"
-                      class="w-full h-full object-cover"
-                      alt=""
-                    />
-                    <nuxt-icon v-else class="" name="doc"></nuxt-icon>
+                    <template v-if="uploaded_file.type == 'pdf'">
+                      <img
+                        src="@/assets/media/pdf-icon.svg"
+                        class="w-full h-full object-cover"
+                        alt=""
+                      />
+                    </template>
+                    <template
+                      v-if="
+                        uploaded_file.type == 'doc' ||
+                        uploaded_file.type == 'docx'
+                      "
+                    >
+                      <img
+                        src="@/assets/media/docx-icon.svg"
+                        class="w-full h-full object-cover"
+                        alt=""
+                      />
+                    </template>
+                    <template v-else>
+                      <img
+                        v-if="uploaded_file?.preview"
+                        :src="uploaded_file?.preview"
+                        class="w-full h-full object-cover"
+                        alt=""
+                      />
+                      <nuxt-icon v-else class="" name="doc"></nuxt-icon>
+                    </template>
 
                     <div
                       class="w-full h-full opacity-0 hover:opacity-100 cursor-pointer left-0 top-0 flex flex-col absolute justify-center items-center uploader-cover transition-all duration-100 ease-out"
@@ -200,7 +221,15 @@ onMounted(() => {
     } else {
       for (let index = 0; index < props.sources.length; index++) {
         const element = props.sources[index];
-        files.value.push({ preview: element.path, id: element.id });
+
+        if (element.hasOwnProperty("type")) {
+        }
+        var file_type = element.path.split(".").pop();
+        files.value.push({
+          preview: element.path,
+          id: element.id,
+          type: file_type,
+        });
       }
     }
   }

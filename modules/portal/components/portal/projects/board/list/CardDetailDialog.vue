@@ -146,6 +146,10 @@ watch(
       form.value.title = props.card.title;
       form.value.description = props.card.description;
       form.value.attachments = props.card.attachments;
+      // form.value.attachments.forEach((attc, index) => {
+      //   var file_type = attc.path.split(".").pop();
+      //   attc.type = file_type;
+      // });
     }
   }
 );

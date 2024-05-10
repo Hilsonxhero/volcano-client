@@ -102,7 +102,6 @@ watch(
 
 const fetchProjects = async () => {
   if (must_fetch.value) {
-    // params.append(`page`, +pager.value?.current_page ?? 1);
     try {
       pager.value.current_page = +pager.value.current_page + 1;
       let params = {
