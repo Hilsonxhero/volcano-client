@@ -5222,12 +5222,12 @@ html {
     grid-template-columns: 1fr 2fr;
   }
 
-  // .img-account {
-  //   background-image: url("@/assets/media/sign up.svg");
-  //   background-position: 50%;
-  //   background-repeat: no-repeat;
-  //   background-size: cover;
-  // }
+  .img-account {
+    background-image: url("@/assets/media/signup.svg");
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
 
   .account {
     width: 100%;
