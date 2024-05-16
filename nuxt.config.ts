@@ -17,6 +17,7 @@ export default defineNuxtConfig({
         vueI18n: './core/plugins/i18n.config.ts',
         defaultLocale: 'fa',
     },
+    ssr: false,
 
 
     css: ["@/assets/sass/main.scss", "@/assets/css/tailwind.css", "@/assets/sass/master.scss"],
