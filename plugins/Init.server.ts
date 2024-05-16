@@ -3,10 +3,10 @@ import { useAuthStore } from "@/modules/auth/store";
 
 export default defineNuxtPlugin({
     name: 'my-plugin',
-    enforce: 'post', // or 'post'
+    enforce: 'default', // or 'post'
     async setup(nuxtApp) {
-        // const store = useAuthStore();
-        // await store.init()
+        const store = useAuthStore();
+        await store.init()
 
     },
     hooks: {
