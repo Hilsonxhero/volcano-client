@@ -55,10 +55,12 @@
 import { useAuthStore } from "@/modules/auth/store";
 import { usePortalStore } from "@/modules/portal/store/portal";
 import { storeToRefs } from "pinia";
+
 const store = useAuthStore();
 const { user } = storeToRefs(store);
 const portalStore = usePortalStore();
 const visible_account = ref(false);
+const route = useRoute();
 
 const pages = ref([
   {

@@ -40,6 +40,7 @@
             }"
             class="flex items-center bg-gray-100 rounded-xl p-2"
             active-class="active"
+            @click="visible_account = false"
           >
             <span
               class="bg-gray-200 rounded-2xl flex justify-center items-center min-w-[2.75rem] h-[2.75rem] ml-2"

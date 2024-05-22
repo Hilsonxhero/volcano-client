@@ -97,6 +97,7 @@
           </div>
           <nuxt-link
             :to="{ name: item.route }"
+            @click="active = false"
             class="block text-center group-hover:text-danger text-sm group-hover:font-bold font-bold mr-2 text-white"
           >
             {{ item?.title }}</nuxt-link
