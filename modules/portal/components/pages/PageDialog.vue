@@ -9,9 +9,9 @@
       <div>
         <div class="">
           <div class="sticky top-0 z-[999] justify-between items-center">
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center flex-wrap">
               <menu-bar
-                class="editor__header sticky top-0 bg-white z-10"
+                class="editor__header sticky top-0 bg-white z-10 flex-nowrap"
                 :editor="editor"
               >
                 <template #link>
@@ -114,8 +114,11 @@
                   </div>
                 </template>
               </menu-bar>
-              <div>
-                <base-button type="primary" @click="handleSave()"
+              <div class="w-full lg:w-auto px-6 lg:px-0">
+                <base-button
+                  class="w-full lg:w-auto mt-3 lg:mt-0"
+                  type="primary"
+                  @click="handleSave()"
                   >ذخیره</base-button
                 >
               </div>
