@@ -43,52 +43,6 @@ $checkbox-bordered-input-width: () !default;
   // margin-right: 30px;
   height: 32px;
 
-  //   @include when(bordered) {
-  //     padding: 0 map.get($checkbox-bordered-padding-right, "default")-$border-width
-  //       0 map.get($checkbox-bordered-padding-left, "default")-$border-width;
-  //     border-radius: getCssVar("border-radius-base");
-  //     border: getCssVar("border");
-  //     box-sizing: border-box;
-
-  //     &.is-checked {
-  //       border-color: getCssVar("color-primary");
-  //     }
-
-  //     &.is-disabled {
-  //       border-color: getCssVar("border-color-lighter");
-  //       cursor: not-allowed;
-  //     }
-
-  //     @each $size in (large, small) {
-  //       &.#{$namespace}-checkbox--#{$size} {
-  //         padding: 0
-  //           map.get($checkbox-bordered-padding-right, $size)-$border-width
-  //           0
-  //           map.get($checkbox-bordered-padding-left, $size)-$border-width;
-
-  //         border-radius: map.get($button-border-radius, $size);
-
-  //         .#{$namespace}-checkbox__label {
-  //           font-size: map.get($button-font-size, $size);
-  //         }
-
-  //         .#{$namespace}-checkbox__inner {
-  //           height: map.get($checkbox-bordered-input-height, $size);
-  //           width: map.get($checkbox-bordered-input-width, $size);
-  //         }
-  //       }
-  //     }
-
-  //     &.#{$namespace}-checkbox--small {
-  //       .#{$namespace}-checkbox__inner {
-  //         &::after {
-  //           height: 6px;
-  //           width: 2px;
-  //         }
-  //       }
-  //     }
-  //   }
-
   input:focus-visible {
     & + .#{$namespace}-checkbox__inner {
       outline: 2px solid getCssVar("checkbox-input-border-color-hover");
@@ -248,6 +202,7 @@ $checkbox-bordered-input-width: () !default;
     padding-right: 8px;
     line-height: 1;
     font-size: getCssVar("checkbox-font-size");
+    overflow: hidden;
   }
 
   @each $size in (large, small) {
