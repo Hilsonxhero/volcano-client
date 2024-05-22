@@ -61,20 +61,19 @@
           <base-switch v-model="form.is_default" />
         </base-form-item>
 
-        <div class="flex flex-col justify-between lg:items-center mt-8">
-          <div class="w-full flex items-center">
+        <div class="flex flex-col lg:items-center mt-8 col-span-12">
+          <div class="w-full flex items-center flex-wrap">
             <base-button
               nativeType="submit"
-              class="w-full"
+              class="w-full lg:w-auto"
               :loading="loader"
               type="primary"
-              block
             >
               ایجاد
             </base-button>
             <base-button
-              :to="{ name: 'management-roles-index' }"
-              class="w-full mr-2"
+              :to="{ name: 'portal-projects-enumerations-index' }"
+              class="w-full lg:w-auto lg:mr-2 mt-3 lg:mt-0"
             >
               لغو
             </base-button>

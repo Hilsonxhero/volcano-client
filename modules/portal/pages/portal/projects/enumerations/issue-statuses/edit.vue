@@ -10,7 +10,7 @@
       </template>
       <template #default>
         <div>
-          <h2 class="text-2xl my-4 text-gray-600">ویرایش دسته بندی زمان</h2>
+          <h2 class="text-2xl my-4 text-gray-600">ویرایش وضعیت مسئله</h2>
         </div>
         <div class="bg-white shadow-xl rounded-xl p-4">
           <base-form
@@ -91,11 +91,11 @@
               <base-switch v-model="form.is_closed" />
             </base-form-item>
 
-            <div class="flex flex-col justify-between lg:items-center mt-8">
-              <div class="w-full flex items-center">
+            <div class="flex flex-col lg:items-center mt-8 col-span-12">
+              <div class="w-full flex items-center flex-wrap">
                 <base-button
                   nativeType="submit"
-                  class="w-full"
+                  class="w-full lg:w-auto"
                   :loading="loader"
                   type="primary"
                   block
@@ -107,7 +107,7 @@
                     name: 'portal-projects-enumerations-index',
                     params: { id: route.params.id },
                   }"
-                  class="w-full mr-2"
+                  class="w-full lg:w-auto lg:mr-2 mt-3 lg:mt-0"
                 >
                   لغو
                 </base-button>

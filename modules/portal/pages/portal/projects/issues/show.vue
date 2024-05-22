@@ -16,9 +16,8 @@
         </div>
       </template>
       <template #default>
-        <div class="flex justify-between items-center">
-          <h2 class="text-2xl my-4 text-gray-600"></h2>
-          <div class="flex items-center">
+        <div class="flex lg:justify-between items-center">
+          <div class="flex items-center flex-wrap w-full">
             <base-button
               :to="{
                 name: 'portal-projects-issues-edit',
@@ -37,7 +36,7 @@
               @click="handleShowTimeDialog"
               size="small"
               type="primary"
-              class="w-full lg:w-auto mr-2"
+              class="w-full lg:w-auto lg:mr-2 mt-3 lg:mt-0"
             >
               <div class="flex items-center">
                 <span class="ml-2"> ثبت زمان</span>
@@ -113,8 +112,12 @@
 
         <template v-if="user.id == form?.assigned?.id">
           <div class="mt-10">
-            <div class="flex items-center justify-between mb-4">
-              <h2 class="text-lg text-gray-600">مسئله های فرزند</h2>
+            <div
+              class="flex flex-col lg:flex-row items-center justify-between mb-4 flex-wrap"
+            >
+              <h2 class="text-lg text-gray-600 mb-2 lg:mb-0">
+                مسئله های فرزند
+              </h2>
               <base-button
                 size="small"
                 type="primary"
