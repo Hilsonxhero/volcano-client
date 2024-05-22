@@ -48,7 +48,7 @@
       >
         <template #item="{ element, index }">
           <div
-            @click="handleShowCard(element)"
+            @click.self="handleShowCard(element)"
             class="relative z-[100] list-group-item group bg-white px-3 py-2 mb-2 handle flex items-center rounded-xl whitespace-normal border-2 hover:border-2 hover:border-blue-600 transition-all ease-linear"
           >
             <div
