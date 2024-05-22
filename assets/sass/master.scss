@@ -26,7 +26,6 @@ html {
   figcaption,
   figure,
   footer,
-  header,
   hgroup,
   main,
   menu,
@@ -3567,8 +3566,8 @@ html {
   }
 
   a {
-    color: #f4f6fd;
-    text-decoration: underline;
+    // color: #f4f6fd;
+    // text-decoration: underline;
     transition: color 0.2s;
   }
 
@@ -6851,4 +6850,9 @@ input[type="number"] {
 .card-module {
   border: 1px solid #f1f1f4;
   box-shadow: 0px 3px 4px 0px rgba(0, 0, 0, 0.03);
+  background-color: #fff;
+}
+
+.base-heade-menu {
+  background-color: #222;
 }
