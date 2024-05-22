@@ -45,6 +45,7 @@
         group="elements"
         :multi-drag="true"
         @change="onChange"
+        :component-data="{ attrs: { filter: 'input', preventOnFilter: false } }"
       >
         <template #item="{ element, index }">
           <div
