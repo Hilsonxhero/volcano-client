@@ -41,7 +41,11 @@
       @create="handleOnCreateCard"
       v-model="visible_create_card"
     />
-    <CardDetailDialog :card="selected_card" v-model="visible_card_detail" />
+    <CardDetailDialog
+      :card="selected_card"
+      v-model="visible_card_detail"
+      :lists="items"
+    />
   </div>
 </template>
 
@@ -96,6 +100,17 @@ const handleOnShowConfigList = (row) => {
   selected_list.value = row;
   visible_config_list.value = true;
 };
+
+onMounted(() => {
+  props.items?.forEach((list, i) => {
+    const share_card = list?.cards?.find(
+      (card, k) => card.id == route.query.card
+    );
+    if (share_card !== undefined) {
+      handleOnShowCardDetail(share_card);
+    }
+  });
+});
 </script>
 
 <style scoped></style>

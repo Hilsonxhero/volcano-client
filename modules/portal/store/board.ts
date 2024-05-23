@@ -47,6 +47,22 @@ export const useBoardStore = defineStore("board", () => {
         }
     };
 
+    const moveCard = async (payload) => {
+
+        try {
+
+            let selected_list = board_lists.value.findIndex((item, i) => item.id == payload.id)
+            board_lists.value[selected_list].cards.unshift(payload.card)
+            let selected_list_index = board_lists.value.findIndex((item, i) => item.id == payload.card?.board_list_id)
+            let removed_card_index = board_lists.value[selected_list_index].cards.findIndex((card, k) => card.id == payload.card?.id)
+            board_lists.value[selected_list_index].cards.splice(removed_card_index, 1)
+
+        } catch (error) {
+            return error;
+        }
+
+    }
+
     const addCard = async (payload) => {
         try {
             const selected_item = board_lists.value.findIndex((item, i) => item.id == payload.id)
@@ -120,6 +136,7 @@ export const useBoardStore = defineStore("board", () => {
     return {
         boards,
         board_lists,
+        moveCard,
         fetchBoardLists,
         fetchBoards,
         updateBoardList,

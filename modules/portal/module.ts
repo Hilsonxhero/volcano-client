@@ -154,6 +154,11 @@ export default defineNuxtModule({
                     path: '/portal/projects/:id/boards/:board',
                     file: resolve(__dirname, './pages/portal/projects/boards/show.vue')
                 },
+                // {
+                //     name: 'portal-projects-boards-card-show',
+                //     path: '/portal/projects/:id/boards/:board',
+                //     file: resolve(__dirname, './pages/portal/projects/boards/show.vue')
+                // },
                 {
                     name: 'portal-projects-boards-confirmation',
                     path: '/portal/projects/board/confirmation',
