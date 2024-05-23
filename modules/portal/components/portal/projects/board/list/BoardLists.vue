@@ -58,6 +58,7 @@ import CardDetailDialog from "@/modules/portal/components/portal/projects/board/
 
 import { useBoardStore } from "@/modules/portal/store/board";
 import { storeToRefs } from "pinia";
+import { watch } from "vue";
 
 const props = defineProps({
   items: {
@@ -100,6 +101,20 @@ const handleOnShowConfigList = (row) => {
   selected_list.value = row;
   visible_config_list.value = true;
 };
+
+watch(
+  () => props.items,
+  (val) => {
+    val?.forEach((list, i) => {
+      const share_card = list?.cards?.find(
+        (card, k) => card.id == route.query.card
+      );
+      if (share_card !== undefined) {
+        handleOnShowCardDetail(share_card);
+      }
+    });
+  }
+);
 
 onMounted(() => {
   props.items?.forEach((list, i) => {
