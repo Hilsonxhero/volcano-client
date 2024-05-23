@@ -45,8 +45,8 @@
         group="elements"
         :multi-drag="true"
         @change="onChange"
-        :component-data="{ attrs: { filter: 'input', preventOnFilter: false } }"
         handle=".handle"
+        :component-data="collapseComponentData"
       >
         <template #item="{ element, index }">
           <div
@@ -97,7 +97,7 @@ const props = defineProps({
   },
 });
 const route = useRoute();
-
+const collapseComponentData = ref({});
 const emits = defineEmits(["open", "show", "config"]);
 const visible_card_detail = ref(false);
 const visible_actions = ref(false);
