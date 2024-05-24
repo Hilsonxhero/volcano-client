@@ -113,7 +113,7 @@ const handleConfirmInvite = async () => {
         name: "portal-projects-boards-show",
         params: {
           id: invite.value.board.project?.id,
-          board: invite.value.board?.id,
+          board: invite.value.board?.short_link,
         },
       });
     }
