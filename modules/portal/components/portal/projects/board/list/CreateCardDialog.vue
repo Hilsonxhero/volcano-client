@@ -121,7 +121,7 @@ const handleCreate = () => {
       try {
         const form_data = new FormData();
         form_data.append("title", form.value.title);
-        form_data.append("description", form.value.title);
+        form_data.append("description", form.value.content);
         form_data.append("board_list_id", props.list);
         if (form.value.image && form.value.image.length >= 1) {
           let uploaded_media = form.value.image.filter((item, j) =>
