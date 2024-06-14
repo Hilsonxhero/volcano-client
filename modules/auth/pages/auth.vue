@@ -85,7 +85,7 @@
             <h3 class="heading-form">سلام رفیق!</h3>
             <p class="paragraph-form text-gray-400">به خونه خوش اومدی!</p>
 
-            <div
+            <!-- <div
               class="flex flex-col lg:flex-row space-y-4 lg:space-y-0 items-center mb-4"
             >
               <div class="w-full">
@@ -113,7 +113,7 @@
                   </div>
                 </BaseButton>
               </div>
-            </div>
+            </div> -->
 
             <div class="form-block w-form">
               <form

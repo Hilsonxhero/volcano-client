@@ -11,18 +11,18 @@
           <div class="grid grid-cols-12 gap-2">
             <div class="col-span-12 lg:col-span-12">
               <base-form-item
-                prop="email"
+                prop="phone"
                 :rules="[
                   {
                     required: true,
-                    message: 'ایمیل کاربر الزامی می باشد',
+                    message: 'شماره همراه کاربر الزامی می باشد',
                   },
                 ]"
-                label="ایمیل"
+                label="شماره همراه"
               >
                 <base-input
-                  v-model="form.email"
-                  placeholder="ایمیل"
+                  v-model="form.phone"
+                  placeholder="شماره همراه"
                 ></base-input>
               </base-form-item>
             </div>
@@ -60,7 +60,7 @@
                 type="primary"
                 block
               >
-                ایجاد
+                ارسال
               </base-button>
             </div>
           </div>
@@ -91,11 +91,10 @@ const project_id = ref(null);
 const route = useRoute();
 const formRef: Ref<FormItemContext | null> = ref(null);
 const form = ref({
-  email: null,
+  phone: null,
   role_group: null,
   role: null,
 });
-const users = ref([{ email: "", role: "" }]);
 watch(
   () => props.modelValue,
   (val: boolean) => {
@@ -124,7 +123,7 @@ const handleInviteUser = () => {
           project: project_id.value,
           users: [
             {
-              email: form.value.email,
+              phone: form.value.phone,
               role: form.value.role,
             },
           ],
@@ -143,7 +142,7 @@ const handleInviteUser = () => {
             offset: 20,
           });
           emits("create", true);
-          form.value.email = null;
+          form.value.phone = null;
           form.value.role_group = null;
           form.value.role = null;
           handleCloseCreateProject();

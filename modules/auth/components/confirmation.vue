@@ -15,7 +15,7 @@
             :rules="[
               {
                 required: true,
-                message: ' ایمیل   الزامی می باشد',
+                message: ' شماره همراه   الزامی می باشد',
               },
             ]"
             label=""
@@ -28,12 +28,11 @@
             ></base-input> -->
             <input
               v-bind="field"
-              type="email"
-              class="text-field w-input"
+              class="text-field w-input text-center"
               maxlength="256"
               name="Email"
               data-name="Email"
-              placeholder="آدرس ایمیل"
+              placeholder="شماره همراه"
               v-model="form.username"
             />
           </base-form-item>

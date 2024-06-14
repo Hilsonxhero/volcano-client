@@ -16,16 +16,16 @@
                 :rules="[
                   {
                     required: true,
-                    message: '  ایمیل  الزامی می باشد',
+                    message: '  شماره همراه  الزامی می باشد',
                   },
                 ]"
                 label=""
                 class="col-span-12"
               >
                 <base-input
-                  type="email"
+           
                   v-model="form.email"
-                  placeholder="آدرس ایمیل "
+                  placeholder=" شماره همراه "
                 ></base-input>
               </base-form-item>
 
