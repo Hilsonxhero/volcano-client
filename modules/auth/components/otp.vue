@@ -1,45 +1,25 @@
 <template>
   <div>
     <div class="w-full">
-      <base-form
-        @submit.prevent="handleSendCode"
-        ref="form"
-        class="h-full space-y-6"
-      >
+      <base-form @submit.prevent="handleSendCode" ref="form" class="h-full space-y-6">
         <div class="block mb-4">
           <div class="flex items-center justify-between mb-6">
             <div class="text-gray-200 text-sm cursor-pointer">
               {{ username }}
             </div>
-            <div
-              @click="changePhone"
-              class="text-gray-300 text-sm cursor-pointer lg:mr-0"
-            >
-              ویرایش شماره موبایل
+            <div @click="changePhone" class="text-gray-300 text-sm cursor-pointer lg:mr-0">
+              ویرایش ایمیل
             </div>
           </div>
 
           <div class="flex items-center">
             <!-- <base-otp :length="5" v-model="code"></base-otp> -->
-            <input
-              type="number"
-              class="text-field w-input text-center"
-              maxlength="5"
-              name="Email"
-              placeholder="کد تایید"
-              v-model="code"
-            />
+            <input type="number" class="text-field w-input text-center" maxlength="5" name="Email"
+              placeholder="کد تایید" v-model="code" />
             <div mode="out-in" class="flex flex-col justify-center mr-6 w-56">
-              <Countdown
-                v-if="!resend"
-                :date="ttl_time"
-                @finish="resend = true"
-              />
-              <div
-                @click="handleresendCode"
-                v-else
-                class="inline-block text-xs cursor-pointer text-typo-light font-medium text-gray-300"
-              >
+              <Countdown v-if="!resend" :date="ttl_time" @finish="resend = true" />
+              <div @click="handleresendCode" v-else
+                class="inline-block text-xs cursor-pointer text-typo-light font-medium text-gray-300">
                 ارسال مجدد
               </div>
             </div>
@@ -57,11 +37,7 @@
               >ورود</base-button
             > -->
 
-            <button
-              :loading="loader"
-              type="submit"
-              class="submit-button w-button block w-full"
-            >
+            <button :loading="loader" type="submit" class="submit-button w-button block w-full">
               ورود
             </button>
           </div>

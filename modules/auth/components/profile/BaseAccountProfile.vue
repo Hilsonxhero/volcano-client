@@ -32,7 +32,7 @@
           </div>
           <div class="flex flex-col justify-between pb-3 pt-2 w-max">
             <div class="leading-[1.5625rem] mb-2 text-sm font-bold lg:text-typo lg:font-extrabold">
-              {{ store.user?.phone }}
+              {{ store.user?.email }}
             </div>
             <div class="text-typo-light text-xs leading-5 lg:font-bold text-right">
               {{ store.user?.username }}

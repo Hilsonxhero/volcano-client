@@ -1,40 +1,21 @@
 <template>
   <div>
     <div class="w-full">
-      <base-form
-        @submit.prevent="handleSubmit"
-        :model="form"
-        ref="formRef"
-        class="h-full space-y-6"
-      >
+      <base-form @submit.prevent="handleSubmit" :model="form" ref="formRef" class="h-full space-y-6">
         <div class="block mb-4">
-          <base-form-item
-            :model="form"
-            v-slot="{ field }"
-            prop="username"
-            :rules="[
-              {
-                required: true,
-                message: ' شماره همراه   الزامی می باشد',
-              },
-            ]"
-            label=""
-            class="col-span-12"
-          >
+          <base-form-item :model="form" v-slot="{ field }" prop="username" :rules="[
+            {
+              required: true,
+              message: '  ایمیل   الزامی می باشد',
+            },
+          ]" label="" class="col-span-12">
             <!-- <base-input
               v-bind="field"
               v-model="form.username"
               placeholder="آدرس ایمیل"
             ></base-input> -->
-            <input
-              v-bind="field"
-              class="text-field w-input text-center"
-              maxlength="256"
-              name="Email"
-              data-name="Email"
-              placeholder="شماره همراه"
-              v-model="form.username"
-            />
+            <input v-bind="field" class="text-field w-input text-center" maxlength="256" name="Email" data-name="Email"
+              placeholder="آدرس ایمیل" v-model="form.username" />
           </base-form-item>
         </div>
 

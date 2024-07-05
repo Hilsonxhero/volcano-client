@@ -1,51 +1,30 @@
 <template>
   <div>
-    <base-dialog
-      @close="handleCloseCreateProject()"
-      title="افزودن عضو جدید"
-      custom-class="lg:w-[30%]"
-      v-model="visible"
-    >
+    <base-dialog @close="handleCloseCreateProject()" title="افزودن عضو جدید" custom-class="lg:w-[30%]"
+      v-model="visible">
       <div>
         <base-form :model="form" ref="formRef" class="space-y-6">
           <div class="grid grid-cols-12 gap-2">
             <div class="col-span-12 lg:col-span-12">
-              <base-form-item
-                prop="phone"
-                :rules="[
-                  {
-                    required: true,
-                    message: 'شماره همراه کاربر الزامی می باشد',
-                  },
-                ]"
-                label="شماره همراه"
-              >
-                <base-input
-                  v-model="form.phone"
-                  placeholder="شماره همراه"
-                ></base-input>
+              <base-form-item prop="username" :rules="[
+                {
+                  required: true,
+                  message: ' ایمیل کاربر الزامی می باشد',
+                },
+              ]" label=" ایمیل">
+                <base-input v-model="form.username" placeholder=" ایمیل"></base-input>
               </base-form-item>
             </div>
 
             <div class="col-span-12 lg:col-span-12">
-              <base-form-item
-                prop="role"
-                :rules="[
-                  {
-                    required: true,
-                    message: ' سطح دسترسی الزامی می باشد',
-                  },
-                ]"
-                label="سطح دسترسی"
-              >
-                <base-select
-                  v-model="form.role"
-                  filterable
-                  placeholder=" سطح دسترسی"
-                  value-key="id"
-                  label="title"
-                  :options="roles"
-                >
+              <base-form-item prop="role" :rules="[
+                {
+                  required: true,
+                  message: ' سطح دسترسی الزامی می باشد',
+                },
+              ]" label="سطح دسترسی">
+                <base-select v-model="form.role" filterable placeholder=" سطح دسترسی" value-key="id" label="title"
+                  :options="roles">
                 </base-select>
               </base-form-item>
             </div>
@@ -53,13 +32,7 @@
 
           <div class="flex flex-col justify-between lg:items-center">
             <div class="w-full">
-              <base-button
-                class="w-full"
-                @click="handleInviteUser"
-                :loading="loader"
-                type="primary"
-                block
-              >
+              <base-button class="w-full" @click="handleInviteUser" :loading="loader" type="primary" block>
                 ارسال
               </base-button>
             </div>
@@ -91,7 +64,7 @@ const project_id = ref(null);
 const route = useRoute();
 const formRef: Ref<FormItemContext | null> = ref(null);
 const form = ref({
-  phone: null,
+  username: null,
   role_group: null,
   role: null,
 });
@@ -123,7 +96,7 @@ const handleInviteUser = () => {
           project: project_id.value,
           users: [
             {
-              phone: form.value.phone,
+              username: form.value.username,
               role: form.value.role,
             },
           ],
@@ -142,7 +115,7 @@ const handleInviteUser = () => {
             offset: 20,
           });
           emits("create", true);
-          form.value.phone = null;
+          form.value.username = null;
           form.value.role_group = null;
           form.value.role = null;
           handleCloseCreateProject();
@@ -164,7 +137,7 @@ const fetchRoles = async () => {
     );
     // role_groups.value = data.data;
     roles.value = data.data.roles;
-  } catch (error) {}
+  } catch (error) { }
 };
 
 const handleCloseCreateProject = () => {
