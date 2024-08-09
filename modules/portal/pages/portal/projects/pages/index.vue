@@ -26,7 +26,7 @@
           </div>
         </div>
 
-        <template v-if="pages.length == 0">
+        <template v-if="pages && pages.length == 0">
           <NoData icon="note-bulk"> هنوز صفحه ای نساخته اید! </NoData>
         </template>
         <template v-else>

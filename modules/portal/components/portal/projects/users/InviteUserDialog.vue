@@ -145,7 +145,7 @@ const handleCloseCreateProject = () => {
 };
 
 onMounted(() => {
-  project_id.value = route.params.id;
+  project_id.value = route.params.id; 
 
   fetchRoles();
 });

@@ -97,6 +97,7 @@ onMounted(() => {
     <template v-if="isCurrentCellActive || selected">
       <tippy
         placement="right-start"
+        trigger="click"
         :interactive="true"
         animation="shift-toward-subtle"
         class="trigger-button z-50"

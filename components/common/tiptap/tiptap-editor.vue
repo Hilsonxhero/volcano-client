@@ -248,7 +248,7 @@ onMounted(() => {
     ],
     content: props.content,
     onUpdate: () => {
-      emit("update:modelValue", editor.value.getHTML());
+      // emit("update:modelValue", editor.value.getHTML());
     },
   });
 });

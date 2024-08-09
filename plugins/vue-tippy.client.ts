@@ -5,13 +5,12 @@ import 'tippy.js/themes/light.css'
 import 'tippy.js/animations/shift-toward-subtle.css'
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(VueTippy, {
-        arrow: true,
+        arrow: false,
         directive: 'tippy',
         component: 'tippy',
         componentSingleton: 'tippy-singleton',
         defaultProps: {
             theme: 'light',
-
             allowHTML: true,
             trigger: 'click',
             delay: 50,
